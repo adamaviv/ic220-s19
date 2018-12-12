@@ -9,8 +9,6 @@
 * Dr. Mike Missler([missler@usna.edu](mailto:missler@usna.edu)) (Office TBA)
   * Section 5002
   
-## Meeting Schedule
-    
 ## Announcements
 
 * TBA
