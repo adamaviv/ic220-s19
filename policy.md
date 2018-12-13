@@ -1,4 +1,4 @@
-# Course Policy for IC220 Computer Organization and Architecture (AY19)
+# Course Policy for IC220 Computer Architecture & Organization (AY19)
 
 
 ## General Information
