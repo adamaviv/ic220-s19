@@ -27,7 +27,7 @@
 |          | Wed. 2/13 | **Review Day**  |                            | **Review Day**                                                                |                         |                         |
 |          | Fri. 2/15 | **6-Week Exam** |                            | **6-Week Exam**                                                               |                         |                         |
 | **---**  |           |                 |                            |                                                                               |                         |                         |
-| **7**    | Mon. 2/18 | **No Class**    | **Presidents Day*          |                                                                               |                         |                         |
+| **7**    | Mon. 2/18 | **No Class**    | **Presidents Day**         |                                                                               |                         |                         |
 |          | Wed. 2/20 | Class 16        |                            | LogiSim Lab (bring laptops!)                                                  |                         | HW-5 Due                |
 |          | Fri. 2/22 | Class 17        |                            | State Machines, SRAM and DRAM                                                 |                         |                         |
 | **---**  |           |                 |                            |                                                                               |                         |                         |
