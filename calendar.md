@@ -11,7 +11,7 @@
 |          | Wed. 1/16 | Class 5                                 | Constants, Byte Order                                                         |                      | [HW-1](hw/hw01.pdf) Due |
 |          | Fri. 1/18 | Class 6                                 | Stacks and Procedures                                                         | 2.8-2.10             |                         |
 | **---**  |           |                                         |                                                                               |                      |                         |
-| **3**    | Mon. 1/21 | No Class                                | MLK Day                                                                       |                      |                         |
+| **3**    | Mon. 1/21 | **No Class**                            | **MLK Day**                                                                       |                      |                         |
 |          | Wed. 1/23 | Class 7                                 | Nested Procedures                                                             |                      | HW-2 Due                |
 |          | Fri. 1/25 | Class 8                                 | SPIM Lab                                                                      |                      | Pre-lab Due             |
 | **---**  |           |                                         |                                                                               |                      |                         |
@@ -27,7 +27,7 @@
 |          | Wed. 2/13 | Class 16                                |                                                                               |                      |                         |
 |          | Fri. 2/15 | 6-week Exam                             |                                                                               |                      |                         |
 | **---**  |           |                                         |                                                                               |                      |                         |
-| **7**    | Mon. 2/18 | <span style="color:red">No Class</span> | <span style="color:red">Presidents Day</span>                                 |                      |                         |
+| **7**    | Mon. 2/18 | **No Class**                            | **Presidents Day**                                                            |                      |                         |
 |          | Wed. 2/20 | Class 17                                |                                                                               |                      |                         |
 |          | Fri. 2/22 | Class 18                                |                                                                               |                      |                         |
 | **---**  |           |                                         |                                                                               |                      |                         |
@@ -39,9 +39,9 @@
 |          | Wed. 3/6  | Class 23                                |                                                                               |                      |                         |
 |          | Fri. 3/8  | Class 24                                |                                                                               |                      |                         |
 | **---**  |           |                                         |                                                                               |                      |                         |
-| **X**    | Mon. 3/11 | <span style="color:red">No Class</span> |                                                                               |                      |                         |
-|          | Wed. 3/13 | <span style="color:red">No Class</span> | <span style="color:red">Spring Break</span>                                   |                      |                         |
-|          | Fri. 3/15 | <span style="color:red">No Class</span> |                                                                               |                      |                         |
+| **X**    | Mon. 3/11 | **No Class**                            |                                                                               |                      |                         |
+|          | Wed. 3/13 | **No Class**                            | **Spring Break**                                                              |                      |                         |
+|          | Fri. 3/15 | **No Class**                            |                                                                               |                      |                         |
 | **---**  |           |                                         |                                                                               |                      |                         |
 | **10**   | Mon. 3/18 |                                         |                                                                               |                      |                         |
 |          | Wed. 3/20 |                                         |                                                                               |                      |                         |
