@@ -1,10 +1,10 @@
 # Course Calendar
 
     
-| **Week** | **Date**  | **Class**    | **Topic**                                                                     | **Readings**         | **Assignment**          |
+| **Week** | **Date**  | **Unit**  |  **Class**    | **Topic**                                                                     | **Readings**         | **Assignment**          |
 |----------|-----------|--------------|-------------------------------------------------------------------------------|----------------------|-------------------------|
-| **1**    | Tue. 1/8  | Class 1      | Course Overview, Computer Anatomy                                             |                      |                         |
-|          | Wed. 1/9  | Class 2      | Instructions                                                                  | 2.1-2.3 <br> 2.5-2.6 |                         |
+| **1**    | Tue. 1/8  | [Unit 1](units/unit_01.md) | Class 1      | Course Overview, Computer Anatomy                                             |                      |                         |
+|          | Wed. 1/9  | [Unit 2](units/unit_02.md) | Class 2      | Instructions                                                                  | 2.1-2.3 <br> 2.5-2.6 |                         |
 |          | Fri. 1/11 | Class 3      | Instructions, Memory, Machine Language, Control Flow, and Pseudo-instructions | 2.7                  |                         |
 | **---**  |           |              |                                                                               |                      |                         |
 | **2**    | Mon. 1/14 | Class 4      | Control Flow and Looping                                                      |                      | [HW-0](hw/hw00.md) Due  |
