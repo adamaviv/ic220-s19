@@ -2,11 +2,11 @@
 
 ## Instructors
     
-* Dr. [Adam Aviv](https://www.usna.edu/Users/cs/aviv/) ([aviv@usna.edu](mailto:aviv@usna.edu)) (MI353) 
+* Dr. [Adam Aviv](https://www.usna.edu/Users/cs/aviv/) ([aviv@usna.edu](mailto:aviv@usna.edu)) (MI353) **Coordinator**
   * Sections 1001, 2001, 4001
 * Dr. [Seung Geol Choi](https://www.usna.edu/Users/cs/choi/) ([choi@usna.edu](mailto:choi@usna.edu)) (MI365)
   * Section 5001
-* Dr. Mike Missler([missler@usna.edu](mailto:missler@usna.edu)) (Office TBA)
+* Dr. Mike Missler ([missler@usna.edu](mailto:missler@usna.edu)) (Office TBA)
   * Section 5002
   
 ## Announcements
