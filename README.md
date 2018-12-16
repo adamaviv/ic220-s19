@@ -30,7 +30,7 @@ Teaching material used in this course is based upon prior work from Maj. Erik
 Rye (USNA), Prof. Luke McDowel (USNA), and Prof. Margarget McMahon
 (USNA). 
 
-Notes based on material found in *Computer Organization and Design: The
+Based upon material found in *Computer Organization and Design: The
 Hardware/Software Interface. Fifth Edition.* by David A. Patterson and John
 L. Hennessy. Morgan Kaufmann. (c) 2014.
 
