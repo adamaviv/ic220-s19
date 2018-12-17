@@ -316,6 +316,35 @@ We can then or imediately with the lower half bits, whose upper half is consider
        
 Note that or of 0 is the identify, so 1 or 0 is 1 and 0 or 0 is 0. 
 
+
+## Big vs. Little Endian
+
+Continuing with the constant above, what decimal number is it?
+
+    10101010101010100000000000111111
+           
+That might depend on the byte ordering. Each machine does this
+differently, and there are two standards:
+
+* Big Endian: Most signficant byte first
+* Little Endian: Least signficant byte first
+
+Dividing the bits here into 4 bytes
+
+      0-byte  1-byte   2-byte   3-byte
+    10101010 10101010 00000000 00111111
+
+With Big Endian, this is how we natural read numbers, like 526, is five
+hunder, and twenty, and six. Then this number would be interpreted as
+2863267903 or (-1431699393 ... more on that later!).
+
+In Little Endian, the 0-byte is the least significant byte and the
+3-byte is the most signficant, leading to the following decimal
+number 1057008298. Most computers use Little Endian because it is more
+efficient for most operations since they occur on the least
+significant bytes. 
+
+
 ## Conditionals and Branching
 
 A program needds to also be able to execute different code
@@ -384,6 +413,25 @@ labels are the human readable portion we use when we write the
 code. When the MIPS is assembeled, and the addresses are known, then
 they get filled in with the true values. 
 
+
+## Looping 
+
+The last control flow instructions we need are loops. But, we actually
+already have that embedded within branching instuctions we already
+have. For example, consider the C/C++ code
+
+    do {
+        g = g + A[i]
+        i = i+j;
+    }while( i != h );
+
+
+We can use a branch instruction to jump backwards in the instructions, forming a loop
+
+    L1: add $t1, $s3, $s3  # t1 = i+i = 2i
+    add $t1, $t1, $t1      # t1 = 2i + 2i = 4i
+    add $t1, $t1, $s5      # t1 
+    
 
 ## Pseudoinstructions
 
