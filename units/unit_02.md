@@ -217,19 +217,28 @@ described as
 
 
 In the above example opcode of `add` is 0 and it's `funct` is
-`32=10000(binary)`. The registers are numbered for reference in the machine
-code. `$t0` is 8=0100 (binary), `$s1` is 17= 10001 (binary), and `$s3` is
-18=10010 (binary)  (you can see a full layout description of this in the book).
+`32=10000(binary)`. The registers are numbered for reference in the
+machine code. `$t0` is 8=0100 (binary), `$s1` is 17= 10001 (binary),
+and `$s3` is 18=10010 (binary). Here is the mapping of registers to
+their numeric labeling. 
+
+![registers](/imgs/registers.png "Copyright © 2014 Elsevier Inc. All rights reserved.")
+
 
 This is all well and fine, but we run into a problem with loading and
 storing. Recall these operations look like the following.
 
     lw $t0, 32($s3)
 
-Surely, we can map this into the field layout above, but what if we have an
-offset into array of size 20, or 100, or 500? There is a porblem because the
-largest field is 6-bits wide, and the operand fields are only 5-bits wide, which
-means they can only count up to 32! 
+Surely, we can map this into the field layout above, but what about this instruction?
+
+    lw $t0, 128($s3)
+    
+Then, the bits to represent the offset 128 is 10000000
+(binary). That's 7 bits long, longer than the 5-bits reseverd for
+register/operand values. Moreover, the offset 128 is not from a
+register! This is still simple and valid MIPS, leading to another
+design principle.
 
 > Design Principle 3: Good design demand good compromises
 
@@ -242,18 +251,186 @@ can realign our fields to the following:
     .-------------------------------------------------.
     | opcode |  rs   |   rt  |    const or addr       |
     '-------------------------------------------------'
+      op.      source  dest   offset
+
+We call this an *I-format* or "immediate format" while the prior
+format is an `R-format` or a register format. In the immediate format,
+we can use the 16-bit field to represent the value. The op-code for
+`lw` is 39 or 100011, `$t0` is register 8, and `$s3` is
+register 18. Leading to the following bit layout for I-type
+
+       lw       $s3     $t0        128
+    .-------------------------------------------.
+    | 100011 | 10010 | 01000 | 0000000001000000 |
+    '-------------------------------------------'
+       op      src      dest      offset
+
+More information on this conversation and other op-codes are found in
+the book.
+
+## Other Immediate Instructions
+
+It's not just loads and stores that use the immediate formats, but
+also our more common operations, like add and sub, have an immedidate
+verision. In these version, what make thems immediate, is that they
+use constants. For example, 
+
+    I = J + 10
+    
+The constant 10 should able to be immediately applied rather tha first
+loaded into the register.
+
+    addi $s0,$s1,10
+    
+See the *green sheet* or the book for more examples. 
+ 
+## Immediate Large Constants
+
+Our immediate format only handles 16-bit numbered constants, but what
+if we want larger constants, say up to 32-bits? If we had the address
+of that constant, say stored in memory, we can issue a `lw`, but if
+not, we would like to immediately place that value in memory.
+
+This requires two steps, and we need to break the value into two
+16-bit segmeents. For example, to store the 32-bit sequence
+10101010101010100000000000111111 in a register immediately, we need to
+break it into two 16-bit segments and load/set them into a reigster in two instructions
+
+    lui $t0 1010101010101010
+    ori $t0 $t0 0000000000111111
+    
+The `lui` instructions places the 16-bits into the upper half of the
+32-bit register, zeroing out the remaining lower half bits. 
+
+    $t0
+    <upper-16-bits>  <lower-16-bits>
+    1010101010101010 0000000000000000
+
+We can then or imediately with the lower half bits, whose upper half is considered zeros
 
 
-We call this an *I-format* or "immediate format" while the prior format is an
-`R-format` or a register format.
+       1010101010101010 0000000000000000
+    or 0000000000000000 0000000000111111
+    ------------------------------------
+       1010101010101010 0000000000111111 -> $t0
+       
+Note that or of 0 is the identify, so 1 or 0 is 1 and 0 or 0 is 0. 
+
+## Conditionals and Branching
+
+A program needds to also be able to execute different code
+dependendent on state information. For example, while-loops and
+if/else statements. The machine instructions that do this are called
+*conditional branching instructions* and when combined with jumping,
+you can get all the control flow features of higher level programming.
+
+For example, the following C/C++ code
+
+    if(i == j)
+        h = i + j
+    //remainder of code
+    
+is written in MIPS like
+
+    bne $s0, $s1, L1
+    add $s3, $s0, $s1
+    L1: //remainder of code
+    
+The `bne` instruction standas for "branch *if* not equal", and so it
+peforms a test on its two operands `$s1` and `$s2` to determine
+equivalence. If they *are* equal, it *does not* branch, or *jump* to
+the label, and the add instruction executes. Otherwise, it jumps to
+the label `L1` and executes the remainder of the code. 
+
+> Check out the book for other branching instructions!
+
+To do more complext branching, say for a if/else we need a new
+instruction calle dthe *jump* instruction. For example, the following
+C code
+
+    if ( i != j)
+        h = i + j
+    else
+        h = i - j
+    //remainder of code
+    
+to the following MIPS where `beq` stands for *branch when equal*.
+
+    beq $s4, $s5, L1
+    add $s3, $s4, $s5
+    j L2
+    L1: sub $s3, $s4, $s5
+    L2: //remainder of code
+    
+The jump instruction `j` will jump-over the instruction `sub` to label
+`L2`, essentially avoiding the else-branch of the code. Also note,
+that a labeled instructions, like `L2`, is executed in sequence with
+the one above it. If the else-branch is taken, then we execute the
+`sub` instruction followed by the remainder of the code. Labels do not
+effect control, but are rather points by which we can jump from other
+instructions. Labeled instructions still execute in sequence.
+
+Another item to notice with a jump instruction is that it is yet
+another machine code format, this time with only one operand. The
+machine layout of this instruction is called a *j-type*.
+
+    < 6-bits><------------26-bits--------------->
+    .--------.-----------------------------------.
+    | opcode |            address                | 
+    '--------'-----------------------------------'
+    
+The address is the address of an instruction, as stored in memory. The
+labels are the human readable portion we use when we write the
+code. When the MIPS is assembeled, and the addresses are known, then
+they get filled in with the true values. 
 
 
-## Data nd Program Memory Layout
+## Pseudoinstructions
+
+There are some instructions in which are easier for us to write, but
+actualyl should be translated into multiple machine instructions. As
+such, they are not actually part of the core MIPS, but we might write
+the down anyway, where at compilation/assembly they get converted.
+
+A good example is the `blt` instruction, or "brach less than". We can
+write this down, but in reality, we actually use `slt` instruction, or
+"set less than". For example
+
+    blt $s1, $s2, L2
+
+Can be written like
+
+    slt $t0, $s1, $s2
+    bne $t0, $zero, L2
+
+The `slt` instruction sets the register `$t0` to 0 or 1 depending on
+the comarison of `$s1` and `$s2` -- 1 if less than. So we can use the
+the `bne` instruction to see if the result is not zero (using the
+special `$zero` register).
+
+We can similarly do the same of a "move" instruction which
+historically moves one register to another, like in C
+
+    A = B
+    -----
+    mov $s2,s1
+
+But we don't have a move instruction. Instead we can use an `add` to do the same
+
+    add $s2, $s1, $zero
+    
+Why not have all of these instructions? They would add complexity to
+the language, espeically for encoding, and so we choose to
+simplify. However, we may refer to the pseudo-instructions to help
+clarify some of our discussion.
 
 
 
 
 
+
+
+    
 
 
 
