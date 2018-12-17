@@ -61,7 +61,7 @@ together to get a larger understanding without loosing ourselves in the details.
 
 We can also break the computer into the following components:
 
-![Computer Components](/imgs/computer-architecture.png "Components")
+![Computer Components](/imgs/computer-architecture.png "Copyright © 2014 Elsevier Inc. All rights reserved.")
 
 Above the break is the software components, and below the break are machine
 components. In the way we can have the same software run on many different kinds
@@ -86,7 +86,7 @@ Gordon Moore in 1965 based on the density of transistors. Mapping this to a
 log-scale, he predicted that computer processing power would double every 18
 months.
 
-![Moore's Curve](/imgs/moores-curve.jpg "Moore's Curve")
+![Moore's Curve](/imgs/moores-curve.jpg "Copyright © 2014 Elsevier Inc. All rights reserved.")
 
 Looking towards the end of the curve, there is a marked slow down. This is
 because the size of transistors is reaching scales where they are loosing
