@@ -12,14 +12,14 @@
 |          | Fri. 1/18 | Class 6         | [Unit 2](units/unit_02.md) | Stacks and Procedures                                                         | 2.8-2.10                |                         |
 | **---**  |           |                 |                            |                                                                               |                         |                         |
 | **3**    | Mon. 1/21 | **No Class**    | **MLK Day**                |                                                                               |                         |                         |
-|          | Wed. 1/23 | Class 7         | [Unit 2](units/unit_02.md) | Nested Procedures                                                             |                         | HW-2 Due                |
-|          | Fri. 1/25 | Class 8         |                            | Nested PRocedures (cont)                                                      |                         |                         |
+|          | Wed. 1/23 | Class 7         | [Unit 2](units/unit_02.md) | Nested Procedures                                                             |                         | [HW-2](hw/hw02.pdf) Due                |
+|          | Fri. 1/25 | Class 8         |                            | Nested Procedures (cont)                                                      |                         |                         |
 | **---**  |           |                 |                            |                                                                               |                         | Pre-lab Due             |
 | **4**    | Mon. 1/28 | Class 9         |                            | SPIM Lab  (bring laptop!)                                                     | A.43-A.45               |                         |
 |          | Wed. 1/30 | Class 10        | Unit 3                     | Performance                                                                   | 1.6,1.9-1.11            | Lab-1 Due               |
-|          | Fri. 2/1  | Class 11        | Unit 3                     | Performacne Metrics                                                           |                         | HW-3 Due                |
+|          | Fri. 2/1  | Class 11        | Unit 3                     | Performance Metrics                                                           |                         | HW-3 Due                |
 | **---**  |           |                 |                            |                                                                               |                         |                         |
-| **5**    | Mon. 2/4  | Class 12        | Unit 4                     | Digital Logic and Mimization                                                  | B.1,B.2,B.3, (skim) B.5 |                         |
+| **5**    | Mon. 2/4  | Class 12        | Unit 4                     | Digital Logic and Minimization                                                | B.1,B.2,B.3, (skim) B.5 |                         |
 |          | Wed. 2/6  | Class 13        | Unit 4                     | K-Maps                                                                        |                         | HW-4 Due                |
 |          | Fri. 2/8  | Class 14        | Unit 4                     | Logic Examples and Muxes                                                      |                         |                         |
 | **---**  |           |                 |                            |                                                                               |                         |                         |
