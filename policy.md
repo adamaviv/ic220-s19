@@ -128,8 +128,9 @@ projects will be marked as a zero.
 
 |           | **6-Weeks** | **12-Weeks** | **16-Weeks** | **Final** |
 |-----------|-------------|--------------|--------------|-----------|
-| Homework  | 20%         | 15%          | 15%          | 15%       |
+| Homework  | 18%         | 18%          | 18%          | 18%       |
 | Quizzes   | 2%          | 2%           | 2%           | 2%        |
+| Readings  | 2%          | 2%           | 2%           | 2%        |
 | Labs      | 5%          | 5%           | 5%           | 5%        |
 | Projects  | 18%         | 18%          | 18%          | 18%       |
 | Midterms  | 55%         | 55%          | 55%          | 25%       |
@@ -156,6 +157,13 @@ composite grade by as much as two points based on class participation.
 Frequent short quizzes will be given at the discretion of the
 instructor. Quizzes may be announced or unannounced. You are responsible to keep
 up with the material in class.
+
+
+### Readings
+
+You will be required to submit short summaries of the textbook readings before
+each class where a reading is assigned. Submission will occur via the submit
+system, and you should provide about 5 key points from the assigned readings.
 
 ### Exams
 
