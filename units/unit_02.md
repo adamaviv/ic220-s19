@@ -81,8 +81,8 @@ fast*, and so it is natural then this is favored. This leads to the second princ
 Performing operations with the smallest set of registers tends to produce faster
 code, but this is not a hard-and-fast rule. The number of registers is
 architecture specific. MIPS uses 32 registers. x86/x86_64 has 8 (plus some
-flagS). LLVM has an infinite number of registers! But, the core of keeping the
-complexity of registers and operations thereover is a key design.
+flags). LLVM has an infinite number of registers! But, the core of keeping the
+complexity of registers and operations there-over is a key design.
 
 So then, how does data get into these registers? It is loaded from
 *memory*. This is one step further away from the processing unit, so memory
@@ -124,7 +124,7 @@ the context.
 There is also this funky thing about addressing for memory layout. We typically
 draw higher addresses at the top and lower addresses at the bottom. Sometimes
 this is referred to as a stack diagram. For example, if the array `A` who began
-at address `196`, we may line it out in memory like soL
+at address `196`, we may line it out in memory like below:
 
     
     C/C++ Code
@@ -235,7 +235,7 @@ Surely, we can map this into the field layout above, but what about this instruc
     lw $t0, 128($s3)
     
 Then, the bits to represent the offset 128 is 10000000
-(binary). That's 7 bits long, longer than the 5-bits reseverd for
+(binary). That's 7 bits long, longer than the 5-bits reserved for
 register/operand values. Moreover, the offset 128 is not from a
 register! This is still simple and valid MIPS, leading to another
 design principle.
@@ -271,13 +271,13 @@ the book.
 ## Other Immediate Instructions
 
 It's not just loads and stores that use the immediate formats, but
-also our more common operations, like add and sub, have an immedidate
-verision. In these version, what make thems immediate, is that they
+also our more common operations, like add and sub, have an immediate
+version. In these version, what make them immediate, is that they
 use constants. For example, 
 
     I = J + 10
     
-The constant 10 should able to be immediately applied rather tha first
+The constant 10 should able to be immediately applied rather than first
 loaded into the register.
 
     addi $s0,$s1,10
@@ -292,9 +292,10 @@ of that constant, say stored in memory, we can issue a `lw`, but if
 not, we would like to immediately place that value in memory.
 
 This requires two steps, and we need to break the value into two
-16-bit segmeents. For example, to store the 32-bit sequence
+16-bit segments. For example, to store the 32-bit sequence
 10101010101010100000000000111111 in a register immediately, we need to
-break it into two 16-bit segments and load/set them into a reigster in two instructions
+break it into two 16-bit segments and load/set them into a register in
+two instructions
 
     lui $t0 1010101010101010
     ori $t0 $t0 0000000000111111
@@ -306,7 +307,7 @@ The `lui` instructions places the 16-bits into the upper half of the
     <upper-16-bits>  <lower-16-bits>
     1010101010101010 0000000000000000
 
-We can then or imediately with the lower half bits, whose upper half is considered zeros
+We can then or immediately with the lower half bits, whose upper half is considered zeros
 
 
        1010101010101010 0000000000000000
@@ -335,7 +336,7 @@ Dividing the bits here into 4 bytes
     10101010 10101010 00000000 00111111
 
 With Big Endian, this is how we natural read numbers, like 526, is five
-hunder, and twenty, and six. Then this number would be interpreted as
+hundred, and twenty, and six. Then this number would be interpreted as
 2863267903 or (-1431699393 ... more on that later!).
 
 In Little Endian, the 0-byte is the least significant byte and the
@@ -347,8 +348,8 @@ significant bytes.
 
 ## Conditionals and Branching
 
-A program needds to also be able to execute different code
-dependendent on state information. For example, while-loops and
+A program needs to also be able to execute different code
+dependent on state information. For example, while-loops and
 if/else statements. The machine instructions that do this are called
 *conditional branching instructions* and when combined with jumping,
 you can get all the control flow features of higher level programming.
@@ -365,16 +366,16 @@ is written in MIPS like
     add $s3, $s0, $s1
     L1: //remainder of code
     
-The `bne` instruction standas for "branch *if* not equal", and so it
-peforms a test on its two operands `$s1` and `$s2` to determine
+The `bne` instruction stands for "branch *if* not equal", and so it
+performs a test on its two operands `$s1` and `$s2` to determine
 equivalence. If they *are* equal, it *does not* branch, or *jump* to
 the label, and the add instruction executes. Otherwise, it jumps to
 the label `L1` and executes the remainder of the code. 
 
 > Check out the book for other branching instructions!
 
-To do more complext branching, say for a if/else we need a new
-instruction calle dthe *jump* instruction. For example, the following
+To do more complex branching, say for a if/else we need a new
+instruction called the *jump* instruction. For example, the following
 C code
 
     if ( i != j)
@@ -410,14 +411,14 @@ machine layout of this instruction is called a *j-type*.
     
 The address is the address of an instruction, as stored in memory. The
 labels are the human readable portion we use when we write the
-code. When the MIPS is assembeled, and the addresses are known, then
+code. When the MIPS is assembled, and the addresses are known, then
 they get filled in with the true values. 
 
 
 ## Looping 
 
 The last control flow instructions we need are loops. But, we actually
-already have that embedded within branching instuctions we already
+already have that embedded within branching instructions we already
 have. For example, consider the C/C++ code
 
     do {
@@ -430,17 +431,20 @@ We can use a branch instruction to jump backwards in the instructions, forming a
 
     L1: add $t1, $s3, $s3  # t1 = i+i = 2i
     add $t1, $t1, $t1      # t1 = 2i + 2i = 4i
-    add $t1, $t1, $s5      # t1 
-    
+    add $t1, $t1, $s5      # t1 = &A[i] (& <- address of operator in C/C++)
+    lw $t0, 0($t1)         # t0 = A[i] (dereference pointer of t1 toget the value)
+    add $s1, $s1, $t0      # g = g + A[i]
+    add $s3, $s3, $s4      # i = i + j
+    bne $s3, $s2, L1       # go to L1 if i != h (h stored in $s2)
 
 ## Pseudoinstructions
 
-There are some instructions in which are easier for us to write, but
-actualyl should be translated into multiple machine instructions. As
+There are some instructions which are easier for us to write, but
+actually should be translated into multiple machine instructions. As
 such, they are not actually part of the core MIPS, but we might write
 the down anyway, where at compilation/assembly they get converted.
 
-A good example is the `blt` instruction, or "brach less than". We can
+A good example is the `blt` instruction, or "branch less than". We can
 write this down, but in reality, we actually use `slt` instruction, or
 "set less than". For example
 
@@ -457,7 +461,7 @@ the `bne` instruction to see if the result is not zero (using the
 special `$zero` register).
 
 We can similarly do the same of a "move" instruction which
-historically moves one register to another, like in C
+historically moves one register to another, like in C.
 
     A = B
     -----
@@ -468,9 +472,12 @@ But we don't have a move instruction. Instead we can use an `add` to do the same
     add $s2, $s1, $zero
     
 Why not have all of these instructions? They would add complexity to
-the language, espeically for encoding, and so we choose to
+the language, especially for encoding, and so we choose to
 simplify. However, we may refer to the pseudo-instructions to help
 clarify some of our discussion.
+
+
+
 
 
 
