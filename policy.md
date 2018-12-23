@@ -135,6 +135,7 @@ projects will be marked as a zero.
 | Projects  | 18%         | 18%          | 18%          | 18%       |
 | Midterms  | 55%         | 55%          | 55%          | 25%       |
 | Final     |             |              |              | 30%       |
+| BONUS     | +2%         | +2%          | +2%          | +2%       |
 |-----------|-------------|--------------|--------------|-----------|
 | **Total** | 100%        | 100%         | 100%         | 100%      |
 
@@ -169,6 +170,24 @@ system, and you should provide about 5 key points from the assigned readings.
 
 All exams are effectively cumulative, though the 12-week exam emphasizes
 material covered since the previous exam. The final exam will be cumulative
+
+
+### Bonus
+
+This course is hosted using git, which allows you a unique opportunity to
+contribute to the course through fixing mistakes and suggesting improvements by
+submitting a pull/merge request to this project. You can earn up to 2% points on
+your final grade!  
+
+For each typo you find and submit a fix for, you earn 0.05% on your final
+grade. You can earn at most 1.5% points on your final grade for typos.
+
+You can earn up to 0.5% points on your final grade for submitting improved
+descriptions or corrections to existing notes. The value of the submission is at
+the description of the course coordinator.
+
+You will need to figure out how to submit pull/merge requests on your own, as
+this is bonus, and will not be covered explicitly in class.
 
 
 ## Absences
