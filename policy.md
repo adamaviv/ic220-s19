@@ -121,24 +121,28 @@ course. For this course:
 * No credit (submitted after that. However, **all assignments must be submitted
   to earn a passing grade**)
   
+Projects will not be accepted late. They are due on the date specified. Late
+projects will be marked as a zero.
+  
 ## Grading
 
 |           | **6-Weeks** | **12-Weeks** | **16-Weeks** | **Final** |
 |-----------|-------------|--------------|--------------|-----------|
-| Homework  | 15%         | 15%          | 15%          | 15%       |
+| Homework  | 20%         | 15%          | 15%          | 15%       |
 | Quizzes   | 2%          | 2%           | 2%           | 2%        |
-| Labs      | 8%          | 8%           | 8%           | 8%        |
-| Midterms  | 65%         | 65%          | 65%          | 30%       |
-| Final     |             |              |              | 35%       |
+| Labs      | 5%          | 5%           | 5%           | 5%        |
+| Projects  | 18%         | 18%          | 18%          | 18%       |
+| Midterms  | 55%         | 55%          | 55%          | 25%       |
+| Final     |             |              |              | 30%       |
 |-----------|-------------|--------------|--------------|-----------|
 | **Total** | 100%        | 100%         | 100%         | 100%      |
 
 
-### Assignments  (HW and Labs)
+### Assignments  (HW, Labs, Projects)
 
 Assignments are a vital part of student learning for this course. Consequently,
 to possibly receive a passing grade at 6-weeks, 12-weeks, or End-of-term, all
-homeworks, labs, and projects due to-date must be completed and turned in, even
+homework, labs, and projects due to-date must be completed and turned in, even
 if the deadline for receiving credit on those assignments has passed. Any
 cheating (including the receiving or giving of unauthorized assistance) will
 result in, at a minimum, a grade of zero on the offending assignment, quiz, or
