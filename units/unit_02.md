@@ -471,24 +471,437 @@ But we don't have a move instruction. Instead we can use an `add` to do the same
 
     add $s2, $s1, $zero
     
-Why not have all of these instructions? They would add complexity to
-the language, especially for encoding, and so we choose to
-simplify. However, we may refer to the pseudo-instructions to help
-clarify some of our discussion.
+Why not have all of these instructions? They would add complexity to the
+language, especially for encoding, and so we choose to simplify. However, we may
+refer to the pseudo-instructions to help clarify some of our discussion, and you
+could even program using pseudo-instructions in our MIPS simulator.
+
+## Procedures and Functions
+
+To do function calls, these are a lot like jumps, but there will be additional
+state, such as arguments, variables, and return values that must also be
+maintained, not to mention, keepint track of which prior instruction to return
+to following this one. In MIPS we use the term *procedure* and *function*
+interchabaly, but both refer to the same general thing you'd be familiar with in
+C/C++.
+
+For the purpose of examples, we will refer to the following functions
 
 
+    void func1(){
+        int a,b,c,d;
+        //...
+        a = func2(b,c,d);
+        //...
+        return;
+    }
 
 
+    int func2(int b, int c, int d){
+        int x,y,z;
+        //...
+        return x;
+     
+    }
+
+To execute these procedures, a few things have to happen between the caller
+procedure (`func1`) and the callee (`func2`).
+
+* (STEP 1) Caller must place parameters where the callee procedure can access them
+
+* (STEP 2) Caller transfer control to the callee
+
+* (STEP 3) Callee allocates memory for its procedures 
+
+* (STEP 4) Callee does the tasks (body of function)
+
+* (STEP 5) Callee Place the results somewhere for the caller procedure can access the return value
+
+* (STEP 6) Return control back to the caller
 
 
+### STEP 1: Parameter passing
 
 
+The caller is responsible for passing parameters to the callee procedures, i.e.,
+the function augments. This is done by setting the `$a0`, `$a1`, `$a2` and `$a3`
+registers, or the *argument registers*.  
 
 
+What happens if there are more than 4 arguments? Well, we can use the *stack*
+... but more on that later.
+
+
+What happens if the callee changes the registers? Well, that can happen, so if
+the caller needs those values latter, it is the responsibility of the caller to
+preserve that information.
+
+
+### STEP 2: Transferring Control 
+
+Consider a function call in abstraction. When you make such a call, once the
+called function finishes, control of the program returns the point in which the
+call occur ed. We need to do the same thing, but in assembly. We will need to
+not only *jump to the procedure* but also *remember where we jumped from*.
+
+The `jal` instruction, *jump and link*, does just that. It will jump to an
+address and save the *return address* (the place to jump after the procedure
+finishes on return) in the special register `$ra` (*return address registers*).
+
+How is the return address calculated? This is actually quite easy, consider the
+following snippet of MIPS
+
+    jal Func1     # <- PC
+    add $s1,$2,$s3 # <- PC+4
+    
+Clearly, after the Func1 finishes, we want to execute the add instruction. At
+the `jal` instruction, the *program counter* or *PC* references the `jal`
+instruction. A jump just changes the PC to point somewhere else in the code, but
+since every instruction is exactly 4 bytes wide, we know the return address is
+exactly 4-bytes more than the current program counter.
+
+Where is the program counter stored? Well, of course, it's in another registers!
+It's not a register you can set directly, but instead, it's value changes after
+each instruction completes, e.g., by adding 4, or via branching or jumping
+instructions, based on the provided label or address.
+
+However, as we will see, just having the return address stored in a register is
+not going to be enough because we can have nested procedures, so we'll need to
+also eventually save it lest it get overwritten by another `jal` instruction.
+
+### STEP 3: Storage for the Callee on the Stack
+
+The local storage for a function, as you might recall from C/C++, is scoped for
+just that function. Operations that occur on those local variables should have
+no impact on variables outside of that function. 
+
+There is a similar notion for procedures in MIPS where if a procedure wants to
+use *stable registers*, e.g., registers that begin `$s*` like `$s0-$s9`, it is
+the responsibility of the callee procedures to *preserve the previous values of
+those registers and restore them before return*. 
+
+To do this, we use something called the *stack* which is used for runtime
+storage and procedure/function management. The current address of the *bottom of
+the stack* is stored in a special register called `$sp`.
+
+We can think of this memory like an array, but a bit counter-intuitive, from the
+address of `$sp` moving upwards towards higher addresses is already used memory,
+maybe from other procedures. Moving towards lower address, subtracting from the
+stack pointer, is unalocated memory
+
+
+    :              :  (higher addresses)
+    |  other       |
+    |   funcs      |  <- $sp+12
+    |    data      |  <- $sp+8
+    |     ...      |  <- $sp+4
+    '--------------'  <- $sp (bottom of the stack)          
+           |          <- $sp-4
+           v          <- $sp-8
+                      <- $sp-12
+                      
+                      
+                      (lower addresses)
+
+So we can *subtract from the stack pointer* to allocate more memory, and then
+use that newly allocated memory to store the stable registers before use.
+
+    addi $sp, $sp, -12   #allocated 12/4= 3 4-byte values on the stack
+    sw   $s1, 8($sp)
+    sw   $s2, 4($sp)
+    sw   $s3, 0($sp)
     
 
+So after this, we have the following picture of our stack
 
 
+
+    :              :  (higher addresses)
+    |  other       |
+    |   funcs      |  <- $sp+20
+    |    data      |  <- $sp+16
+    |     ...      |  <- $sp+12 (old bottom of the stack)
+    |     $s3      |  <- $sp+8
+    |     $s2      |  <- $sp+4
+    |     $s1      |  <- $sp    (new bottom of the stack
+    '--------------'  <- $sp-4 
+           |
+           v
+                      (lower addresses)
+
+
+### STEP 4: Callee Execution/Function Body
+
+At this point, the PC references the callee's instructions. The callee can
+access the arguments in `$a0-$a3` and/or any additional information that the
+caller set on the stack. During the execution procedure, the callee can use all
+the registers available to it, including stable ones if they were saved. 
+
+What if the callee needs more local variables, perhaps more than the number of
+registers? Well then it can use the stack. Assembly languages that do not have
+as many registers as MIPS --- x86/x86_64 make due with 6! --- allocate space on
+the stack by subtracting from the stack pointer and then load/store data back
+and forth from the registers and the stack. We won't do that too much here, but
+you should know it is possible. 
+
+### STEP 5: Return Values
+
+Just as most arguments are going to be passed via registers, so will return
+values. The registers `$v0` and `$v1` are used to return a value from a
+procedure. If it is a 32-bit value, then only `$v0` is used, otherwise if it is
+a 64-bit value, then `$v1` stores the higher order bits while `$v1` stores the
+lower order bits.
+
+You should also know that you can return values via the stack, but this is not
+standard on MIPS. Other assembly languages use this design decision.
+
+### STEP 6: Returning Control to Caller
+
+With the return value set in the `$v0-$v1` registers, the last step is to reload
+the stable registers, de-allocate on the stack, and jump back to the caller.
+
+Returning to the example from above, where we stored stable registers `$s1-$s3`
+we can reload them prior to return, as well as de-allocate the stack space by
+*adding* to the stack pointer.
+
+    lw $s3, 0($sp)     #restore register $s3
+    lw $s2, 4($sp)     #restore register $s2
+    lw $s1, 8($sp)     #restore register $s1
+    addi $sp, $sp, 12  #de-allocate 12/4=3 4-byte memory from stack
+    
+With that done, we can now `jr` (*jump-register*) to the caller based on the
+return address saved in `$ra`
+
+    jr $ra
+    
+## Nested Procedures
+
+What happens when one function calls another function and another function and
+so on. There are a few things that might get clobbered that we would need to be
+careful about.
+
+* Return Address: `$ra` would be set to a *new* return address and so the
+  calling function will need to save and restore the `$ra`before calling the
+  next function.
+  
+* Temporary Registers:  `$t0-$t7` could be changed by the callee but contain
+  relevant data for the caller, and so would need to be saved and restored once
+  the callee returns.
+  
+  
+* Argument Registers: `$a0-$a3` would need to be changed so the caller function
+  can pass arugments to the callee, but maybe the caller is using them?
+  
+All of this can be preserved easily by using the stack. So the caller would need
+to allocate and store all registers that would need to persist onto the stack
+and then restore them when the callee returns.
+
+In MIPS that we describe this region of stack space as the *activation record*
+of the *function frame*. The *function frame* is all the stack data associated
+with the current executing function, and the *activation record* of the frame is
+the portion used to restore the stack and registers back to the state prior to
+calling this function so that control can be returned to the caller. 
+
+We use another special registers `$fp`, the *frame pointer*, to track function-
+or stack-frames. While the stack pointer points to the bottom of the stack, the
+frame pointer indicates the top of the frame pointer. By adjusting the stack and
+frame pointers, you can track function calls, saving and restoring state as
+functions are called and returned.
+
+For example, visually, the caller functions frame might look like this.
+
+
+    :             :
+    |             |
+    |-------------| <-- $fp
+    |  caller     |
+    |    stack    |
+    |      frame  |
+    |-------------| <-- $sp 
+    
+Following, the function call:
+    
+    
+    
+    :             :
+    |             |
+    |-------------| 
+    |  caller     | 
+    |    stack    | 
+    |      frame  | 
+    |-------------| <-- $fp
+    |  saved regs |
+    |.............|
+    | saved ret   |
+    |    address  |
+    |.............|    (callee's stack frame)
+    | saved       |
+    |   registers |
+    |.............|
+    | local func  |
+    |    data     | 
+    |-------------| <-- $sp
+
+Once the procedure ends, we can reset the register state, including `$sp` and
+`$fp`, which would give us teh original state prior to the call. 
+
+### Nested Function Example
+
+To see this in action, let's convert the following function procedure into
+assembly:
+
+    int cloak(int n){
+        if( n < 1 ) return 1;
+        else return n * dagger(n-1);
+    }
+
+
+Note first that `cloak` takes one argument, an int, and returns an
+argument. Additionally, we have a conditional branch with the if/else, and a
+procedure call to `dagger`. Further, there are two return points. There's more
+than a few things happening here that we need to track. 
+
+
+To start, let's establish the stack frame for `cloak`. I'm *not* going to use
+the frame pointer as a reference for the stack frame, but some examples in MIPS
+may do so. This one is simple enough we won't need that. 
+
+    cloak:
+        
+        #ACTIVITY RECORD SETUP
+        addi $sp, $sp -8    #allocate 2 words of stack space
+        sw $ra, 4($sp)      #save old return address
+        sw $a0, 0($sp)      #save argument 0
+
+        #PROCEDURE BODY
+        slti $t0, $a0, 1    # test if $a0 < 1
+        beq $t0, $zero, L1  # if so, branch to L1
+        
+        addi $v0, $zero, 1  # otherwise set return value to 1
+        addi $sp,$sp, 8     # dealocate on the stack
+        jr $ra              # jump back to the return address
+
+        
+    L1:
+        addi $a0, $a0, -1   # decrement the argumnet
+        jal dagger          # call dagger procedure
+        
+        lw $a0, 0($sp)      # retstore $a0 from stack
+        
+        mul $v0, $a0, $v0   # multiple return value of dagger
+                            # with argument, storing in 
+                            # return value of this procedure
+
+        lw $ra, 4($sp)      # restore the return address
+        addi $sp, $sp, 8    # deallocate memory
+        jr $ra              # jump back to the return address
+        
+
+Notice that there are two different return points! A smart compiler may simplify
+this further by jumping to a return point, labeled `cloack_return` below.
+
+    cloak:
+        
+        #ACTIVITY RECORD SETUP
+        addi $sp, $sp -8    #allocate 2 words of stack space
+        sw $ra, 4($sp)      #save old return address
+        sw $a0, 0($sp)      #save argument 0
+
+        #PROCEDURE BODY
+        slti $t0, $a0, 1    # test if $a0 < 1
+        beq $t0, $zero, L1  # if so, branch to L1
+        
+
+        addi $v0, $zero, 1  # otherwise set return value to 1
+        
+        j cloack_return     # do the return
+        
+    L1:
+        addi $a0, $a0, -1   # decrement the argumnet
+        jal dagger          # call dagger procedure
+        
+        lw $a0, 0($sp)      # retstore $a0 from stack
+        
+        mul $v0, $a0, $v0   # multiple return value of dagger
+                            # with argument, storing in 
+                            # return value of this procedure
+
+    cloack_return:
+        lw $ra, 4($sp)      # restore the return address
+        addi $sp, $sp, 8    # deallocate memory
+        jr $ra              # jump back to the return address
+        
+
+Now let's consider `dagger`. What if we were to replace `dagger` with `cloak`,
+like in C:
+
+    int cloak(int n){
+        if( n < 1 ) return 1;
+        else return n * cloack(n-1); //the dagger is the cloak!
+    }
+
+This results in the factorial function! If were to modify our code above to call
+`cloak` 
+
+    cloak:
+        
+        #ACTIVITY RECORD SETUP
+        addi $sp, $sp -8    #allocate 2 words of stack space
+        sw $ra, 4($sp)      #save old return address
+        sw $a0, 0($sp)      #save argument 0
+
+        #PROCEDURE BODY
+        slti $t0, $a0, 1    # test if $a0 < 1
+        beq $t0, $zero, L1  # if so, branch to L1
+        
+
+        addi $v0, $zero, 1  # otherwise set return value to 1
+        
+        j cloack_return     # do the return
+        
+    L1:
+        addi $a0, $a0, -1   # decrement the argumnet
+        jal cloak           # call cloak <----!!!!
+        
+        lw $a0, 0($sp)      # retstore $a0 from stack
+        
+        mul $v0, $a0, $v0   # multiple return value of dagger
+                            # with argument, storing in 
+                            # return value of this procedure
+
+    cloack_return:
+        lw $ra, 4($sp)      # restore the return address
+        addi $sp, $sp, 8    # deallocate memory
+        jr $ra              # jump back to the return address
+        
+
+Everything would be fine, even if the procedure is calling itself. That's
+because we used good practice to preserve and restore registers through
+procedure calls.
+
+
+## Alternative Architectures
+
+MIPS is far from the single architecture nor is it a dominant architecture. Some
+you may have heard of are Intel, ARM, AMD, SPARC. 
+
+One defining characteristic of architectures is if there are RISC or CISC:
+Regular or Complex instruction sets. MIPS is a regular instruction set (all
+instructions are 32-bits wide), as well as ARM, but Intel instructions set tend
+to be complex, the width of instructions can vary.
+
+The most dominant architecture is Intel's 80x86 (or x86) and the AMD 64-bit
+extension. This architecture is CISC, and instructions can be from 1-byte to
+17-bytes wide. However, at the PC, they are translated into RISC instructions
+using proprietary micro-instructions. x86 is dominant in
+laptops/desktops/servers, but on mobile devices and IoT ARM is dominate. ARM is
+a RISC ISA, and due to its simplicity and plethora of chips that support it, it
+has proliferated on mobile and embedded devices. It is not as fast as x86
+variants, but its fast enough for nearly all settings.
+
+Here, we only covered a subset of the MIPs ISA, and you will need to refer to
+the book and the green card to understand the fuller picture. Additionally, more
+info on other ISA's are found in the book.
 
 
 
