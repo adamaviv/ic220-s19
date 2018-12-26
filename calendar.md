@@ -14,8 +14,8 @@
 | **3**    | Mon. 1/21 | **No Class**    | **MLK Day**                |                                                                               |                         |                         |
 |          | Wed. 1/23 | Class 7         | [Unit 2](units/unit_02.md) | Nested Procedures                                                             |                         | [HW-2](hw/hw02.pdf) Due                |
 |          | Fri. 1/25 | Class 8         | [Unit 2](units/unit_02.md) | Nested Procedures (cont)                                                      |                         |                         |
-| **---**  |           |                 |                            |                                                                               |                         | Pre-lab Due             |
-| **4**    | Mon. 1/28 | Class 9         |                            | SPIM Lab  (bring laptop!)                                                     | A.43-A.45               |                         |
+| **---**  |           |                 |                            |                                                                               |                         |             |
+| **4**    | Mon. 1/28 | Class 9         |                            | SPIM Lab  (bring laptop!)                                                     | A.43-A.45               |   Pre-lab Due                       |
 |          | Wed. 1/30 | Class 10        | Unit 3                     | Performance                                                                   | 1.6,1.9-1.11            | Lab-1 Due               |
 |          | Fri. 2/1  | Class 11        | Unit 3                     | Performance Metrics                                                           |                         | HW-3 Due                |
 | **---**  |           |                 |                            |                                                                               |                         |                         |
