@@ -6,7 +6,7 @@
   * Sections 1001, 2001, 4001
 * Dr. [Seung Geol Choi](https://www.usna.edu/Users/cs/choi/) ([choi@usna.edu](mailto:choi@usna.edu)) (MI365)
   * Section 5001
-* Dr. Mike Missler ([missler@usna.edu](mailto:missler@usna.edu)) (Office TBA)
+* Dr. Mike Missler ([missler@usna.edu](mailto:missler@usna.edu)) (MI363)
   * Section 5002
   
 ## Announcements
