@@ -15,12 +15,12 @@
 * Dr. Seung Geol Choi
   * choi@usna.edu
   * MI365
-  * x-36819
+  * x3-6819
   
 * Dr. Mike Missler
   * missler@usna.edu
-  * TBA
-  * TBA
+  * MI363
+  * (number by request)
 
 ### Course Descrition
 
