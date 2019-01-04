@@ -121,8 +121,6 @@ course. For this course:
 * No credit (submitted after that. However, **all assignments must be submitted
   to earn a passing grade**)
   
-Projects will not be accepted late. They are due on the date specified. Late
-projects will be marked as a zero.
   
 ## Grading
 
