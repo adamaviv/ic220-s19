@@ -2,7 +2,7 @@
 
  Readings: Chapter 1 
 
-> These unit notes are **not** design to replace readings from the book! There
+> These unit notes are **not** design to replace readings from the book! These
 > are to provide structure to material covered in class and provide you an
 > outline for using the book. **You are still required to do the course
 > readings** in which you will find much more detail, and those details will be
@@ -17,14 +17,14 @@
 * Issues affecting modern processors (caches, pipelines, wire delay, parallelism,
   power mobile devices)
   
-* Constant Tradeoffs: Spped vs. Capacity vs. Cost vs. Power
+* Constant Tradeoffs: Speed vs. Capacity vs. Cost vs. Power
 
 * Key concepts for improving performance and using parallelism
 
 This is a lot of stuff! One student commented in prior years
 
 > A great deal. One of those classes where you don't realize how much you
-> learned- you just come out understanding a lot of things that nobody else
+> learned - you just come out understanding a lot of things that nobody else
 > does.
 
 
@@ -43,7 +43,7 @@ Classically we consider 4 major components of a computer
 4. Control
 
 In this class we will touch on all of these components, particularly from the
-datapath and control perspecitve. These components reside in the CPU (central
+datapath and control perspective. These components reside in the CPU (central
 processing unit). Additionally, as both datapath and controls must be stored
 somewhere, we will also cover concepts of memory. 
 
@@ -64,17 +64,17 @@ We can also break the computer into the following components:
 ![Computer Components](/imgs/computer-architecture.png "Copyright © 2014 Elsevier Inc. All rights reserved.")
 
 Above the break is the software components, and below the break are machine
-components. In the way we can have the same software run on many different kinds
+components. In this way we can have the same software run on many different kinds
 of machines, we have an abstraction that enables re-usability: the instruction
 set architecture (ISA).
 
-There are many types of ISA's, x86, spark, powerPC, x86_64, arm, etc. We will
+There are many types of ISAs: x86, spark, powerPC, x86_64, arm, etc. We will
 use MIPS which is an ISA specifically designed for education.
 
 The machine organization is also an abstraction. Again, these components are
 hardware specific, but we can define them in general terms. 
 
-Combined, the chosen ISA and machine organization abstraction for our notion of
+Combined, the chosen ISA and machine organization abstraction form our notion of
 **Computer Architecture**. 
 
 
@@ -89,13 +89,13 @@ months.
 ![Moore's Curve](/imgs/moores-curve.jpg "Copyright © 2014 Elsevier Inc. All rights reserved.")
 
 Looking towards the end of the curve, there is a marked slow down. This is
-because the size of transistors is reaching scales where they are loosing
-reliability due to quantum effects. Additionally, as CPU get smaller and clock
-speeds (the rate instructions are processed) increase, computer draw more and
+because the size of transistors is reaching scales where they are losing
+reliability due to quantum effects. Additionally, as CPUs get smaller and clock
+speeds (the rate instructions are processed) increase, computers draw more and
 more power (see book for more details).
 
-To compensate, the community has moved towards mutli-core systems, with multiple
-CPU on a single chip. This requires programming and designing for
+To compensate, the community has moved towards multi-core systems, with multiple
+CPUs on a single chip. This requires programming and designing for
 parallelism. This is hard to do in general, and we will cover a lot of
 interesting design challenges later in the semester.
 
