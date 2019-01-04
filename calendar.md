@@ -17,7 +17,7 @@
 | **---**  |           |                 |                            |                                                                               |                         |             |
 | **4**    | Mon. 1/28 | Class 9         |                            | SPIM Lab  (bring laptop!)                                                     | A.43-A.45               |   Pre-lab Due                       |
 |          | Wed. 1/30 | Class 10        | Unit 3                     | Performance                                                                   | 1.6,1.9-1.11            | Lab-1 Due               |
-|          | Fri. 2/1  | Class 11        | Unit 3                     | Performance Metrics                                                           |                         | HW-3 Due                |
+|          | Fri. 2/1  | Class 11        | Unit 3                     | Performance Metrics                                                           |                         | [HW-3](hw/hw_03.pdf) Due                |
 | **---**  |           |                 |                            |                                                                               |                         |                         |
 | **5**    | Mon. 2/4  | Class 12        | Unit 4                     | Digital Logic and Minimization                                                | B.1,B.2,B.3, (skim) B.5 |                         |
 |          | Wed. 2/6  | Class 13        | Unit 4                     | K-Maps                                                                        |                         | HW-4 Due                |
