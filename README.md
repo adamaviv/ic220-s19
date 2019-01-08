@@ -9,6 +9,10 @@
 * Dr. Mike Missler ([missler@usna.edu](mailto:missler@usna.edu)) (MI363)
   * Section 5002
   
+## MGSP
+
+* MIDN Caroline Sears: Tues. 2000 (Location TBA)
+
 ## Announcements
 
 * TBA
