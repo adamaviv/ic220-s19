@@ -47,7 +47,7 @@ The rigidity of MIPS is a benefit --- it's natural that the sum of two numbers
 requires three registers, two for the inputs and one to store the result.  It
 makes for more simple instructions, and this will have big consequences when we
 cover how instructions are loaded and
-executed on the compute processing unit.  
+executed on the computer processing unit.  
 
 However, rigidity means that there is not a one-to-one mapping between MIPS
 instructions and lines of a program. For example, the C code
@@ -97,7 +97,7 @@ systems.
 ## Memory Addressing
 
 To make memory manageable, we have to apply an abstraction to its
-organization. Nominally, we consider memory as a an array of bytes.
+organization. Nominally, we consider memory as an array of bytes.
 
     <addr>  <data>
     0    | 8-bits |
@@ -163,7 +163,7 @@ You may wonder, isn't `lw` and `sw` taking 2 arguments? I thought everything
 takes 3 arguments. It does, we just formatted it differently to make it more
 readable. The middle argument is an offset.
 
-    desitnation
+    destination
             |   .--offset
             v   v
         lw $t0, 32($s3) <-- address
@@ -327,8 +327,8 @@ Continuing with the constant above, what decimal number is it?
 That might depend on the byte ordering. Each machine does this
 differently, and there are two standards:
 
-* Big Endian: Most signficant byte first
-* Little Endian: Least signficant byte first
+* Big Endian: Most significant byte first
+* Little Endian: Least significant byte first
 
 Dividing the bits here into 4 bytes
 
@@ -340,7 +340,7 @@ hundred, and twenty, and six. Then this number would be interpreted as
 2863267903 or (-1431699393 ... more on that later!).
 
 In Little Endian, the 0-byte is the least significant byte and the
-3-byte is the most signficant, leading to the following decimal
+3-byte is the most significant, leading to the following decimal
 number 1057008298. Most computers use Little Endian because it is more
 efficient for most operations since they occur on the least
 significant bytes. 
@@ -397,7 +397,7 @@ The jump instruction `j` will jump-over the instruction `sub` to label
 that a labeled instructions, like `L2`, is executed in sequence with
 the one above it. If the else-branch is taken, then we execute the
 `sub` instruction followed by the remainder of the code. Labels do not
-effect control, but are rather points by which we can jump from other
+affect control, but are rather points by which we can jump from other
 instructions. Labeled instructions still execute in sequence.
 
 Another item to notice with a jump instruction is that it is yet
