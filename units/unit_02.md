@@ -465,7 +465,7 @@ historically moves one register to another, like in C.
 
     A = B
     -----
-    mov $s2,s1
+    mov $s2, $s1
 
 But we don't have a move instruction. Instead we can use an `add` to do the same
 
@@ -552,7 +552,7 @@ How is the return address calculated? This is actually quite easy, consider the
 following snippet of MIPS
 
     jal Func1     # <- PC
-    add $s1,$2,$s3 # <- PC+4
+    add $s1,$s2,$s3 # <- PC+4
     
 Clearly, after the Func1 finishes, we want to execute the add instruction. At
 the `jal` instruction, the *program counter* or *PC* references the `jal`
@@ -649,7 +649,7 @@ you should know it is possible.
 Just as most arguments are going to be passed via registers, so will return
 values. The registers `$v0` and `$v1` are used to return a value from a
 procedure. If it is a 32-bit value, then only `$v0` is used, otherwise if it is
-a 64-bit value, then `$v1` stores the higher order bits while `$v1` stores the
+a 64-bit value, then `$v1` stores the higher order bits while `$v0` stores the
 lower order bits.
 
 You should also know that you can return values via the stack, but this is not
@@ -690,7 +690,7 @@ careful about.
   
   
 * Argument Registers: `$a0-$a3` would need to be changed so the caller function
-  can pass arugments to the callee, but maybe the caller is using them?
+  can pass arguments to the callee, but maybe the caller is using them?
   
 All of this can be preserved easily by using the stack. So the caller would need
 to allocate and store all registers that would need to persist onto the stack
@@ -708,7 +708,7 @@ frame pointer indicates the top of the frame pointer. By adjusting the stack and
 frame pointers, you can track function calls, saving and restoring state as
 functions are called and returned.
 
-For example, visually, the caller functions frame might look like this.
+For example, visually, the caller function's frame might look like this.
 
 
     :             :
@@ -743,7 +743,7 @@ Following, the function call:
     |-------------| <-- $sp
 
 Once the procedure ends, we can reset the register state, including `$sp` and
-`$fp`, which would give us teh original state prior to the call. 
+`$fp`, which would give us the original state prior to the call. 
 
 ### Nested Function Example
 
@@ -894,10 +894,10 @@ The most dominant architecture is Intel's 80x86 (or x86) and the AMD 64-bit
 extension. This architecture is CISC, and instructions can be from 1-byte to
 17-bytes wide. However, at the PC, they are translated into RISC instructions
 using proprietary micro-instructions. x86 is dominant in
-laptops/desktops/servers, but on mobile devices and IoT ARM is dominate. ARM is
+laptops/desktops/servers, but on mobile devices and IoT ARM is dominant. ARM is
 a RISC ISA, and due to its simplicity and plethora of chips that support it, it
 has proliferated on mobile and embedded devices. It is not as fast as x86
-variants, but its fast enough for nearly all settings.
+variants, but it's fast enough for nearly all settings.
 
 Here, we only covered a subset of the MIPs ISA, and you will need to refer to
 the book and the green card to understand the fuller picture. Additionally, more
