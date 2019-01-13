@@ -5,7 +5,7 @@
 |----------|-----------|-----------------|----------------------------|-------------------------------------------------------------------------------|-------------------------|-------------------------|
 | **1**    | Tue. 1/8  | Class 1         | [Unit 1](units/unit_01.md) | Course Overview, Computer Anatomy                        | 1.1-1.5, 1.7-1.8        |                         |
 |          | Wed. 1/9  | Class 2         | [Unit 2](units/unit_02.md) | Instructions                                                                  | 2.1-2.3 <br> 2.5-2.6    |                         |
-|          | Fri. 1/11 | Class 3         | [Unit 2](units/unit_02.md) | Instructions, Memory, Machine Language, Control Flow, and Pseudo-instructions | 2.7                     |                         |
+|          | Fri. 1/11 | Class 3         | [Unit 2](units/unit_02.md) | Instructions, Memory, Machine Language, Control Flow, and Pseudo-instructions | 2.7                     | [Quiz](https://github.com/adamaviv/ic220-s19-quiz/blob/master/quizzes/03-Add-Sub-Load-Store.txt)                        |
 | **---**  |           |                 |                            |                                                                               |                         |                         |
 | **2**    | Mon. 1/14 | Class 4         | [Unit 2](units/unit_02.md) | Control Flow and Looping                                                      | 2.12                    | [HW-0](hw/hw00.md) Due  |
 |          | Wed. 1/16 | Class 5         | [Unit 2](units/unit_02.md) | Constants, Byte Order                                                         |                         | [HW-1](hw/hw01.pdf) Due |
