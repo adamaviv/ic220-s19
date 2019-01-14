@@ -8,11 +8,11 @@ it has nice windowing and buttons.
 When you first open it, the default settings will look like the following (Note
 that these images were taken on a Mac).
 
-![qtspim-init](/rsc/spim/images/qtspim-init.png)
+![qtspim-init](/rsc/spim/imgs/qtspim-init.png)
 
 There is also a console window
 
-![console-init](/rsc/spim/images/console-init.png)
+![console-init](/rsc/spim/imgs/console-init.png)
 
 Note if you don't see the console. You can select the "Window" file menu and
 click for it to appear, as well as make other windows to appear.
@@ -46,46 +46,46 @@ also do this from the "File" menu option.
 After which, you can see that the code for that program was loaded into the Text
 segment.
 
-![qtspim-init](/rsc/spim/images/qtspim-init.png)
+![qtspim-init](/rsc/spim/imgs/qtspim-init.png)
 
-You can now run the program by clicking ![run](run.png) (F5), where you'll see that
+You can now run the program by clicking ![run](/rsc/spim/imgs/run.png) (F5), where you'll see that
 that grayed box of which line of code that executed is at the end of our instructions,
 
-![qtspim-end](/rsc/spim/images/qtspim-end.png)
+![qtspim-end](/rsc/spim/imgs/qtspim-end.png)
 
 and the console now displays the results.
 
 
-![console-result](/rsc/spim/images/console-result.png)
+![console-result](/rsc/spim/imgs/console-result.png)
 
-To run your program again, select ![Reinitilize](clear.png) to reinitialize the
+To run your program again, select ![Reinitilize](/rsc/spim/imgs/clear.png) to reinitialize the
 registers, and then click the run button. Or, reinitialize and load the file.
 
 ## Debugging, Stepping Through the Program
 
 If you want to step through the program, instruction by instruction, select the
-Single Step button ![Single Step](single-step.png) (F10). This will highlight the
+Single Step button ![Single Step](/rsc/spim/imgs/single-step.png) (F10). This will highlight the
 an instruction in the User Text Segment. 
 
 
-![qtspim-step-1](/rsc/spim/images/qtspim-step-1.png)
+![qtspim-step-1](/rsc/spim/imgs/qtspim-step-1.png)
 
 Continue to hit the single step button to move forward in the code, until after
 the initial `li` instructions at line 0x0040030 (in memory). Watch each of the
 associated registers being updated.
 
-![qtspim-step-2](/rsc/spim/images/qtspim-step-2.png)
+![qtspim-step-2](/rsc/spim/imgs/qtspim-step-2.png)
 
 
 You can also change register values by "right clicking" on the register and
 selecting "Change Registers Contents"
 
-![qtspim-reg](/rsc/spim/images/qtspim-reg.png)
+![qtspim-reg](/rsc/spim/imgs/qtspim-reg.png)
 
 
 This is also a handy way to jump ahead in your code by changing the `PC` register.
 
-![qtspim-pc](/rsc/spim/images/qtspim-pc.png)
+![qtspim-pc](/rsc/spim/imgs/qtspim-pc.png)
 
 At any point, you can then run the program to the end by clicking the run button
-![run](run.png), or reset with the reinitialize button ![Reinitilize](clear.png)
+![run](run.png), or reset with the reinitialize button ![Reinitilize](/rsc/spim/imgs/clear.png)
