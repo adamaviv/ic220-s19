@@ -64,7 +64,7 @@ registers, and then click the run button. Or, reinitialize and load the file.
 ## Debugging, Stepping Through the Program
 
 If you want to step through the program, instruction by instruction, select the
-Single Step button ![Single Step](/rsc/spim/imgs/single-step.png) (F10). This will highlight the
+Single Step button ![Single Step](/rsc/spim/imgs/step.png) (F10). This will highlight the
 an instruction in the User Text Segment. 
 
 
@@ -88,4 +88,4 @@ This is also a handy way to jump ahead in your code by changing the `PC` registe
 ![qtspim-pc](/rsc/spim/imgs/qtspim-pc.png)
 
 At any point, you can then run the program to the end by clicking the run button
-![run](run.png), or reset with the reinitialize button ![Reinitilize](/rsc/spim/imgs/clear.png)
+![run](/rsc/spim/imgs/run.png), or reset with the reinitialize button ![Reinitilize](/rsc/spim/imgs/clear.png)
