@@ -8,4 +8,4 @@ List of items here:
 * [Project Cover Sheet](/rsc/proj_coversheet.pdf)
 * [Reading Sheet](/rsc/reading_sheet.pdf)
 * [Pull Requests](/rsc/pull_requests.md)
-* [SPIM Resources](/rsc/spim.md)
+* [SPIM Resources](/rsc/spim/README.md)
