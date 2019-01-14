@@ -6,5 +6,5 @@
   * [simple-spim.asm](/rsc/spim/simple-spim.asm)
   * [funct-spim.asm](/rsc/spim/funct-spim.asm)
 * [SPIM Program Structure](/rsc/spim/structure.md)
-* How to use [system calls](/rsc/spim/syscalls-howto.md) (and the [system call table](/rsc/spim/syscall-table.md))
+* How to use [system calls](/rsc/spim/syscalls-howto.md) (and the [system call table](/rsc/spim/systemcalls-table.md))
 * [Register Conversion](/rsc/spim/registers.md)
