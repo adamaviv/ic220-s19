@@ -1,6 +1,6 @@
 ## Additional SPIM Resources
 
-* Installing QTSpim (see [HW-0](/hw/hw0.md))
+* Installing QTSpim (see [HW-0](/hw/hw00.md))
 * [Basic QTSpim Usage](/rsc/spim/qtspim-usage.md)
 * [Additional Resources](http://spimsimulator.sourceforge.net/further.html) from QTSpim 
 * Sample SPIM programs: 
@@ -8,5 +8,5 @@
   * [simple-spim.asm](/rsc/spim/simple-spim.asm)
   * [funct-spim.asm](/rsc/spim/funct-spim.asm)
 * [SPIM Program Structure](/rsc/spim/structure.md)
-* How to use [system calls](/rsc/spim/syscalls-howto.md) (and the [system call table](/rsc/spim/syscall-table.md))
+* How to use [system calls](/rsc/spim/systemcalls-howto.md) (and the [system call table](/rsc/spim/systemcalls-table.md))
 * [Register Conversion](/rsc/spim/registers.md)
