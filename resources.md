@@ -18,5 +18,5 @@
 ## SPIM Resources
 
 * Installing QTSpim -- see [HW0](hw/hw0.md)
-* [Additional SPIM resources](rsc/spim.md)
+* [Additional SPIM resources](/rsc/spim/)
  
