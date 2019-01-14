@@ -1,6 +1,6 @@
 ## Additional SPIM Resources
 
-* Installing QTSpim (see [HW-0](/hw/hw0.md))
+* Installing QTSpim (see [HW-0](/hw/hw00.md))
 * Sample SPIM programs: 
   * [very-simple-spim.asm](/rsc/spim/very-simple-spim.asm)
   * [simple-spim.asm](/rsc/spim/simple-spim.asm)
