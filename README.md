@@ -24,7 +24,7 @@
 * [Units](units/README.md)
 * [HW](hw/README.md)
 * [Labs](labs/README.md)
-* [Resources](https://github.com/adamaviv/ic220-s19/tree/master/rsc)
+* [Resources](resources.md)
     
     
     
