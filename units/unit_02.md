@@ -256,7 +256,7 @@ can realign our fields to the following:
 We call this an *I-format* or "immediate format" while the prior
 format is an `R-format` or a register format. In the immediate format,
 we can use the 16-bit field to represent the value. The op-code for
-`lw` is 39 or 100011, `$t0` is register 8, and `$s3` is
+`lw` is 35 or 100011, `$t0` is register 8, and `$s3` is
 register 18. Leading to the following bit layout for I-type
 
        lw       $s3     $t0        128
