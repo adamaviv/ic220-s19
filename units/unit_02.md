@@ -2,7 +2,7 @@
 
 Readings: Chapter 2.1-2.3, 2.5-2.10 and 2.12 
 
-> These unit notes are **not** design to replace readings from the book! There
+> These unit notes are **not** designed to replace readings from the book! They
 > are to provide structure to material covered in class and provide you an
 > outline for using the book. **You are still required to do the course
 > readings** in which you will find much more detail, and those details will be
@@ -12,7 +12,8 @@ Readings: Chapter 2.1-2.3, 2.5-2.10 and 2.12
 
 
 Assembly languages are called *assembly* languages because they are *assembled*
-from higher level languages. For example, in the compilation process with C++,
+into the binary machine code that directly runs on your processor.
+For example, in the compilation process with C++,
 when we use `g++` to compile a program it goes through a multi-step
 process. First, compilation, converting the C++ code into assembly, and then
 that assembly is assembled into a binary program containing the *machine
@@ -23,8 +24,9 @@ instructions.
 There are many kinds of assembly languages and variations thereof. Some include,
 x86, nasm, gas, spark, etc. We will be using MIPS in this class because it
 contains an expressive but restrictive set of operations that lends itself to
-teaching. More modern assembly languages/machine instructions such as ARM is
-based on MIPS, and once you understand the basics of one such language, you can
+teaching. More modern assembly languages/machine instructions such as ARM are
+based on the same principles as MIPS,
+and once you understand the basics of one such language, you can
 learn more.
 
 ## Instruction Format
@@ -39,7 +41,7 @@ Can be translated to the MIPS instruction
     
 Here the register `$s0` gets the result of adding the values stored in register
 `$s1` and `$s2`, which in this example have the values preloaded for variables
-`A`, `B`, and `C`.
+`B` and `C`.
 
 > Design Principle 1: Simplicity favors regularity
 
@@ -56,14 +58,15 @@ instructions and lines of a program. For example, the C code
     E = F - A
     
 Would be translated to multiple lines of MIPS, including the use of temporary
-storage in registers.
+storage in registers. For example (assuming the values of `B`, `C`,
+`D`, and `F` are preloaded into `$s1`, `$s2`, `$s3`, and `$s5`):
 
     add $t0, $s1, $s2
-    add $s0, $50, $s3
+    add $s0, $t0, $s3
     sub $s4, $s5, $s0
     
-We could avoid the temporary variable/register (`$t0`)here (how might we do
-that?_, but the increased complexity of multiple instructions is unavoidable.
+We could avoid the temporary variable/register (`$t0`) here (how might we do
+that?), but _the increased complexity of multiple instructions is unavoidable_.
 
 ### Registers and Memory and Disk
 
@@ -72,17 +75,17 @@ unit data path.
 
 ![computer-arch](/imgs/computer-arch.png)
 
-Registers are typically 32-bits in size, depending on the architecture of the
+Registers are typically 32 or 64 bits in size, depending on the architecture of the
 computer, e.g., 64-bit machines. Performing operations on registers is *very
-fast*, and so it is natural then this is favored. This leads to the second principle
+fast*, and so it is natural that this is favored. This leads to the second principle
 
 > Design Principle 2: Smaller is Faster
 
 Performing operations with the smallest set of registers tends to produce faster
 code, but this is not a hard-and-fast rule. The number of registers is
 architecture specific. MIPS uses 32 registers. x86/x86_64 has 8 (plus some
-flags). LLVM has an infinite number of registers! But, the core of keeping the
-complexity of registers and operations there-over is a key design.
+flags). LLVM has an infinite number of registers! But, the core idea of keeping the
+complexity of registers and operations low is a key to efficient design.
 
 So then, how does data get into these registers? It is loaded from
 *memory*. This is one step further away from the processing unit, so memory
@@ -123,7 +126,7 @@ the context.
 
 There is also this funky thing about addressing for memory layout. We typically
 draw higher addresses at the top and lower addresses at the bottom. Sometimes
-this is referred to as a stack diagram. For example, if the array `A` who began
+this is referred to as a stack diagram. For example, if the array `A` begins
 at address `196`, we may line it out in memory like below:
 
     
@@ -146,7 +149,7 @@ at address `196`, we may line it out in memory like below:
 
 ## Loading and Storing
 
-Moving data between memory and registers is called *loading*, placing data back
+Moving data between memory and registers is called *loading*; placing data back
 in memory from a register is called *storing*. This is best seen through
 example. Consider the following C code.
 
@@ -173,16 +176,16 @@ Why 32 for the offset? If `A` stores words, 4-byte values, then index 8 of the
 array `A` is at address `s3+32` where `32=8*4`. 
 
 For `sw`, note that that the storage location (or the destination of the
-operation) is the second (and third) operand. While the first operand is the
+operation) is the second (and third) operand, while the first operand is the
 value to be stored.
 
-Finally, you might wonder why can't we just do?
+Finally, you might wonder why can't we just do
 
     add $t0, 32($s3), $t0
     
-Because this is actually many operations. It violates the simplicity
+The answer is that this is actually two operations. It violates the simplicity
 principality that add/sub should occur only on registers. And moreover the
-loading of memory should be separated from adding. 
+loading/storing of memory should be separated from adding. 
 
  
 ## Assembly to Machine Code
@@ -190,18 +193,18 @@ loading of memory should be separated from adding.
 The human readable assembly language needs to be stored in a format that a
 machine can read. That means bits. There must be some organization of this data.
 
-In MIPs all instructions, like registers and words of data, are 32-bits long,
+In MIPS all instructions, like registers and words of data, are 32-bits long,
 broken into 6 *fields* of either 6- or 5-bits wide. For example we can translate
 the following MIPS code
 
 
     add $t0, $s1, $s2
     
-into a following layout 
+into the following layout 
 
-     <6-bits><5-bits><5-bits><5-bits><5-bits><6-bits>
+     <6-bits> <5-bits><5-bits><5-bits><5-bits><6-bits>
     .-------------------------------------------------.
-    | 000000 | 10001 | 10010 | 01000  | 0000 | 100000 |
+    | 000000 | 10001 | 10010 | 01000 | 00000 | 100000 |
     '-------------------------------------------------'
       opcode     rs      rt     rd     shamt   funct
 
@@ -217,8 +220,8 @@ described as
 
 
 In the above example opcode of `add` is 0 and it's `funct` is
-`32=10000(binary)`. The registers are numbered for reference in the
-machine code. `$t0` is 8=0100 (binary), `$s1` is 17= 10001 (binary),
+`32=100000 (binary)`. The registers are numbered for reference in the
+machine code. `$t0` is 8=01000 (binary), `$s1` is 17= 10001 (binary),
 and `$s3` is 18=10010 (binary). Here is the mapping of registers to
 their numeric labeling. 
 
@@ -228,19 +231,19 @@ their numeric labeling.
 This is all well and fine, but we run into a problem with loading and
 storing. Recall these operations look like the following.
 
-    lw $t0, 32($s3)
+    lw $t0, 16($s3)
 
 Surely, we can map this into the field layout above, but what about this instruction?
 
     lw $t0, 128($s3)
     
 Then, the bits to represent the offset 128 is 10000000
-(binary). That's 7 bits long, longer than the 5-bits reserved for
+(binary). That's 8 bits long, longer than the 5-bits reserved for
 register/operand values. Moreover, the offset 128 is not from a
 register! This is still simple and valid MIPS, leading to another
 design principle.
 
-> Design Principle 3: Good design demand good compromises
+> Design Principle 3: Good design demands good compromises
 
 We have to a few places where we buck the rules for the purpose of supporting
 our operations. For loading and storing offset, since they are very specific we
@@ -261,7 +264,7 @@ register 18. Leading to the following bit layout for I-type
 
        lw       $s3     $t0        128
     .-------------------------------------------.
-    | 100011 | 10010 | 01000 | 0000000001000000 |
+    | 100011 | 10010 | 01000 | 0000000010000000 |
     '-------------------------------------------'
        op      src      dest      offset
 
@@ -272,7 +275,7 @@ the book.
 
 It's not just loads and stores that use the immediate formats, but
 also our more common operations, like add and sub, have an immediate
-version. In these version, what make them immediate, is that they
+version. For these operations, what make them immediate is that they
 use constants. For example, 
 
     I = J + 10
