@@ -131,7 +131,7 @@ example, the following circuit and its truth table.
 
 We can further describe these results using boolean logic, in two equations
 
-![curuit1 formula](https://latex.codecogs.com/gif.latex?\begin{align*}&space;x&space;=&&space;A&space;\bullet&space;B&space;\\&space;y&space;=&&space;A&space;\bullet&space;B&space;&plus;&space;C&space;\end{align*})
+![curuit1 formula](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20x%20%3D%26%20A%20%5Cbullet%20B%20%5C%5C%20y%20%3D%26%20A%20%5Cbullet%20B%20&plus;%20C%20%5Cend%7Balign*%7D)
 
 
 
