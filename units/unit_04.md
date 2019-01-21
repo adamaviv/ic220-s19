@@ -151,28 +151,28 @@ not always quite the same way.
 
 ### Identity Law
 
-![identity law](https://latex.codecogs.com/gif.latex?A&space;&plus;&space;0&space;=&space;A&space;\quad&space;A&space;\bullet&space;1&space;=&space;A)
+![identity law](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20%26%20A%20&plus;%200%20%3D%20A%20%5C%5C%20%26%20A%20%5Cbullet%201%20%3D%20A%20%5Cend%7Balign*%7D)
 
 ### Zero and One Law
 
-![zero and one law](https://latex.codecogs.com/gif.latex?A&space;&plus;&space;1&space;=&space;1&space;\quad&space;A&space;\bullet&space;0&space;=&space;0)
+![zero and one law](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20%26%20A%20&plus;%201%20%3D%201%20%5C%5C%20%26%20A%20%5Cbullet%200%20%3D%200%20%5Cend%7Balign*%7D)
 
 ### Inverse Law
 
-![inverse law](https://latex.codecogs.com/gif.latex?A&space;&plus;&space;\overline{A}&space;=&space;1&space;\quad&space;A&space;\bullet&space;\overline{A}&space;=&space;0)
+![inverse law](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20%26%20A%20&plus;%20%5Coverline%7BA%7D%20%3D%201%20%5C%5C%20%26%20A%20%5Cbullet%20%5Coverline%7BA%7D%3D%200%20%5Cend%7Balign*%7D)
 
 ### Commutative Law
 
-![commutative law](https://latex.codecogs.com/gif.latex?A&space;&plus;&space;B&space;=&space;B&space;&plus;&space;A&space;\quad&space;A&space;\bullet&space;B&space;=&space;B&space;\bullet&space;A)
+![commutative law](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20A%20&plus;%20B%20%26%3D%20B%20&plus;%20A%5C%5C%20A%20%5Cbullet%20B%20%26%3D%20B%20%5Cbullet%20A%20%5Cend%7Balign*%7D)
 
 ### Associative Law
 
-![associative law](https://latex.codecogs.com/gif.latex?\begin{align*}&space;A&space;&plus;&space;(B&space;&plus;C)&space;&=&space;(A&plus;B)&space;&plus;&space;C&space;\\&space;A&space;\bullet(B&space;\bullet&space;C)&space;&=&space;(A&space;\bullet&space;B)&space;\bullet&space;C&space;\end{align*})
+![associative law](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20A%20&plus;%20%28B%20&plus;%20C%29%20%26%3D%20%28A&plus;%20B%29%20&plus;%20C%5C%5C%20A%20%5Cbullet%20%28B%20%5Cbullet%20C%29%20%26%3D%20%28A%20%5Cbullet%20B%29%20%5Cbullet%20C%20%5C%5C%20%5Cend%7Balign*%7D)
 
 ### Distributive Law
 
-![distributive law](https://latex.codecogs.com/gif.latex?\begin{align*}&space;A&space;\bullet&space;(B&space;&plus;C)&space;&=&space;(A\bullet&space;B)&space;&plus;&space;(A\bullet&space;C)&space;\\&space;A&space;&plus;&space;(B&space;\bullet&space;C)&space;&=&space;(A&space;&plus;&space;B)&space;\bullet&space;(A&space;&plus;&space;C)&space;\end{align*})
+![distributive law](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20A%20%5Cbullet%20%28B%20&plus;%20C%29%20%26%3D%20%28A%20%5Cbullet%20B%29%20&plus;%20%28A%20%5Cbullet%20C%29%5C%5C%20A%20&plus;%20%28B%20%5Cbullet%20C%29%20%26%3D%20%28A%20&plus;%20B%29%20%5Cbullet%20%28A%20&plus;%20C%29%20%5C%5C%20%5Cend%7Balign*%7D)
 
 ### DeMorgan's Law
 
-![DeMorgan's Law](https://latex.codecogs.com/gif.latex?\begin{align*}&space;\overline{A&plus;B}&space;=&space;\overline{A}&space;\bullet&space;\overline{B}\\&space;\overline{A&space;\bullet&space;B}&space;=&space;\overline{A}&space;&plus;&space;\overline{B}&space;\end{align*})
+![DeMorgan's Law](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20%5Coverline%7BA&plus;B%7D%20%26%3D%20%5Coverline%7BA%7D%20%5Cbullet%20%5Coverline%7BB%7D%5C%5C%20%5Coverline%7BA%20%5Cbullet%20B%7D%20%26%3D%20%5Coverline%7BA%7D%20&plus;%20%5Coverline%7BB%7D%5C%5C%20%5Cend%7Balign*%7D)
