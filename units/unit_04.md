@@ -233,7 +233,7 @@ The inverse (notting) of the result of an OR, is the same as a NOR gate.
 
 And, then using similar logic, the following gate
 
-![not-and](/imgs/logic/notted-and.png)
+![not-and](/imgs/logic/notted-or.png)
 
 Is the same as a NAND gate
 
