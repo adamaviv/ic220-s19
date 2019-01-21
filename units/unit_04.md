@@ -373,4 +373,26 @@ The result is again the equation.
 ![eq](https://latex.codecogs.com/gif.latex?%5Coverline%7BB%7D%5Cbullet%20C%20&plus;%20A%5Cbullet%5Coverline%7BB%7D%20&plus;%20A%5Cbullet%20C%20%26%3D%20x)
 
 But this time, we don't have to minimize by hand, but instead seek out adjacent
-truths.
+truths. To make this work, you order the values such that adjacent logic overlap
+by one value, and this can be true for more complex tables as well, as long as
+the values are in powers of 2.
+
+For example, we can minimize from the following table
+
+|                  | ![][not-C-not-D] | ![][not-C-D] | ![][C-D] | ![][C-not-D] |
+|------------------|------------------|--------------|----------|--------------|
+| ![][not-A-not-B] | 1                | 0            | 0        | 0            |
+| ![][not-A-B]     | 0                | 0            | 0        | 1            |
+| ![][A-B]         | 0                | 1            | 1        | 0            |
+| ![][A-not-B]     | 1                | 1            | 1        | 1            |
+
+[not-C-not-D] : https://latex.codecogs.com/gif.latex?%5Coverline%7BC%7D%5Cbullet%5Coverline%7BD%7D
+[not-C-D] : https://latex.codecogs.com/gif.latex?%5Coverline%7BC%7D%5Cbullet%20D
+[C-not-D] : https://latex.codecogs.com/gif.latex?C%5Cbullet%20%5Coverline%7BD%7D
+[C-D] : https://latex.codecogs.com/gif.latex?C%5Cbullet%20D
+[not-A-not-B] : https://latex.codecogs.com/gif.latex?%5Coverline%7BA%7D%20%5Cbullet%20%5Coverline%20%7BB%7D
+[not-A-B] : https://latex.codecogs.com/gif.latex?%5Coverline%7BA%7D%20%5Cbullet%20B
+[A-not-B] : https://latex.codecogs.com/gif.latex?A%20%5Cbullet%20%5Coverline%7BB%7D
+[A-B] : https://latex.codecogs.com/gif.latex?A%20%5Cbullet%20B
+
+
