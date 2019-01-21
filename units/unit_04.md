@@ -206,7 +206,7 @@ not always quite the same way.
 
 ![distributive law](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20A%20%5Cbullet%20%28B%20&plus;%20C%29%20%26%3D%20%28A%20%5Cbullet%20B%29%20&plus;%20%28A%20%5Cbullet%20C%29%5C%5C%20A%20&plus;%20%28B%20%5Cbullet%20C%29%20%26%3D%20%28A%20&plus;%20B%29%20%5Cbullet%20%28A%20&plus;%20C%29%20%5C%5C%20%5Cend%7Balign*%7D)
 
-## DeMorgan's Law
+## DeMorgan's Law 
 
 We also have a very important rule in digital logic **DeMorgan's Law**, which
 describes how to distribute the not operator.
@@ -239,3 +239,28 @@ Is the same as a NAND gate
 
 ![not-and](/imgs/logic/nand.png)
 
+## Bubble Pushing
+
+This process of applying DeMorgan's Law to gates is called **bubble pushing**,
+and in the two above examples, we were pushing the bubbles from the input side
+to the output side by swapping the gate between and/or. But, we can also push
+the bubble from the output of a NAND or NOR gate to the next input.
+
+Let's consider the following more complex circuit. 
+
+![bubble0](/imgs/logic/bubble0.png)
+
+Note that we have two inputs that are inverted, and we can then apply DeMorgan's
+law to flip the gates and *push the bubble* to the output.
+
+![bubble1](/imgs/logic/bubble1.png)
+
+Continuing, we can push the bubble further from the outputs to the inputs of the
+next gate.
+
+![bubble2](/imgs/logic/bubble2.png)
+
+This means we can flip the gate, and push the bubble to the final output,
+resulting in the following circuit.
+
+![bubble3](/imgs/logic/bubble3.png)
