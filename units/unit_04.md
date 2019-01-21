@@ -335,8 +335,9 @@ For example, we can rewrite the truth table from above as follows
 
 |            | ![][not-B-not-C] | ![][not-B-C] | ![][B-C]) | ![][B-not-C] |
 |------------|------------------|--------------|-----------|--------------|
-| ![][A]     |                  |              |           |              |
-| ![][not-A] |                  |              |           |              |
+| ![][A]     | 1                | 0            | 1         | 1            |
+| ![][not-A] | 0                | 1            | 0         | 0            |
+
 
 [not-B-not-C]: https://latex.codecogs.com/gif.latex?%5Coverline%7BB%7D%5Cbullet%5Coverline%7BC%7D
 [not-B-C]: https://latex.codecogs.com/gif.latex?%5Coverline%7BB%7D%5Cbullet%20C
