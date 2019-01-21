@@ -63,5 +63,5 @@ second input value is `B`.
 
 ![nor-gate](/imgs/logic/nor.png)
 
-![nor-equation](https://latex.codecogs.com/gif.latex?x&space;=&space;\overline{A&space;&plus;&space;B}
+![nor-equation](https://latex.codecogs.com/gif.latex?x&space;=&space;\overline{A&space;&plus;&space;B})
 
