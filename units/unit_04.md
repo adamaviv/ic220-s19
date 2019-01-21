@@ -118,7 +118,7 @@ example, the following circuit and its truth table.
 
 ![circuit1](/imgs/logic/circuit1.png)
 
-| A | B | C | x | Y |
+| A | B | C | x | y |
 |---|---|---|---|---|
 | 0 | 0 | 0 | 0 | 0 |
 | 0 | 0 | 1 | 0 | 1 |
@@ -129,6 +129,11 @@ example, the following circuit and its truth table.
 | 1 | 1 | 0 | 1 | 1 |
 | 1 | 1 | 1 | 1 | 1 |
 
+We can further describe these results using boolean logic, in two equations
+
+![curuit1 formula](https://latex.codecogs.com/gif.latex?\begin{align*}&space;x&space;=&&space;A&space;\bullet&space;B&space;\\&space;y&space;=&&space;A&space;\bullet&space;B&space;&plus;&space;C&space;\end{align*})
+
+
 
 ## Laws of Boolean Logic 
 
@@ -136,6 +141,13 @@ Just like in normal arithmetic/algebra, boolean logic has a set of identities,
 properties, and methods of distributing and rearranging factors in
 equations. These typically take the form of traditional arithmetic/algebra, but
 not always quite the same way.
+
+### Order of Operations
+
+1. Parenthesis
+2. Not/Inverse
+3. And
+4. OR
 
 ### Identity Law
 
