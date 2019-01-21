@@ -27,7 +27,8 @@ also describe this logic using equations.
 
 Below are the standard boolean logic, both in terms of gates and formulas. In
 the formulas, the output value is `x` and the first input value is `A` and the
-second input value is `B`.
+second input value is `B`. We can also describe a **truth table*, which
+describes the output based on the two inputs.
 
 ### Not
 
@@ -35,11 +36,23 @@ second input value is `B`.
 
 ![not-equation](https://latex.codecogs.com/gif.latex?x&space;=&space;\overline{A})
 
+| A | x |
+|---|---|
+| 0 | 1 |
+| 1 | 0 |
 
 ### And 
 ![and-gate](/imgs/logic/and.png)
 
 ![and-equation](https://latex.codecogs.com/gif.latex?x&space;=&space;A&space;\bullet&space;B=AB)
+
+| A | B | x |
+|---|---|---|
+| 0 | 0 | 0 |
+| 0 | 1 | 0 |
+| 1 | 0 | 0 |
+| 1 | 1 | 1 |
+
 
 ### Or
 
@@ -47,11 +60,27 @@ second input value is `B`.
 
 ![or-equation](https://latex.codecogs.com/gif.latex?x&space;=&space;A&space;&plus;&space;B)
 
+
+| A | B | x |
+|---|---|---|
+| 0 | 0 | 1 |
+| 0 | 1 | 1 |
+| 1 | 0 | 1 |
+| 1 | 1 | 0 |
+
 ### Xor
 
 ![xor-gate](/imgs/logic/xor.png)
 
 ![xor-equation](https://latex.codecogs.com/gif.latex?x&space;=&space;A&space;\oplus&space;B)
+
+
+| A | B | x |
+|---|---|---|
+| 0 | 0 | 0 |
+| 0 | 1 | 1 |
+| 1 | 0 | 1 |
+| 1 | 1 | 0 |
 
 ### Nand
 
@@ -59,9 +88,23 @@ second input value is `B`.
 
 ![nand-equation](https://latex.codecogs.com/gif.latex?x&space;=&space;\overline{A&space;\bullet&space;B}&space;=&space;\overline{AB})
 
+
+| A | B | x |
+|---|---|---|
+| 0 | 0 | 1 |
+| 0 | 1 | 1 |
+| 1 | 0 | 1 |
+| 1 | 1 | 0 |
+
 ### Nor
 
 ![nor-gate](/imgs/logic/nor.png)
 
 ![nor-equation](https://latex.codecogs.com/gif.latex?x&space;=&space;\overline{A&space;&plus;&space;B})
 
+| A | B | x |
+|---|---|---|
+| 0 | 0 | 1 |
+| 0 | 1 | 0 |
+| 1 | 0 | 0 |
+| 1 | 1 | 0 |
