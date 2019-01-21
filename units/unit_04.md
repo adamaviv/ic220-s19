@@ -133,6 +133,39 @@ We can further describe these results using boolean logic, in two equations
 
 ![curuit1 formula](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20x%20%3D%26%20A%20%5Cbullet%20B%20%5C%5C%20y%20%3D%26%20A%20%5Cbullet%20B%20&plus;%20C%20%5Cend%7Balign*%7D)
 
+## Simplifying Not Gates
+
+As not gates have a single input and output, we often will compress them down to
+a simple circle on the input to the next gate. For example, the following
+circuit.
+
+![not-and](/imgs/logic/not-and.png)
+
+
+
+May also be written this way. 
+
+![not-and-collapse](/imgs/logic/not-and-collapse.png)
+
+
+With the following truth table
+
+| A | B | x |
+|---|---|---|
+| 0 | 0 | 0 |
+| 0 | 1 | 1 |
+| 1 | 0 | 0 |
+| 1 | 1 | 0 |
+
+
+The same logic of pushing the circles, can be collapsed in the output direction,
+which explains the NAND and NOR gates and their truth tables.
+
+
+![not-and](/imgs/logic/nand.png)
+
+![not-and](/imgs/logic/nor.png)
+
 
 
 ## Laws of Boolean Logic 
@@ -173,6 +206,12 @@ not always quite the same way.
 
 ![distributive law](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20A%20%5Cbullet%20%28B%20&plus;%20C%29%20%26%3D%20%28A%20%5Cbullet%20B%29%20&plus;%20%28A%20%5Cbullet%20C%29%5C%5C%20A%20&plus;%20%28B%20%5Cbullet%20C%29%20%26%3D%20%28A%20&plus;%20B%29%20%5Cbullet%20%28A%20&plus;%20C%29%20%5C%5C%20%5Cend%7Balign*%7D)
 
-### DeMorgan's Law
+## DeMorgan's Law
+
+We also have a very important rule in digital logic **DeMorgan's Law**, which
+describes how to distribute the not operator.
 
 ![DeMorgan's Law](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20%5Coverline%7BA&plus;B%7D%20%26%3D%20%5Coverline%7BA%7D%20%5Cbullet%20%5Coverline%7BB%7D%5C%5C%20%5Coverline%7BA%20%5Cbullet%20B%7D%20%26%3D%20%5Coverline%7BA%7D%20&plus;%20%5Coverline%7BB%7D%5C%5C%20%5Cend%7Balign*%7D)
+
+Essentially, it flips the operator, from and to or (or in reverse). This allows
+us to simplify some of our gate design. For example, consider that 
