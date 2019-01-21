@@ -145,7 +145,7 @@ circuit.
 
 May also be written this way. 
 
-![not-and-collapse](/imgs/logic/not-and-collapse.png)
+![not-and-collapsed](/imgs/logic/not-and-collapsed.png)
 
 
 With the following truth table
