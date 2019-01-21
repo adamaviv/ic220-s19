@@ -333,9 +333,9 @@ when forming a sum of products.
 
 For example, we can rewrite the truth table from above as follows
 
-|            | ![][not-B-not-C] | ![][not-B-C] | ![][B-C]) | ![][B-not-C] |
+|            | ![][not-B-not-C] | ![][not-B-C] | ![][B-C] | ![][B-not-C] |
 |------------|------------------|--------------|-----------|--------------|
-| ![][A]     | 1                | 0            | 1         | 1            |
+| ![][A]     | 1                | 1            | 1         | 0            |
 | ![][not-A] | 0                | 1            | 0         | 0            |
 
 
@@ -345,3 +345,32 @@ For example, we can rewrite the truth table from above as follows
 [B-not-C]: https://latex.codecogs.com/gif.latex?B%5Cbullet%20%5Coverline%7BC%7D
 [A]: https://latex.codecogs.com/gif.latex?A
 [not-A]: https://latex.codecogs.com/gif.latex?%5Coverline%7BA%7D
+
+Now we can group adjacent 1's in rows and columns.  For example, these two 1's
+share A and not-B in common.
+
+|            | ![][not-B-not-C] | ![][not-B-C] | ![][B-C] | ![][B-not-C] |
+|------------|------------------|--------------|----------|--------------|
+| ![][A]     | **1**            | **1**        | 1        | 0            |
+| ![][not-A] | 0                | 1            | 0        | 0            |
+
+And these two, share A and C in common
+
+|            | ![][not-B-not-C] | ![][not-B-C] | ![][B-C] | ![][B-not-C] |
+|------------|------------------|--------------|----------|--------------|
+| ![][A]     | 1                | **1**        | **1**    | 0            |
+| ![][not-A] | 0                | 1            | 0        | 0            |
+
+And finally, these two share not-B and C in common
+
+|            | ![][not-B-not-C] | ![][not-B-C] | ![][B-C] | ![][B-not-C] |
+|------------|------------------|--------------|----------|--------------|
+| ![][A]     | 1                | **1**        | 1    | 0            |
+| ![][not-A] | 0                | **1**        | 0        | 0            |
+
+The result is again the equation. 
+
+![eq](https://latex.codecogs.com/gif.latex?%5Coverline%7BB%7D%5Cbullet%20C%20&plus;%20A%5Cbullet%5Coverline%7BB%7D%20&plus;%20A%5Cbullet%20C%20%26%3D%20x)
+
+But this time, we don't have to minimize by hand, but instead seek out adjacent
+truths.
