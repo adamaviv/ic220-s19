@@ -214,4 +214,28 @@ describes how to distribute the not operator.
 ![DeMorgan's Law](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20%5Coverline%7BA&plus;B%7D%20%26%3D%20%5Coverline%7BA%7D%20%5Cbullet%20%5Coverline%7BB%7D%5C%5C%20%5Coverline%7BA%20%5Cbullet%20B%7D%20%26%3D%20%5Coverline%7BA%7D%20&plus;%20%5Coverline%7BB%7D%5C%5C%20%5Cend%7Balign*%7D)
 
 Essentially, it flips the operator, from and to or (or in reverse). This allows
-us to simplify some of our gate design. For example, consider that 
+us to simplify some of our gate design. For example, consider that the following
+AND gate with two inverted inputs
+
+![not-and](/imgs/logic/notted-and.png)
+
+That can be written as the formula
+
+![not-a-or-not-b](https://latex.codecogs.com/gif.latex?%5Coverline%7BA%7D%20%5Cbullet%20%5Coverline%7BB%7D)
+
+And by, DeMorgan's Law, thats the same as
+
+![not-a-or--b](https://latex.codecogs.com/gif.latex?%5Coverline%7BA%20&plus;%20B%7D)
+
+The inverse (notting) of the result of an OR, is the same as a NOR gate.
+
+![not-and](/imgs/logic/nor.png)
+
+And, then using similar logic, the following gate
+
+![not-and](/imgs/logic/notted-and.png)
+
+Is the same as a NAND gate
+
+![not-and](/imgs/logic/nand.png)
+
