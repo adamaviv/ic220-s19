@@ -518,7 +518,7 @@ carries. For example, if we wished to select between two 32-bit numbers as our
 output, we can group together many two-way muxes to produce a 32-bit wide
 output.
 
-![](/imgs/logic/32-wide-mix.png)
+![](/imgs/logic/32-wide-mux.png)
 
 If we now bring this back to our binary representation of R-type instructions,
 we can see that 5-bit-wide field that represents the register number could act
