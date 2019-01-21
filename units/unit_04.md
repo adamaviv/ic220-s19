@@ -351,22 +351,22 @@ share A and not-B in common.
 
 |            | ![][not-B-not-C] | ![][not-B-C] | ![][B-C] | ![][B-not-C] |
 |------------|------------------|--------------|----------|--------------|
-| ![][A]     | **_1_**            | **_1_**        | 1        | 0            |
+| ![][A]     | (1)              | (1)          | 1        | 0            |
 | ![][not-A] | 0                | 1            | 0        | 0            |
 
 And these two, share A and C in common
 
 |            | ![][not-B-not-C] | ![][not-B-C] | ![][B-C] | ![][B-not-C] |
 |------------|------------------|--------------|----------|--------------|
-| ![][A]     | 1                | **_1_**        | **_1_**    | 0            |
+| ![][A]     | 1                | (1)          | (1)      | 0            |
 | ![][not-A] | 0                | 1            | 0        | 0            |
 
 And finally, these two share not-B and C in common
 
 |            | ![][not-B-not-C] | ![][not-B-C] | ![][B-C] | ![][B-not-C] |
 |------------|------------------|--------------|----------|--------------|
-| ![][A]     | 1                | **_1_**        | 1    | 0            |
-| ![][not-A] | 0                | **_1_**        | 0        | 0            |
+| ![][A]     | 1                | (1)          | 1        | 0            |
+| ![][not-A] | 0                | (1)          | 0        | 0            |
 
 The result is again the equation. 
 
@@ -394,5 +394,48 @@ For example, we can minimize from the following table
 [not-A-B]: https://latex.codecogs.com/gif.latex?%5Coverline%7BA%7D%20%5Cbullet%20B
 [A-not-B]: https://latex.codecogs.com/gif.latex?A%20%5Cbullet%20%5Coverline%7BB%7D
 [A-B]: https://latex.codecogs.com/gif.latex?A%20%5Cbullet%20B
+[A-D]: https://latex.codecogs.com/gif.latex?A%20%5Cbullet%20D
+[not-B-not-C-not-D]: https://latex.codecogs.com/gif.latex?%5Coverline%7BB%7D%5Cbullet%5Coverline%7BC%7D%5Cbullet%5Coverline%7BD%7D
+[not-A-B-C-not-D]: https://latex.codecogs.com/gif.latex?%5Coverline%7BB%7D%5Cbullet%5Coverline%7BC%7D%5Cbullet%5Coverline%7BD%7D
+
+We can now "cover" the entire bottom row of this table with ![][A-not-B]. 
 
 
+|                  | ![][not-C-not-D] | ![][not-C-D] | ![][C-D] | ![][C-not-D] |
+|------------------|------------------|--------------|----------|--------------|
+| ![][not-A-not-B] | 1                | 0            | 0        | 0            |
+| ![][not-A-B]     | 0                | 0            | 0        | 1            |
+| ![][A-B]         | 0                | 1            | 1        | 0            |
+| ![][A-not-B]     | (1)              | (1)          | (1)      | (1)          |
+
+Then there is a bock of 4 in the which has ![][A-D] in common
+
+|                  | ![][not-C-not-D] | ![][not-C-D] | ![][C-D] | ![][C-not-D] |
+|------------------|------------------|--------------|----------|--------------|
+| ![][not-A-not-B] | 1                | 0            | 0        | 0            |
+| ![][not-A-B]     | 0                | 0            | 0        | 1            |
+| ![][A-B]         | 0                | (1)          | (1)      | 0            |
+| ![][A-not-B]     | 1                | (1)          | (1)      | 1            |
+
+We can then wrap around to cover these with ![][not-B-not-C-not-D] in common
+
+
+|                  | ![][not-C-not-D] | ![][not-C-D] | ![][C-D] | ![][C-not-D] |
+|------------------|------------------|--------------|----------|--------------|
+| ![][not-A-not-B] | (1)              | 0            | 0        | 0            |
+| ![][not-A-B]     | 0                | 0            | 0        | 1            |
+| ![][A-B]         | 0                | 1            | 1        | 0            |
+| ![][A-not-B]     | (1)              | 1            | 1        | 1            |
+
+Finally, only one does not have a pair to cover with it ![][not-A-B-C-not-D]. 
+
+|                  | ![][not-C-not-D] | ![][not-C-D] | ![][C-D] | ![][C-not-D] |
+|------------------|------------------|--------------|----------|--------------|
+| ![][not-A-not-B] | 1                | 0            | 0        | 0            |
+| ![][not-A-B]     | 0                | 0            | 0        | (1)          |
+| ![][A-B]         | 0                | 1            | 1        | 0            |
+| ![][A-not-B]     | 1                | 1            | 1        | 1            |
+
+This leaves us with the following sum of products
+
+![[(https://latex.codecogs.com/gif.latex?%28A%5Cbullet%5Coverline%7BB%7D%29&plus;%28A%5Cbullet%20D%29%20&plus;%20%28%5Coverline%7BB%7D%5Cbullet%5Coverline%7BC%7D%5Cbullet%5Coverline%7BD%7D%29&plus;%28%5Coverline%7BA%7D%5Cbullet%20B%20%5Cbullet%20C%20%5Cbullet%5Coverline%7BD%7D%29)
