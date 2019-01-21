@@ -496,7 +496,7 @@ Some of these are found in the book, here we discuss
 * Registers (storage gates)
 * Arithmetic unit (ALU)
 
-## MUX'es : selector logic
+## MUX'es : multiplexor selector logic
 
 A mux (or a multiplexor) is a select combination logic. The simplest version, a two-way mux,
 chooses between two input signals for the output based on a selector signal.
@@ -514,12 +514,30 @@ Note that we need 3 selector signals, since `2^3` options to select between 8
 inputs. 
 
 The *width* of the multiplexor describes how many bits each of the input wires
-carries. For example, if we wished to select between two 32-bit numbers as our
-output, we can group together many two-way muxes to produce a 32-bit wide
-output.
+carries. For example, we may describe a 32-bit-wide, two-way mux:
 
 ![](/imgs/logic/32-wide-mux.png)
 
-If we now bring this back to our binary representation of R-type instructions,
-we can see that 5-bit-wide field that represents the register number could act
-as a signal to a 32-way multiplexors with a 32-bits of width. This 
+This can be composed of many 2-bit-wide, two-way multiplexors where the selector
+each selects each of the bits from one of the inputs.  Finally, it's possible to
+produce a multi-bit-wide, multi-way multiplexor by combining both of these
+reasoning, which is how, for example, when we provide a register number in a
+R-Type instructor's binary representation, we can select input from one of the
+registers.
+
+
+The details on how multiplexors are built using logic gates can be found in the book.
+
+## Sequential Logic and Clocks
+
+So far, we've only consider logic circuits that are *combinational* as they only
+compute based on the current input. However, you can imagine computation that is
+*sequential*, where the logic takes into account current inputs and previous
+inputs. 
+
+A previous input element will be stored *state elements*, which is updated based
+on a clock cycle. This requires *feedback circuits* which cannot occur in
+combinational circuits.
+
+
+
