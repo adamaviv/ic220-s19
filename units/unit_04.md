@@ -190,6 +190,11 @@ not always quite the same way.
 
 ![zero and one law](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20%26%20A%20&plus;%201%20%3D%201%20%5C%5C%20%26%20A%20%5Cbullet%200%20%3D%200%20%5Cend%7Balign*%7D)
 
+### Duplication/Consumption Law
+
+![duplication](https://latex.codecogs.com/gif.latex?A%20%3D%20A%20&plus;%20A)
+
+
 ### Inverse Law
 
 ![inverse law](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20%26%20A%20&plus;%20%5Coverline%7BA%7D%20%3D%201%20%5C%5C%20%26%20A%20%5Cbullet%20%5Coverline%7BA%7D%3D%200%20%5Cend%7Balign*%7D)
@@ -373,9 +378,14 @@ The result is again the equation.
 ![eq](https://latex.codecogs.com/gif.latex?%5Coverline%7BB%7D%5Cbullet%20C%20&plus;%20A%5Cbullet%5Coverline%7BB%7D%20&plus;%20A%5Cbullet%20C%20%26%3D%20x)
 
 But this time, we don't have to minimize by hand, but instead seek out adjacent
-truths. To make this work, you order the values such that adjacent logic overlap
-by one value, and this can be true for more complex tables as well, as long as
-the values are in powers of 2.
+truths. 
+
+## Higher-Order K-Maps
+
+We can do K-Maps with column/row labels of any power of 2, for example, this is
+a 2x2 K-Map. We can minimize in the same way, but the key idea is that every
+adjacent box shares a variable in common so that you can "cover" or reduce them
+out. 
 
 For example, we can minimize from the following table
 
@@ -438,4 +448,78 @@ Finally, only one does not have a pair to cover with it ![][not-A-B-C-not-D].
 
 This leaves us with the following sum of products
 
-![[(https://latex.codecogs.com/gif.latex?%28A%5Cbullet%5Coverline%7BB%7D%29&plus;%28A%5Cbullet%20D%29%20&plus;%20%28%5Coverline%7BB%7D%5Cbullet%5Coverline%7BC%7D%5Cbullet%5Coverline%7BD%7D%29&plus;%28%5Coverline%7BA%7D%5Cbullet%20B%20%5Cbullet%20C%20%5Cbullet%5Coverline%7BD%7D%29)
+![](https://latex.codecogs.com/gif.latex?%28A%5Cbullet%5Coverline%7BB%7D%29&plus;%28A%5Cbullet%20D%29%20&plus;%20%28%5Coverline%7BB%7D%5Cbullet%5Coverline%7BC%7D%5Cbullet%5Coverline%7BD%7D%29&plus;%28%5Coverline%7BA%7D%5Cbullet%20B%20%5Cbullet%20C%20%5Cbullet%5Coverline%7BD%7D%29)
+
+## K-Maps with "Don't Cares!"
+
+Finally, there are times when we have K-Maps where there are values that we
+don't care about, labeled here as `X`. These can have either a 0 or 1, whichever
+helps the minimization. 
+
+|                  | ![][not-C-not-D] | ![][not-C-D] | ![][C-D] | ![][C-not-D] |
+|------------------|------------------|--------------|----------|--------------|
+| ![][not-A-not-B] | X                | 0            | 0        | 0            |
+| ![][not-A-B]     | 1                | 0            | 0        | X            |
+| ![][A-B]         | 1                | 1            | 1        | 1            |
+| ![][A-not-B]     | 1                | 0            | 0        | 0            |
+
+Here, we can cover these as such,
+
+![](https://latex.codecogs.com/gif.latex?%28A%20%5Cbullet%20B%29%20&plus;%20%28%5Coverline%7BC%7D%5Cbullet%5Coverline%7BD%7D%29%20&plus;%20%28B%20%5Cbullet%20C%20%5Cbullet%20%5Coverline%7BD%7D%29)
+
+
+## Building Logic Circuits out of Truth Tables
+
+Let's return to the minimized sum of products from before.
+
+![eq](https://latex.codecogs.com/gif.latex?%5Coverline%7BB%7D%5Cbullet%20C%20&plus;%20A%5Cbullet%5Coverline%7BB%7D%20&plus;%20A%5Cbullet%20C%20%26%3D%20x)
+
+How can we turn this into a circuit? The structure of the equation itself
+dictates this for us: it's an OR gate with subsequent AND gates.
+
+![](/imgs/logic/circuit2.png)
+
+Note that an OR with multiple inputs can be written with multiple OR gates due
+to the communicative rule.
+
+
+## Higher Level Gates: Combination Logic
+
+It should be clear by now that all we really need is AND and OR gates, plus
+inversion, but building up large, complex circuits with such simple gates is
+slow and complicated. Just like in normal programming, we can use none
+combinations to build in more complex logic, much like a library call. These are
+called **Combination Logic** circuits. 
+
+Some of these are found in the book, here we discuss
+* Multiplexors (or mux)
+* Registers (storage gates)
+* Arithmetic unit (ALU)
+
+## MUX'es : selector logic
+
+A mux (or a multiplexor) is a select combination logic. The simplest version, a two-way mux,
+chooses between two input signals for the output based on a selector signal.
+
+![](/imgs/logic/two-way-mux.png)
+
+In the two-way mux, the signal is either high or low (1 or 0), and based on that
+value, either input A or B is selected to continue onto output C. We can
+multiplex over any input size as long as we have enough selector bits to
+enumerate our choices. For example, this is an eight-way mux
+
+![](/imgs/logic/eight-way-mux.png)
+
+Note that we need 3 selector signals, since `2^3` options to select between 8
+inputs. 
+
+The *width* of the multiplexor describes how many bits each of the input wires
+carries. For example, if we wished to select between two 32-bit numbers as our
+output, we can group together many two-way muxes to produce a 32-bit wide
+output.
+
+![](/imgs/logic/32-wide-mix.png)
+
+If we now bring this back to our binary representation of R-type instructions,
+we can see that 5-bit-wide field that represents the register number could act
+as a signal to a 32-way multiplexors with a 32-bits of width. This 
