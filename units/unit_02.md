@@ -162,7 +162,7 @@ assuming the address of the first element in the array is stored in `s3`.
     add $t0, $s2, $t0
     sw $t0, 32($s3)
     
-You may wonder, isn't `lw` and `sw` taking 2 arguments? I thought everything
+You may wonder, aren't `lw` and `sw` taking 2 arguments? I thought everything
 takes 3 arguments. It does, we just formatted it differently to make it more
 readable. The middle argument is an offset.
 
@@ -483,9 +483,9 @@ could even program using pseudo-instructions in our MIPS simulator.
 
 To do function calls, these are a lot like jumps, but there will be additional
 state, such as arguments, variables, and return values that must also be
-maintained, not to mention, keepint track of which prior instruction to return
+maintained, not to mention, keeping track of which prior instruction to return
 to following this one. In MIPS we use the term *procedure* and *function*
-interchabaly, but both refer to the same general thing you'd be familiar with in
+interchangeably, but both refer to the same general thing you'd be familiar with in
 C/C++.
 
 For the purpose of examples, we will refer to the following functions
@@ -518,7 +518,7 @@ procedure (`func1`) and the callee (`func2`).
 
 * (STEP 4) Callee does the tasks (body of function)
 
-* (STEP 5) Callee Place the results somewhere for the caller procedure can access the return value
+* (STEP 5) Callee places the results somewhere for the caller procedure can access the return value
 
 * (STEP 6) Return control back to the caller
 
@@ -527,7 +527,7 @@ procedure (`func1`) and the callee (`func2`).
 
 
 The caller is responsible for passing parameters to the callee procedures, i.e.,
-the function augments. This is done by setting the `$a0`, `$a1`, `$a2` and `$a3`
+the function arguments. This is done by setting the `$a0`, `$a1`, `$a2` and `$a3`
 registers, or the *argument registers*.  
 
 
@@ -536,7 +536,7 @@ What happens if there are more than 4 arguments? Well, we can use the *stack*
 
 
 What happens if the callee changes the registers? Well, that can happen, so if
-the caller needs those values latter, it is the responsibility of the caller to
+the caller needs those values later, it is the responsibility of the caller to
 preserve that information.
 
 
@@ -544,7 +544,7 @@ preserve that information.
 
 Consider a function call in abstraction. When you make such a call, once the
 called function finishes, control of the program returns the point in which the
-call occur ed. We need to do the same thing, but in assembly. We will need to
+call occurred. We need to do the same thing, but in assembly. We will need to
 not only *jump to the procedure* but also *remember where we jumped from*.
 
 The `jal` instruction, *jump and link*, does just that. It will jump to an
@@ -563,8 +563,8 @@ instruction. A jump just changes the PC to point somewhere else in the code, but
 since every instruction is exactly 4 bytes wide, we know the return address is
 exactly 4-bytes more than the current program counter.
 
-Where is the program counter stored? Well, of course, it's in another registers!
-It's not a register you can set directly, but instead, it's value changes after
+Where is the program counter stored? Well, of course, it's in another register!
+It's not a register you can set directly, but instead, its value changes after
 each instruction completes, e.g., by adding 4, or via branching or jumping
 instructions, based on the provided label or address.
 
@@ -590,7 +590,7 @@ the stack* is stored in a special register called `$sp`.
 We can think of this memory like an array, but a bit counter-intuitive, from the
 address of `$sp` moving upwards towards higher addresses is already used memory,
 maybe from other procedures. Moving towards lower address, subtracting from the
-stack pointer, is unalocated memory
+stack pointer, is unallocated memory
 
 
     :              :  (higher addresses)
@@ -781,17 +781,17 @@ may do so. This one is simple enough we won't need that.
         beq $t0, $zero, L1  # if so, branch to L1
         
         addi $v0, $zero, 1  # otherwise set return value to 1
-        addi $sp,$sp, 8     # dealocate on the stack
+        addi $sp,$sp, 8     # deallocate on the stack
         jr $ra              # jump back to the return address
 
         
     L1:
-        addi $a0, $a0, -1   # decrement the argumnet
+        addi $a0, $a0, -1   # decrement the argument
         jal dagger          # call dagger procedure
         
-        lw $a0, 0($sp)      # retstore $a0 from stack
+        lw $a0, 0($sp)      # restore $a0 from stack
         
-        mul $v0, $a0, $v0   # multiple return value of dagger
+        mul $v0, $a0, $v0   # multiply return value of dagger
                             # with argument, storing in 
                             # return value of this procedure
 
@@ -820,12 +820,12 @@ this further by jumping to a return point, labeled `cloack_return` below.
         j cloack_return     # do the return
         
     L1:
-        addi $a0, $a0, -1   # decrement the argumnet
+        addi $a0, $a0, -1   # decrement the argument
         jal dagger          # call dagger procedure
         
-        lw $a0, 0($sp)      # retstore $a0 from stack
+        lw $a0, 0($sp)      # restore $a0 from stack
         
-        mul $v0, $a0, $v0   # multiple return value of dagger
+        mul $v0, $a0, $v0   # multiply return value of dagger
                             # with argument, storing in 
                             # return value of this procedure
 
@@ -866,9 +866,9 @@ This results in the factorial function! If were to modify our code above to call
         addi $a0, $a0, -1   # decrement the argumnet
         jal cloak           # call cloak <----!!!!
         
-        lw $a0, 0($sp)      # retstore $a0 from stack
+        lw $a0, 0($sp)      # restore $a0 from stack
         
-        mul $v0, $a0, $v0   # multiple return value of dagger
+        mul $v0, $a0, $v0   # multiply return value of dagger
                             # with argument, storing in 
                             # return value of this procedure
 
@@ -904,7 +904,7 @@ variants, but it's fast enough for nearly all settings.
 
 Here, we only covered a subset of the MIPs ISA, and you will need to refer to
 the book and the green card to understand the fuller picture. Additionally, more
-info on other ISA's are found in the book.
+info on other ISA's is found in the book.
 
 
 
