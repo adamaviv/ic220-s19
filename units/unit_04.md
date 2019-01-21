@@ -333,11 +333,14 @@ when forming a sum of products.
 
 For example, we can rewrite the truth table from above as follows
 
-|                                             | ![](https://latex.codecogs.com/gif.latex?%5Coverline%7BB%7D%5Cbullet%5Coverline%7BC%7D) | ![](https://latex.codecogs.com/gif.latex?%5Coverline%7BB%7D%5Cbullet%20C) | ![](https://latex.codecogs.com/gif.latex?B%5Cbullet%20C) | ![](https://latex.codecogs.com/gif.latex?B%5Cbullet%20%5Coverline%7BC%7D) |
-|---------------------------------------------|-----------------------------------------------------------------------------------------|---------------------------------------------------------------------------|----------------------------------------------------------|---------------------------------------------------------------------------|
-| ![](https://latex.codecogs.com/gif.latex?A) |                                                                                         |                                                                           |                                                          |                                                                           |
-| ![](https://latex.codecogs.com/gif.latex?%5Coverline%7BA%7D)                                            |                                                                                         |                                                                           |                                                          |                                                                           |
+|            | ![][not-B-not-C] | ![][not-B-C] | ![][B-C]) | ![][B-not-C] |
+|------------|------------------|--------------|-----------|--------------|
+| ![][A]     |                  |              |           |              |
+| ![][not-A] |                  |              |           |              |
 
-
-
-
+[not-B-not-C]: https://latex.codecogs.com/gif.latex?%5Coverline%7BB%7D%5Cbullet%5Coverline%7BC%7D
+[not-B-C]: https://latex.codecogs.com/gif.latex?%5Coverline%7BB%7D%5Cbullet%20C
+[B-C]: https://latex.codecogs.com/gif.latex?B%5Cbullet%20C
+[B-not-C]: https://latex.codecogs.com/gif.latex?B%5Cbullet%20%5Coverline%7BC%7D
+[A]: https://latex.codecogs.com/gif.latex?A
+[not-A]: https://latex.codecogs.com/gif.latex?%5Coverline%7BA%7D
