@@ -264,3 +264,80 @@ This means we can flip the gate, and push the bubble to the final output,
 resulting in the following circuit.
 
 ![bubble3](/imgs/logic/bubble3.png)
+
+## 2-Level Logic and Minimization 
+
+Despite the plethora of gate types, it's the case that we really only need two
+gates and inversion to express any kind of logical statement: AND, OR, and
+NOT. We call this *2-level Logic* because it requires just two gates (assuming
+inversion is free). 
+
+What this means is that for any truth table, with a single output and any number
+of inputs, we can represent that truth table using a boolean logical expression
+of AND, OR, and NOT. There are two canonical forms *sum of products* and
+*product of sums*. We will use sum of products. 
+
+For example, consider the following Truth Table
+
+| A | B | C | x |
+|---|---|---|---|
+| 0 | 0 | 0 | 0 |
+| 0 | 0 | 1 | 1 |
+| 0 | 1 | 0 | 0 |
+| 0 | 1 | 1 | 0 |
+| 1 | 0 | 0 | 1 |
+| 1 | 0 | 1 | 1 |
+| 1 | 1 | 0 | 0 |
+| 1 | 1 | 1 | 1 |
+
+We can take each line of the truth table that results in a true output, and just
+consider which inputs produce those outputs.
+
+| A | B | C | x |
+|---|---|---|---|
+| 0 | 0 | 1 | 1 |
+| 1 | 0 | 0 | 1 |
+| 1 | 0 | 1 | 1 |
+| 1 | 1 | 1 | 1 |
+
+![eq](https://latex.codecogs.com/gif.latex?%28%5Coverline%7BA%7D%5Cbullet%5Coverline%7BB%7D%5Cbullet%20C%29%20&plus;%20%28A%20%5Cbullet%20%5Coverline%7BB%7D%20%5Cbullet%20%5Coverline%7BC%7D%29%20&plus;%20%28A%20%5Cbullet%20%5Coverline%7BB%7D%20%5Cbullet%20C%29%20&plus;%20%28A%20%5Cbullet%20B%20%5Cbullet%20C%29%20%3D%20x)
+
+The equation above is in canonical form, but it is important to minimize
+it. Writing out this circuit would require more gates than we probably need,
+costing more money, power, and making the chip more inefficient. 
+
+We can minimize this equation by hand using the some of the rules above, plus
+the fact that we can duplicate any values. That's because in boolean logic,
+`E+E=E`. It's the same as saying either `E` or `E` is true is equivalent of just
+testing if `E` is true.
+
+The minimization precedes by duplicating 
+
+![eq](https://latex.codecogs.com/gif.latex?%28A%20%5Cbullet%20%5Coverline%7BB%7D%20%5Cbullet%20C%29)
+
+twice more, and then rearranging to apply the distributed rule
+
+
+![eq](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20%28%5Coverline%7BA%7D%5Cbullet%5Coverline%7BB%7D%5Cbullet%20C%29%20&plus;%20%28A%20%5Cbullet%20%5Coverline%7BB%7D%20%5Cbullet%20%5Coverline%7BC%7D%29%20&plus;%20%28A%20%5Cbullet%20%5Coverline%7BB%7D%20%5Cbullet%20C%29%20&plus;%20%28A%20%5Cbullet%20B%20%5Cbullet%20C%29%20%26%3D%20x%20%5C%5C%20%28%28%5Coverline%7BA%7D%5Cbullet%5Coverline%7BB%7D%5Cbullet%20C%29%20&plus;%20%28A%20%5Cbullet%20%5Coverline%7BB%7D%20%5Cbullet%20C%29%29%20&plus;%20%28%28A%20%5Cbullet%20%5Coverline%7BB%7D%20%5Cbullet%20%5Coverline%7BC%7D%29%20&plus;%20%28A%20%5Cbullet%20%5Coverline%7BB%7D%20%5Cbullet%20C%29%29%20&plus;%20%28%28A%20%5Cbullet%20%5Coverline%7BB%7D%20%5Cbullet%20C%29%20&plus;%20%28A%20%5Cbullet%20B%20%5Cbullet%20C%29%29%20%26%3D%20x%20%5C%5C%20%5Coverline%7BB%7D%5Cbullet%20C%20%5Cbullet%28%5Coverline%7BA%7D%20&plus;%20A%20%29%20&plus;%20A%5Cbullet%5Coverline%7BB%7D%5Cbullet%28%5Coverline%7BC%7D%20&plus;%20C%29%20&plus;%20A%5Cbullet%20C%20%5Cbullet%28%5Coverline%7BB%7D%20&plus;%20B%29%29%20%26%3D%20x%20%5C%5C%20%5Coverline%7BB%7D%5Cbullet%20C%20%5Cbullet%281%29%20&plus;%20A%5Cbullet%5Coverline%7BB%7D%5Cbullet%281%29%20&plus;%20A%5Cbullet%20C%20%5Cbullet%281%29%20%26%3D%20x%20%5C%5C%20%5Coverline%7BB%7D%5Cbullet%20C%20&plus;%20A%5Cbullet%5Coverline%7BB%7D%20&plus;%20A%5Cbullet%20C%20%26%3D%20x%20%5C%5C%20%5Cend%7Balign*%7D)
+
+The final formula is
+
+![eq](https://latex.codecogs.com/gif.latex?%5Coverline%7BB%7D%5Cbullet%20C%20&plus;%20A%5Cbullet%5Coverline%7BB%7D%20&plus;%20A%5Cbullet%20C%20%26%3D%20x)
+
+## Karnaugh Maps (K-Maps) 
+
+Minimizing by hand can be cumbersome, but there are more automated ways to do
+this. Karnaugh Maps (K-Maps) are one way to do this. It procedes by building a
+truth-table with groupings of variables, which helps to minimize the results
+when forming a sum of products.
+
+For example, we can rewrite the truth table from above as follows
+
+|                                             | ![](https://latex.codecogs.com/gif.latex?%5Coverline%7BB%7D%5Cbullet%5Coverline%7BC%7D) | ![](https://latex.codecogs.com/gif.latex?%5Coverline%7BB%7D%5Cbullet%20C) | ![](https://latex.codecogs.com/gif.latex?B%5Cbullet%20C) | ![](https://latex.codecogs.com/gif.latex?B%5Cbullet%20%5Coverline%7BC%7D) |
+|---------------------------------------------|-----------------------------------------------------------------------------------------|---------------------------------------------------------------------------|----------------------------------------------------------|---------------------------------------------------------------------------|
+| ![](https://latex.codecogs.com/gif.latex?A) |                                                                                         |                                                                           |                                                          |                                                                           |
+| ![](https://latex.codecogs.com/gif.latex?%5Coverline%7BA%7D)                                            |                                                                                         |                                                                           |                                                          |                                                                           |
+
+
+
+
