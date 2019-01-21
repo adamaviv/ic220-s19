@@ -108,3 +108,59 @@ describes the output based on the two inputs.
 | 0 | 1 | 0 |
 | 1 | 0 | 0 |
 | 1 | 1 | 0 |
+
+
+## More Complex Circuits and Truth Tables
+
+The above examples consider just a single gate in a circuit, but we can express
+more complex boolean logic with multiple inputs/outputs using circuits. For
+example, the following circuit and its truth table.
+
+![circuit1](/imgs/logic/circuit1.png)
+
+| A | B | C | x | Y |
+|---|---|---|---|---|
+| 0 | 0 | 0 | 0 | 0 |
+| 0 | 0 | 1 | 0 | 1 |
+| 0 | 1 | 0 | 0 | 0 |
+| 0 | 1 | 1 | 0 | 1 |
+| 1 | 0 | 0 | 0 | 0 |
+| 1 | 0 | 1 | 0 | 1 |
+| 1 | 1 | 0 | 1 | 1 |
+| 1 | 1 | 1 | 1 | 1 |
+
+
+## Laws of Boolean Logic 
+
+Just like in normal arithmetic/algebra, boolean logic has a set of identities,
+properties, and methods of distributing and rearranging factors in
+equations. These typically take the form of traditional arithmetic/algebra, but
+not always quite the same way.
+
+### Identity Law
+
+![identity law](https://latex.codecogs.com/gif.latex?A&space;&plus;&space;0&space;=&space;A&space;\quad&space;A&space;\bullet&space;1&space;=&space;A)
+
+### Zero and One Law
+
+![zero and one law](https://latex.codecogs.com/gif.latex?A&space;&plus;&space;1&space;=&space;1&space;\quad&space;A&space;\bullet&space;0&space;=&space;0)
+
+### Inverse Law
+
+![inverse law](https://latex.codecogs.com/gif.latex?A&space;&plus;&space;\overline{A}&space;=&space;1&space;\quad&space;A&space;\bullet&space;\overline{A}&space;=&space;0)
+
+### Commutative Law
+
+![commutative law](https://latex.codecogs.com/gif.latex?A&space;&plus;&space;B&space;=&space;B&space;&plus;&space;A&space;\quad&space;A&space;\bullet&space;B&space;=&space;B&space;\bullet&space;A)
+
+### Associative Law
+
+![associative law](https://latex.codecogs.com/gif.latex?\begin{align*}&space;A&space;&plus;&space;(B&space;&plus;C)&space;&=&space;(A&plus;B)&space;&plus;&space;C&space;\\&space;A&space;\bullet(B&space;\bullet&space;C)&space;&=&space;(A&space;\bullet&space;B)&space;\bullet&space;C&space;\end{align*})
+
+### Distributive Law
+
+![distributive law](https://latex.codecogs.com/gif.latex?\begin{align*}&space;A&space;\bullet&space;(B&space;&plus;C)&space;&=&space;(A\bullet&space;B)&space;&plus;&space;(A\bullet&space;C)&space;\\&space;A&space;&plus;&space;(B&space;\bullet&space;C)&space;&=&space;(A&space;&plus;&space;B)&space;\bullet&space;(A&space;&plus;&space;C)&space;\end{align*})
+
+### DeMorgan's Law
+
+![DeMorgan's Law](https://latex.codecogs.com/gif.latex?\begin{align*}&space;\overline{A&plus;B}&space;=&space;\overline{A}&space;\bullet&space;\overline{B}\\&space;\overline{A&space;\bullet&space;B}&space;=&space;\overline{A}&space;&plus;&space;\overline{B}&space;\end{align*})
