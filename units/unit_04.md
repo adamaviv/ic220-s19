@@ -25,16 +25,27 @@ settings, while low asserted (False) is represented by low voltage. We typically
 consider these voltages carried over wires and manipulated by gates. For
 example:
 
+### Not
 
 ![not-gate](/imgs/logic/not.png)
 
+
+### And 
 ![and-gate](/imgs/logic/and.png)
+
+### Or
 
 ![or-gate](/imgs/logic/or.png)
 
+### Xor
+
 ![xor-gate](/imgs/logic/xor.png)
 
+### Nand
+
 ![nand-gate](/imgs//logic/nand.png)
+
+### Nor
 
 ![nor-gate](/imgs/logic/nor.png)
 
