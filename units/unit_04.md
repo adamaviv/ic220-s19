@@ -26,15 +26,15 @@ consider these voltages carried over wires and manipulated by gates. For
 example:
 
 
-![not-gate](/imgs/not.png)
+![not-gate](/imgs/logic/not.png)
 
-![and-gate](/imgs/and.png)
+![and-gate](/imgs/logic/and.png)
 
-![or-gate](/imgs/or.png)
+![or-gate](/imgs/logic/or.png)
 
-![xor-gate](/imgs/xor.png)
+![xor-gate](/imgs/logic/xor.png)
 
-![nand-gate](/imgs/nand.png)
+![nand-gate](/imgs//logic/nand.png)
 
-![nor-gate](/imgs/nor.png)
+![nor-gate](/imgs/logic/nor.png)
 
