@@ -45,15 +45,23 @@ second input value is `B`.
 
 ![or-gate](/imgs/logic/or.png)
 
+![or-equation](https://latex.codecogs.com/gif.latex?x&space;=&space;A&space;&plus;&space;B)
+
 ### Xor
 
 ![xor-gate](/imgs/logic/xor.png)
+
+![xor-equation](https://latex.codecogs.com/gif.latex?x&space;=&space;A&space;\oplus&space;B)
 
 ### Nand
 
 ![nand-gate](/imgs//logic/nand.png)
 
+![nand-equation](https://latex.codecogs.com/gif.latex?x&space;=&space;\overline{A&space;\bullet&space;B}&space;=&space;\overline{AB})
+
 ### Nor
 
 ![nor-gate](/imgs/logic/nor.png)
+
+![nor-equation](https://latex.codecogs.com/gif.latex?x&space;=&space;\overline{A&space;&plus;&space;B}
 
