@@ -22,16 +22,24 @@ In this framework, we consider two states:
 
 Typically, but not always, high asserted (True) is represented by high voltage
 settings, while low asserted (False) is represented by low voltage. We typically
-consider these voltages carried over wires and manipulated by gates. For
-example:
+consider these voltages carried over wires and manipulated by gates, but we can
+also describe this logic using equations.
+
+Below are the standard boolean logic, both in terms of gates and formulas. In
+the formulas, the output value is `x` and the first input value is `A` and the
+second input value is `B`.
 
 ### Not
 
 ![not-gate](/imgs/logic/not.png)
 
+![not-equation](https://latex.codecogs.com/gif.latex?x&space;=&space;\overline{A})
+
 
 ### And 
 ![and-gate](/imgs/logic/and.png)
+
+![and-equation](https://latex.codecogs.com/gif.latex?x&space;=&space;A&space;\bullet&space;B=AB)
 
 ### Or
 
