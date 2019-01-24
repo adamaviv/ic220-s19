@@ -8,17 +8,34 @@
 > readings** in which you will find much more detail, and those details will be
 > evaluated in quizzes, homework, and exams.
 
-## Sequential Logic and Clocks
+## Sequential Logic 
 
 So far, we've only consider logic circuits that are *combinational* as they only
 compute based on the current input. However, you can imagine computation that is
 *sequential*, where the logic takes into account current inputs and previous
 inputs. 
 
-A previous input element will be stored *state elements*, which is updated based
-on a clock cycle. This requires *feedback circuits* which cannot occur in
+A previous input element will be stored in *state elements*, which is updated
+based on clock cycle. This requires *feedback circuits* which cannot occur in
 combinational circuits.
 
+
+## S R Latches
+
+
+![s-r-latch-gif](/imgs/seq-logic/s-r-latch.gif)
+
+
+
+## Clock Cycles
+
+
+
+## D Flip Flops
+
+
+
+![seq-flip-flop](/imgs/seq-logic/seq-flip-flop.gif)
 
 
 **_IN PROGRESS_**
