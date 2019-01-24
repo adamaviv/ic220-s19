@@ -33,11 +33,11 @@ combinational circuits.
 
 ## D Flip Flops
 
-![d-latch](/imgs/seqseq-logic/d-latch.gif)
+![d-latch](/imgs/seq-logic/d-latch.gif)
 
-![d-flip-flop-falling)(/imgs/seq-logic/d-flip-flop-falling.gif)
+![d-flip-flop-falling](/imgs/seq-logic/d-flip-flop-falling.gif)
 
-![d-flip-flop-rising)(/imgs/seq-logic/d-flip-flop-rising.gif)
+![d-flip-flop-rising](/imgs/seq-logic/d-flip-flop-rising.gif)
 
 ![seq-flip-flop](/imgs/seq-logic/seq-flip-flop.gif)
 
