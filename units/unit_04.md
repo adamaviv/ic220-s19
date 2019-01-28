@@ -71,15 +71,88 @@ oscillates between asserted and de-asserted at some frequency.
 
 ![clock](/imgs/seq-logic/clock.png)
 
-## D Flip Flops
+The transition between a 0 or 1 (or a 1 or 0), is called the *rising edge* when
+transitioning between a 0 to 1 and a *falling edge* when transitioning between a
+1 to 0. Different state elements change their output state either on the rising
+or falling edge. Below, we will look at a bit of both. 
+
+## D Latch
+
+The first state element is a *D Latch*, which has many of the same properties of
+a S-R Latch (in fact its built out of an S-R latch!), except that its output
+transition is based on the edges of the clock. 
+
+Like before, we can consider the states of input and output of the
+D-latch. There exist two wires for input, `C` for the clock and `D` for the
+data. The data, `D`, can be in two states, 0 or 1, as well as `C`, either
+asserted 1 or de-asserted 0. This is a latch, so when the clock is asserted (1),
+the latch is **open** and thus the output `Q` takes on the state of the input `D`. 
 
 ![d-latch](/imgs/seq-logic/d-latch.gif)
 
+Thus, we can describe the states of the D-Latch in much the same way as the S-R
+latch, except the clock plays the role of opening the output. 
+
+* In state (1,1) : `Q` is set to 1
+* In state (0,1) : `Q` is set to 0
+* In state (X,0) : `Q` keeps the prior state, where X can be either 0 or 1 for `D`.
+
+You should also notice the importance of the S-R-Latch in the D-Latch. The two
+leading AND gates use the input states to switch between a Set and Reset in the
+S-R-latch, which is what is saving the state. 
+
+## D Flip Flops
+
+The D-latch is still a *transparent* because it doesn't act on the transitions
+of the clock, just on the values. A flip-flop, however, is designed to change
+state at transitions, either rising or falling edges, of the clock. 
+
+In this model, we can consider the clock having four states, two steady states
+of 0 and 1, and two transition states that are either rising (0->1) or falling
+(1->0).
+
+A D-flip-flop is the first state element that is not transparent, and the
+example below is a **falling edge** flip-flop, which means that the output state
+is *set* on the falling edge and *held* on the rising edge as well as the two
+steady states..
+
+Below, is a animation of a D-Flip-Flop which is composed of two D-latches, which
+in turn are composed of S-R-Latches.
+
 ![d-flip-flop-falling](/imgs/seq-logic/d-flip-flop-falling.gif)
+
+To understand the behavior, like before, if we consider the states (`D`,`C`), we
+can describe the operations of the D-Flip-Flop like:
+
+* In state (1,1->0): set output `Q` to 1
+* In state (0,1->0): set output `Q` to 0
+* In state (X,0->1): hold output `Q` to whatever was its prior state
+* In state (X,0): hold output `Q` to whatever was its prior state 
+* In state (X,1): hold output `Q` to whatever was its prior state 
+
+Looking at the animation. The output `Q` is unaffected as `D` changes from 0
+to 1. It is only when a falling edge occurs, C goes 1->0, does the output `Q`
+change state. 
+
+In Logisim, the simulator we will use *rising edge* D-Flip-Flops and mostly
+abstract away the underlying circuitry. However, the basic principal applies,
+just in this case, the output `Q` only transitions when the clock has a rising
+edge from 0->1.
+
 
 ![d-flip-flop-rising](/imgs/seq-logic/d-flip-flop-rising.gif)
 
+
+Finally, to put this all together and see sequential logic at work, consider the
+circuit below which places two rising-edge D-Flip-Flops in sequence with an
+alternating clock (note the AND gate along the top), and a feedback loop.
+
 ![seq-flip-flop](/imgs/seq-logic/seq-flip-flop.gif)
+
+This small circuit counts, based on the value of the flip flops, 00, 10, 11, 01,
+00, ... It's not perfect counting, but it's most of the way there! 
+
+## State Machines
 
 
 **_IN PROGRESS_**
