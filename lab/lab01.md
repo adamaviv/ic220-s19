@@ -3,7 +3,7 @@
 ## Part 0: Pre-lab -- due at the start of class Jan 30
 
 1. Read the entirety of this lab carefully
-2. Read the QtSPIM Overview and additional resources
+2. Read the QtSPIM Overview and [additional resources](/rsc/spim)
 3. Execute a sample program simple-spim.asm
 4. Create and turn-in: Use a drawing tool or Microsoft Word or a simple text
    file or etc. to construct pseudocode OR a flow chart for the “Program objective”
