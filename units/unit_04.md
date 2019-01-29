@@ -205,7 +205,7 @@ We can model this in the following table:
 
 We can represent this visually like so. 
 
-![candy machine](/imgs/seq-logic/sff-state-diagram.png)
+![candy machine](/imgs/seq-logic/candy.png)
 
 Each node label represents the current state, or the number of cents previously
 inputted. The transition labels is the input coin, either `N` for nickel or `D`
@@ -232,7 +232,8 @@ like so.
 [Q_0]: https://latex.codecogs.com/gif.latex?Q_0
 [Q_1]: https://latex.codecogs.com/gif.latex?Q_1
 [I]: https://latex.codecogs.com/gif.latex?I
-[Q_1]: https://latex.codecogs.com/gif.latex?O_0
+[O_0]: https://latex.codecogs.com/gif.latex?O_0
+[O_1]: https://latex.codecogs.com/gif.latex?O_1
 [Q_1']: https://latex.codecogs.com/gif.latex?Q_1%27
 [Q_0']: https://latex.codecogs.com/gif.latex?Q_0%27
 
