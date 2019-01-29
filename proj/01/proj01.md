@@ -45,7 +45,7 @@ keep the recursion.
 
 ## Specifics
 
-Download [starter-code.asm](proj/01/starter-code.md). 
+Download [starter-code.asm](proj/01/starter-code.asm). 
 
 1. Read over the starter code (see link above and/or last page). Make sure you
    understand where the function is defined and how it is called. NOTE: The
