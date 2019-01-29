@@ -305,12 +305,12 @@ We can either minimize this by hand or convert it into a K-map
 |            | ![][not-Q_0-not-Q_1] | ![][Q_0-not-Q_1] | ![][Q_0-Q_1] | ![][not-Q_0-Q_1] |
 |------------|----------------------|------------------|--------------|------------------|
 | ![][I]     | 0                    | 1                | X            | 1                |
-| ![][not-I] | 0                    | 0                | X            | 1                |
+| ![][not-I] | 0                    | 1                | X            | 0                |
 
 Two states have X's since ![][Q_0-Q_1] does not produce an output. Covering this
 K-map, we find the formula: 
 
-[O_1-eq]: https://latex.codecogs.com/gif.latex?O_1%20%3D%20Q_0I%20&plus;%20%5Coverline%7BQ_0%7DQ_1
+[O_1-eq]: https://latex.codecogs.com/gif.latex?O_1%20%3D%20Q_0%5Coverline%7BQ_1%7D%20&plus;%20IQ_1
 
 ![][O_1-eq]
 
