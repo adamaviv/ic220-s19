@@ -365,10 +365,10 @@ Which has the formula
 
 Now that we have a boolean formula for each output of the machine based on the
 inputs, we can map these into a digital circuit. Here's
-[one](/rsc/logisim/ex/candy-circuit-1.circ) in LogiSim that you can play with,
+[one](/rsc/logisim/ex/candy-state-1.circ) in LogiSim that you can play with,
 animated below:
 
-![candy-state-1][/imgs/seq-logic/candy-state-1.gif]
+![candy-state-1](/imgs/seq-logic/candy-state-1.gif)
 
 Note that in each of the input states produces the proper asserted output
 states. 
@@ -382,11 +382,11 @@ elements, one for each output wire of the circuit. Each click of the clock
 (rising edge), based on the input wire (either a Nickel or a Dime), the state
 elements will update. 
 
-You can play around with this [circuit](/rsc/logisim/ex/candy-circuit-2.circ) in
+You can play around with this [circuit](/rsc/logisim/ex/candy-state-2.circ) in
 LogiSim, and view the animation below. In the animation, it cycles through
 adding three nickels, two dimes, and then one nickel and one dime. 
 
-![candy-state-2][/imgs/seq-logic/candy-state-2.gif]
+![candy-state-2](/imgs/seq-logic/candy-state-2.gif)
 
 Note that the prime labels, such as `O'_0` `O'_1` `Q'_0` `Q'_1` indicate would
 be future output states based on the input bit `I`. It's only once the clock
