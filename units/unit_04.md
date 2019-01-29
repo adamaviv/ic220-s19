@@ -312,7 +312,7 @@ K-map, we find the formula:
 
 [O_1-eq]: https://latex.codecogs.com/gif.latex?O_1%20%3D%20Q_0I%20&plus;%20%5Coverline%7BQ_0%7DQ_1
 
-![][O-1-eq]
+![][O_1-eq]
 
 ### Solving for ![][Q_0']
 
