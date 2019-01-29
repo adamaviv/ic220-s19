@@ -361,7 +361,48 @@ Which has the formula
 
 ![][Q_1'-eq]
 
+### Candy Machine: Digital Logic Circuit
+
+Now that we have a boolean formula for each output of the machine based on the
+inputs, we can map these into a digital circuit. Here's
+[one](/rsc/logisim/ex/candy-circuit-1.circ) in LogiSim that you can play with,
+animated below:
+
+![candy-state-1][/imgs/seq-logic/candy-state-1.gif]
+
+Note that in each of the input states produces the proper asserted output
+states. 
+
+### Candy Machine: Sequential Logic Circuit
+
+To make this a sequential logic circuit that fully mimics the state machine, we
+need to use a state elements to store the current state that get updates based
+on the input and compute an output. We will need four D-Flip-Flops as our state
+elements, one for each output wire of the circuit. Each click of the clock
+(rising edge), based on the input wire (either a Nickel or a Dime), the state
+elements will update. 
+
+You can play around with this [circuit](/rsc/logisim/ex/candy-circuit-2.circ) in
+LogiSim, and view the animation below. In the animation, it cycles through
+adding three nickels, two dimes, and then one nickel and one dime. 
+
+![candy-state-2][/imgs/seq-logic/candy-state-2.gif]
+
+Note that the prime labels, such as `O'_0` `O'_1` `Q'_0` `Q'_1` indicate would
+be future output states based on the input bit `I`. It's only once the clock
+ticks, do the output states `O_0` `O_1` are set and the current state `Q_0` and
+`Q_1` set in their respective D-Flip-Flop state elements. 
+
+
+### Candy Machine to the CPU
+
+Putting this all together, it should be clear how state elements enable
+sequential logic. With sequential logic, we can model computation as a state
+machine, like the candy machine. Of course, this is a small, contrived example,
+but as we move towards CPU design, the same principles of state machines
+apply. The digital logic to compute each state and the number of states (and
+outputs) will increase, but the basic building blocks are clear
 
 
 
-**_IN PROGRESS_**
+
