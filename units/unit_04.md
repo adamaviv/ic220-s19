@@ -279,7 +279,7 @@ We can write the normal form simply as
 
 [O_0-eq]: https://latex.codecogs.com/gif.latex?O_0%3DQ_0%5Coverline%7BQ_1%7DI
 
-![][0_0-eq]
+![][O_0-eq]
 
 ### Solving for ![][O_1]
 
