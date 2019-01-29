@@ -300,7 +300,7 @@ We can either minimize this by hand or convert it into a K-map
 [not-Q_0-not-Q_1]: https://latex.codecogs.com/gif.latex?%5Coverline%7BQ_0%7D%5Coverline%7BQ_1%7D
 [not-Q_0-Q_1]: https://latex.codecogs.com/gif.latex?%5Coverline%7BQ_0%7DQ_1
 [Q_0-not-Q_1]: https://latex.codecogs.com/gif.latex?Q_0%5Coverline%7BQ_1%7D
-[Q_0-Q-1]: https://latex.codecogs.com/gif.latex?Q_0Q_1
+[Q_0-Q_1]: https://latex.codecogs.com/gif.latex?Q_0Q_1
 
 |            | ![][not-Q_0-not-Q_1] | ![][Q_0-not-Q_1] | ![][Q_0-Q_1] | ![][not-Q_0-Q_1] |
 |------------|----------------------|------------------|--------------|------------------|
