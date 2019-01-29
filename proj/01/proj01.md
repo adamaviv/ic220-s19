@@ -16,7 +16,7 @@ project.
 
 ## Your Task
 
-ou will translate a given recursive C++ program into MIPS, and test it
+You will translate a given recursive C++ program into MIPS, and test it
 thoroughly (in SPIM) to ensure that it is fully correct. The C++ program takes
 as input two numbers, a “seed” and a "PIN", then uses a recursive computation to
 compute a password. When run, the program _might_ look like this:
