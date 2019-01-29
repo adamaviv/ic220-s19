@@ -249,7 +249,7 @@ like so.
 
 
 To see how this works, consider that ![][Q_0] ![][Q_1] combined represent the
-state, so `00` is 0 cent, `01` is 5 cents, `10` is 10 cents. The input state `I`
+state, so `00` is 0 cent, `01` is 5 cents, `10` is 10 cents. The input state ![][I]
 is either 0 or 1 for nickel or dime. The output states ![][O_0] and ![][O_1]
 represent the change and candy dispensing conditions, respectively. And
 ![][Q_0'] combined with ![][Q_1'] represent the next state in the transition,
