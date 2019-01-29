@@ -154,5 +154,255 @@ This small circuit counts, based on the value of the flip flops, 00, 10, 11, 01,
 
 ## State Machines
 
+The notion of a *state machine* was described in the previous description to
+think about the output state of the circuit based on its input. We can take that
+notion a bit further to think about any basic computation. 
 
-**_IN PROGRESS_**
+State machines are typically modeled as graphs with each node describing a state
+and transitions between states as edges. The labels on the node can describe an
+output state, and the label on an edge an input state transition to a new
+(output) state.
+
+To see an example, consider the sequential counting D-flip-flops from above. We
+can draw a state diagram for that like so. 
+
+![sff-state-diagram](/imgs/sff-state-diagram.png)
+
+Note that each transition is a clock tick, either rising or falling edge. The
+state in the node is the state of the D-Flip-Flops. The "Data Input", not
+pictured, is the inverse of the second bit of the node (as the output of the
+second D-Flip-Flop is notted as the "Data Input").
+
+This is a fairly simple state diagram for a known circuit. Where this becomes
+more interesting is when we use a state diagram to describe some behavior and
+then translate that into a sequential logic circuit.
+
+## The Candy Machine Example
+
+Suppose we wanted to write a sequential logic circuit to mimic a candy
+machine. Candy costs 15 cents, and the machine accepts two types of input, a
+nickel or dime. If the total inputted is less then 15 cents, there is no output,
+if it is 15 cents, the output is a piece of candy, and if it is 20 cents, then
+the output is candy and 5 cents change. 
+
+What are the states of this machine? It's the total count of change
+inputted. The input state of the machine is just if the user provided a nickel
+or dime.  The output states of the machine is three-fold: do you provide candy
+(y/n), do you provide change (y/n), and what is the next state?
+
+We can model this in the following table:
+
+
+| Current State | Input | Output Change | Output Candy | Next State |
+|---------------|-------|---------------|--------------|------------|
+| 0             | N     | 0             | 0            | 5          |
+| 0             | D     | 0             | 0            | 10         |
+| 5             | N     | 0             | 0            | 10         |
+| 5             | D     | 0             | 1            | 0          |
+| 10            | N     | 0             | 1            | 0          |
+| 10            | D     | 1             | 1            | 0          |
+
+
+We can represent this visually like so. 
+
+![candy machine](/imgs/seq-logic/candy.png)
+
+Each node label represents the current state, or the number of cents previously
+inputted. The transition labels is the input coin, either `N` for nickel or `D`
+for dime, plus the two output states (`Change`/`Candy`).
+
+## Next State Truth Table
+
+The candy machine above can further be modeled as a **next state** truth table
+based on the input states and the output states. Consider that the input set of
+the machine are the current state and the coin. The output set are the change,
+candy, and the next state of the machine. In order to represent this as a truth
+table, we need to rewrite these input and output sets in terms of the number of
+bits needed to represent them.
+
+* Input: 3 possible current states can be represented using 2 bits, and we need
+  one bit to represent which coin was supplied.
+  
+* Output: 1 bit for the change, 1 bit for the candy, and 2 bits to represent the
+  next state.
+  
+So there are 3 bits of input and 4 bits of output. We can write this truth table
+like so.
+
+[Q_0]: https://latex.codecogs.com/gif.latex?Q_0
+[Q_1]: https://latex.codecogs.com/gif.latex?Q_1
+[I]: https://latex.codecogs.com/gif.latex?I
+[O_0]: https://latex.codecogs.com/gif.latex?O_0
+[O_1]: https://latex.codecogs.com/gif.latex?O_1
+[Q_1']: https://latex.codecogs.com/gif.latex?Q_1%27
+[Q_0']: https://latex.codecogs.com/gif.latex?Q_0%27
+
+
+| ![][Q_0] | ![][Q_1] | ![][I] | ![][O_0] | ![][O_1] | ![][Q_0'] | ![][Q_1'] |
+|----------|----------|--------|----------|----------|-----------|-----------|
+| 0        | 0        | 0      | 0        | 0        | 0         | 1         |
+| 0        | 0        | 1      | 0        | 0        | 1         | 0         |
+| 0        | 1        | 0      | 0        | 0        | 1         | 0         |
+| 0        | 1        | 1      | 0        | 1        | 0         | 0         |
+| 1        | 0        | 0      | 0        | 1        | 0         | 0         |
+| 1        | 0        | 1      | 1        | 1        | 0         | 0         |
+
+
+To see how this works, consider that ![][Q_0] ![][Q_1] combined represent the
+state, so `00` is 0 cent, `01` is 5 cents, `10` is 10 cents. The input state ![][I]
+is either 0 or 1 for nickel or dime. The output states ![][O_0] and ![][O_1]
+represent the change and candy dispensing conditions, respectively. And
+![][Q_0'] combined with ![][Q_1'] represent the next state in the transition,
+either to `00` `01` or `10`.
+
+
+## Building Circuits at of State Machines
+
+The last step in this process is to construct a circuit that has the sequential
+logic of the candy machine. This begins by solving the truth table for all the
+input conditions for each output condition. 
+
+### Solving for ![][O_0]
+
+Let's solve for ![][O_0] first, resulting in the following simple truth table.
+
+| ![][Q_0] | ![][Q_1] | ![][I] | ![][O_0] |
+|----------|----------|----------|----------|
+| 0        | 0        | 0        | 0        |
+| 0        | 0        | 1        | 0        |
+| 0        | 1        | 0        | 0        |
+| 0        | 1        | 1        | 0        |
+| 1        | 0        | 0        | 0        |
+| 1        | 0        | 1        | 1        |
+
+We can write the normal form simply as 
+
+[O_0-eq]: https://latex.codecogs.com/gif.latex?O_0%3DQ_0%5Coverline%7BQ_1%7DI
+
+![][O_0-eq]
+
+### Solving for ![][O_1]
+
+The next truth table for output state ![][O_1] is more complicated
+
+| ![][Q_0] | ![][Q_1] | ![][I] | ![][O_1] |
+|----------|----------|----------|----------|
+| 0        | 0        | 0        | 0        |
+| 0        | 0        | 1        | 0        |
+| 0        | 1        | 0        | 0        |
+| 0        | 1        | 1        | 1        |
+| 1        | 0        | 0        | 1        |
+| 1        | 0        | 1        | 1        |
+
+We can either minimize this by hand or convert it into a K-map
+
+[not-I]: https://latex.codecogs.com/gif.latex?%5Coverline%7BI%7D
+[not-Q_0-not-Q_1]: https://latex.codecogs.com/gif.latex?%5Coverline%7BQ_0%7D%5Coverline%7BQ_1%7D
+[not-Q_0-Q_1]: https://latex.codecogs.com/gif.latex?%5Coverline%7BQ_0%7DQ_1
+[Q_0-not-Q_1]: https://latex.codecogs.com/gif.latex?Q_0%5Coverline%7BQ_1%7D
+[Q_0-Q_1]: https://latex.codecogs.com/gif.latex?Q_0Q_1
+
+|            | ![][not-Q_0-not-Q_1] | ![][Q_0-not-Q_1] | ![][Q_0-Q_1] | ![][not-Q_0-Q_1] |
+|------------|----------------------|------------------|--------------|------------------|
+| ![][I]     | 0                    | 1                | X            | 1                |
+| ![][not-I] | 0                    | 1                | X            | 0                |
+
+Two states have X's since ![][Q_0-Q_1] does not produce an output. Covering this
+K-map, we find the formula: 
+
+[O_1-eq]: https://latex.codecogs.com/gif.latex?O_1%20%3D%20Q_0%5Coverline%7BQ_1%7D%20&plus;%20IQ_1
+
+![][O_1-eq]
+
+### Solving for ![][Q_0']
+
+We have the following truth table
+
+| ![][Q_0] | ![][Q_1] | ![][I] | ![][Q_0'] |
+|----------|----------|----------|----------|
+| 0        | 0        | 0        | 0        |
+| 0        | 0        | 1        | 1        |
+| 0        | 1        | 0        | 1        |
+| 0        | 1        | 1        | 0        |
+| 1        | 0        | 0        | 0        |
+| 1        | 0        | 1        | 0        |
+
+
+which we can transform into a K-Map
+
+|            | ![][not-Q_0-not-Q_1] | ![][Q_0-not-Q_1] | ![][Q_0-Q_1] | ![][not-Q_0-Q_1] |
+|------------|----------------------|------------------|--------------|------------------|
+| ![][I]     | 1                    | 0                | X            | 0                |
+| ![][not-I] | 0                    | 0                | X            | 1                |
+
+Which has the following minimized formula
+
+[Q_0'-eq]: https://latex.codecogs.com/gif.latex?Q_0%27%3D%5Coverline%7BQ_0%7D%5Coverline%7BQ_1%7DI%20&plus;%20Q_1%5Coverline%7BI%7D
+
+![][Q_0'-eq] 
+
+### Solving for ![][Q_1']
+
+We have the following truth table
+
+
+| ![][Q_0] | ![][Q_1] | ![][I] | ![][Q_1'] |
+|----------|----------|--------|-----------|
+| 0        | 0        | 0      | 1         |
+| 0        | 0        | 1      | 0         |
+| 0        | 1        | 0      | 0         |
+| 0        | 1        | 1      | 0         |
+| 1        | 0        | 0      | 0         |
+| 1        | 0        | 1      | 0         |
+
+Which has the formula
+
+[Q_1'-eq]: https://latex.codecogs.com/gif.latex?Q_1%27%20%3D%20%5Coverline%7BQ_0Q_1I%7D
+
+![][Q_1'-eq]
+
+### Candy Machine: Digital Logic Circuit
+
+Now that we have a boolean formula for each output of the machine based on the
+inputs, we can map these into a digital circuit. Here's
+[one](/rsc/logisim/ex/candy-state-1.circ) in LogiSim that you can play with,
+animated below:
+
+![candy-state-1](/imgs/seq-logic/candy-state-1.gif)
+
+Note that in each of the input states produces the proper asserted output
+states. 
+
+### Candy Machine: Sequential Logic Circuit
+
+To make this a sequential logic circuit that fully mimics the state machine, we
+need to use a state elements to store the current state that get updates based
+on the input and compute an output. We will need four D-Flip-Flops as our state
+elements, one for each output wire of the circuit. Each click of the clock
+(rising edge), based on the input wire (either a Nickel or a Dime), the state
+elements will update. 
+
+You can play around with this [circuit](/rsc/logisim/ex/candy-state-2.circ) in
+LogiSim, and view the animation below. In the animation, it cycles through
+adding three nickels, two dimes, and then one nickel and one dime. 
+
+![candy-state-2](/imgs/seq-logic/candy-state-2.gif)
+
+Note that the prime labels, such as `O'_0` `O'_1` `Q'_0` `Q'_1` indicate would
+be future output states based on the input bit `I`. It's only once the clock
+ticks, do the output states `O_0` `O_1` are set and the current state `Q_0` and
+`Q_1` set in their respective D-Flip-Flop state elements. 
+
+
+### Candy Machine to the CPU
+
+Putting this all together, it should be clear how state elements enable
+sequential logic. With sequential logic, we can model computation as a state
+machine, like the candy machine. Of course, this is a small, contrived example,
+but as we move towards CPU design, the same principles of state machines
+apply. The digital logic to compute each state and the number of states (and
+outputs) will increase, but the basic building blocks are clear
+
+
+
+
