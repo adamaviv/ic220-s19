@@ -69,10 +69,11 @@ This lab is due Feb 1st
 
 On the submission system: 
  - upload your .asm file from part 3
+ - the file should be name `part3.asm`
 
 In class/hardcopy, stapled together:
   - [Lab cover-page](https://github.com/adamaviv/ic220-s19/blob/master/rsc/lab_coversheet.pdf)
-  - Printout of your part 3 .asm file using codeprint (or equivalent)
+  - Printout of your `part3.asm` file using codeprint (or equivalent)
   - **Three** screenshot of your code executing for N=3
     - x=12
     - x=17
