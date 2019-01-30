@@ -65,7 +65,7 @@ version).
 
 ## Deliverables
 
-This lab is due Feb 1st
+This lab is due Feb 4th
 
 On the submission system: 
  - upload your .asm file from part 3
