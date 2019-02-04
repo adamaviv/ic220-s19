@@ -774,28 +774,30 @@ may do so. This one is simple enough we won't need that.
         #ACTIVITY RECORD SETUP
         addi $sp, $sp -8    #allocate 2 words of stack space
         sw $ra, 4($sp)      #save old return address
-        sw $a0, 0($sp)      #save argument 0
+        sw $s0, 0($sp)      #save caller's $s0 
+  
+        move $s0, $a0       #from now on, use $s0 for variable n
 
         #PROCEDURE BODY
-        slti $t0, $a0, 1    # test if $a0 < 1
-        beq $t0, $zero, L1  # if so, branch to L1
-        
-        addi $v0, $zero, 1  # otherwise set return value to 1
-        addi $sp,$sp, 8     # deallocate on the stack
-        jr $ra              # jump back to the return address
-
-        
-    L1:
-        addi $a0, $a0, -1   # decrement the argument
-        jal dagger          # call dagger procedure
-        
-        lw $a0, 0($sp)      # restore $a0 from stack
-        
-        mul $v0, $a0, $v0   # multiply return value of dagger
-                            # with argument, storing in 
-                            # return value of this procedure
-
+        li  $t0, 1
+        bge $s0, $t0, ELSE  # if n>=1 go to ELSE  
+               
+        addi $v0, $zero, 1  # return value to 1
         lw $ra, 4($sp)      # restore the return address
+        lw $s0, 0($sp)      # restore caller's $s0
+        addi $sp, $sp, 8    # deallocate memory
+        jr $ra              # jump back to the return address
+    
+        
+    ELSE:
+        addi $a0, $s0, -1   # set $a0 = n-1  
+        jal dagger          # call dagger procedure
+               
+        mul $v0, $s0, $v0   # n * dagger(n-1)  
+                            # n is stored in $s0, dagger(n-1) is stored in $v0  
+                            # set $v0 = n* dagger(n-1) [return value in $v0]
+        lw $ra, 4($sp)      # restore the return address
+        lw $s0, 0($sp)      # restore caller's $s0
         addi $sp, $sp, 8    # deallocate memory
         jr $ra              # jump back to the return address
         
@@ -804,36 +806,34 @@ Notice that there are two different return points! A smart compiler may simplify
 this further by jumping to a return point, labeled `cloack_return` below.
 
     cloak:
-        
         #ACTIVITY RECORD SETUP
         addi $sp, $sp -8    #allocate 2 words of stack space
         sw $ra, 4($sp)      #save old return address
-        sw $a0, 0($sp)      #save argument 0
+        sw $s0, 0($sp)      #save caller's $s0 
+  
+        move $s0, $a0       #from now on, use $s0 for variable n
 
         #PROCEDURE BODY
-        slti $t0, $a0, 1    # test if $a0 < 1
-        beq $t0, $zero, L1  # if so, branch to L1
+        li  $t0, 1
+        bge $s0, $t0, ELSE  # if n>=1 go to ELSE  
         
-
-        addi $v0, $zero, 1  # otherwise set return value to 1
-        
-        j cloack_return     # do the return
-        
-    L1:
-        addi $a0, $a0, -1   # decrement the argument
+        addi $v0, $zero, 1  # return value to 1
+        j clock_return
+         
+    ELSE:
+        addi $a0, $s0, -1   # set $a0 = n-1  
         jal dagger          # call dagger procedure
+               
+        mul $v0, $s0, $v0   # n * dagger(n-1)  
+                            # n is stored in $s0, dagger(n-1) is stored in $v0  
+                            # set $v0 = n* dagger(n-1) [return value should be in $v0]
         
-        lw $a0, 0($sp)      # restore $a0 from stack
-        
-        mul $v0, $a0, $v0   # multiply return value of dagger
-                            # with argument, storing in 
-                            # return value of this procedure
-
     cloack_return:
         lw $ra, 4($sp)      # restore the return address
+        lw $s0, 0($sp)      # restore caller's $s0
         addi $sp, $sp, 8    # deallocate memory
         jr $ra              # jump back to the return address
-        
+         
 
 Now let's consider `dagger`. What if we were to replace `dagger` with `cloak`,
 like in C:
@@ -846,38 +846,38 @@ like in C:
 This results in the factorial function! If were to modify our code above to call
 `cloak` 
 
+
     cloak:
-        
         #ACTIVITY RECORD SETUP
         addi $sp, $sp -8    #allocate 2 words of stack space
         sw $ra, 4($sp)      #save old return address
-        sw $a0, 0($sp)      #save argument 0
+        sw $s0, 0($sp)      #save caller's $s0 
+  
+        move $s0, $a0       #from now on, use $s0 for variable n
 
         #PROCEDURE BODY
-        slti $t0, $a0, 1    # test if $a0 < 1
-        beq $t0, $zero, L1  # if so, branch to L1
+        li  $t0, 1
+        bge $s0, $t0, ELSE  # if n>=1 go to ELSE  
         
-
-        addi $v0, $zero, 1  # otherwise set return value to 1
+        addi $v0, $zero, 1  # return value to 1
+        j clock_return
+       
         
-        j cloack_return     # do the return
+    ELSE:
+        addi $a0, $s0, -1   # set $a0 = n-1  
+        jal clock           # **** call clock!!! 
+               
+        mul $v0, $s0, $v0   # n * clock(n-1)  
+                            # n is stored in $s0, clock(n-1) is stored in $v0  
+                            # set $v0 = n* clock(n-1) [return value in $v0]
         
-    L1:
-        addi $a0, $a0, -1   # decrement the argumnet
-        jal cloak           # call cloak <----!!!!
-        
-        lw $a0, 0($sp)      # restore $a0 from stack
-        
-        mul $v0, $a0, $v0   # multiply return value of dagger
-                            # with argument, storing in 
-                            # return value of this procedure
-
     cloack_return:
         lw $ra, 4($sp)      # restore the return address
+        lw $s0, 0($sp)      # restore caller's $s0
         addi $sp, $sp, 8    # deallocate memory
         jr $ra              # jump back to the return address
         
-
+        
 Everything would be fine, even if the procedure is calling itself. That's
 because we used good practice to preserve and restore registers through
 procedure calls.
