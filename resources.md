@@ -20,3 +20,7 @@
 * Installing QTSpim -- see [HW0](hw/hw0.md)
 * [Additional SPIM resources](/rsc/spim/)
  
+## Logisim Resources
+
+* [Installing LogiSim](https://sourceforge.net/projects/circuit/)
+* [Additional LogiSim Resources](/rsc/logisim)

@@ -3,7 +3,7 @@
 ## Part 0: Pre-lab -- due at the start of class Jan 30
 
 1. Read the entirety of this lab carefully
-2. Read the QtSPIM Overview and additional resources
+2. Read the QtSPIM Overview and [additional resources](/rsc/spim)
 3. Execute a sample program simple-spim.asm
 4. Create and turn-in: Use a drawing tool or Microsoft Word or a simple text
    file or etc. to construct pseudocode OR a flow chart for the “Program objective”
@@ -65,14 +65,15 @@ version).
 
 ## Deliverables
 
-This lab is due Feb 1st
+This lab is due Feb 4th
 
 On the submission system: 
  - upload your .asm file from part 3
+ - the file should be name `part3.asm`
 
 In class/hardcopy, stapled together:
   - [Lab cover-page](https://github.com/adamaviv/ic220-s19/blob/master/rsc/lab_coversheet.pdf)
-  - Printout of your part 3 .asm file using codeprint (or equivalent)
+  - Printout of your `part3.asm` file using codeprint (or equivalent)
   - **Three** screenshot of your code executing for N=3
     - x=12
     - x=17

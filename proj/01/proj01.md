@@ -16,7 +16,7 @@ project.
 
 ## Your Task
 
-ou will translate a given recursive C++ program into MIPS, and test it
+You will translate a given recursive C++ program into MIPS, and test it
 thoroughly (in SPIM) to ensure that it is fully correct. The C++ program takes
 as input two numbers, a “seed” and a "PIN", then uses a recursive computation to
 compute a password. When run, the program _might_ look like this:
@@ -45,7 +45,7 @@ keep the recursion.
 
 ## Specifics
 
-Download [starter-code.asm](proj/01/starter-code.md). 
+Download [starter-code.asm](/proj/01/starter-code.asm). 
 
 1. Read over the starter code (see link above and/or last page). Make sure you
    understand where the function is defined and how it is called. NOTE: The
