@@ -1,5 +1,17 @@
 # LogiSim Lab
 
+There are 4 parts to this lab:
+
+1. Part 0 (pre-lab) : basic AND circuit --- 10 points
+2. Part 1: boolean circuit -- 20 points
+3. Part 2: Less than circuit -- 30 points 
+4. Part 3: 2-bit reverse counter -- 40 points
+
+
+All parts have a digital and hard copy submission requirement. Use the [lab
+coversheet](/rsc/lab_coversheet.pdf) for your hard copy submission.
+
+
 ## Part 0: Pre-lab -- due at the star of class Feb 22
 
 1. Install [logisim](http://www.cburch.com/logisim/index.html) on your machine, either your Windows or Linux VM.  
@@ -85,7 +97,12 @@ circuit or export as an image.
 
 ![](/imgs/logisim/and-circ.png)
 
-Print those out, and bring it to the start of lab.
+
+### Requirement
+
+1. Install logisim
+2. Do the AND Circuit and print out the final circuit
+3. Bring it to the start of class
 
 ## Part 1: Implement Boolean Logic
 
@@ -134,7 +151,56 @@ In this part of the lab you will implement a 2-bit comparison operator for the
 
 ### Submission
 
-1. Digitally: Submit `part2.circ` on the submission circuit. 
+1. Digitally: Submit `part2.circ` on the submission server
 
 2. Hard copy: Your truth table, k-map and minmization work. A printout of the circuit. 
+
+
+## Part 3: Two bit reverse counter
+
+
+In this part of the lab, you will implement a clock oriented two-bit reverse
+counter. Consider input `X` whose two bit values or `X1` and `X0` (higher and
+lower bit, respectively), and the next state `X'` whose two bit values are `X'1`
+and `X'0` (higher and lower, bit respectively).
+
+We can form a truth table to describe the counting
+
+| `X1` | `X0` | `X'1` | `X'0` | `X - 1 = X'` |
+|------|------|-------|-------|--------------|
+| 0    | 0    | 1     | 1     | 0 - 1 = 3    |
+| 0    | 1    | 0     | 0     | 1 - 1 = 0    |
+| 1    | 0    | 0     | 1     | 2 - 1 = 1    |
+| 1    | 1    | 1     | 0     | 3 - 1 = 2    |
+
+
+### Requirements
+
+1. Find two formulas, one for `X'1` and one for `X'0`, based on current state `X0` and `X1`
+
+2. Implement the logic circuit in logisim such that given the input state `X`
+   the right output state `X1`
+
+3. Use two D-Flip-Flops to save your current state and a pin input for the clock, such that you can
+   cycle clock and see your counter count in reverse.
+   
+   
+### Submission
+
+1. Digitally: Submit `part3.circ` on the submission server
+
+
+2. Hard Copy: Your boolean formula for `X'0` and `X'1`, print out of the circuit
+
+
+### Hint
+
+Check out this video of two bit forward counter we did in class. 
+
+![two-bit-counter](/imgs/logisim/two-bit-counter.gif)
+
+If you replace the logic with a reverse counter and the clock element with a pin
+input, you are most of the way there! 
+
+
 
