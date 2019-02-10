@@ -19,36 +19,36 @@ simple and straightforward.
 To start, let's consider building a basic AND circuit.  Open up Logisim, where
 you'll see the main drawing pane:
 
-![](imgs/logisim/logisim-init.png)
+![logisim-init](imgs/logisim/logisim-init.png)
 
 Along the left bar, there are a many options for different gates and built in
 circuits. Feel free to explore some of the items here. You'll see a lot of
 familiar items.
 
-![](imgs/logisim/circuit-pane.png)
+![circuit-pane](imgs/logisim/circuit-pane.png)
 
 And along the top bar, there are some common ones that are easier to access. 
 
-![](imgs/logisim/top-bar.png)
+![top-bar](imgs/logisim/top-bar.png)
 
 This includes pins ![](imgs/logisim/pins) and NOT, AND, and OR gates
 ![](imgs/logis/notandor.png). Since we are building a simple AND circuit, select
 the AND gate option from the top bar. Once selected, you can see the outline of
 it on the circuit pane, drop it down somewhere in the center portion. 
 
-![](imgs/logisim/and-circ1.png)
+![and-circ1](imgs/logisim/and-circ1.png)
 
 You'll notice that the side pane has also changed to highlight options for this
 and gate. By default, an AND gate in LogiSim can accept 5 inputs, let's change
 it to 2 inputs for the purposes of this circuit.
 
-![](imgs/logisim/and-options.pn)
+![and-options](imgs/logisim/and-options.pn)
 
 Now we can draw the input and output wires by selecting the "pointer" symbol
 ![](imgs/logisim/pointer.png) in the top bar. Then drag the wires.
 
 
-![](imgs/logisim/and-circ2.png)
+![and-circ2](imgs/logisim/and-circ2.png)
 
 At this point, the output wire is red because there are no inputs. This is an
 ERROR state. To provide inputs, and to read wire values, we use the pins. 
@@ -57,28 +57,28 @@ A pin can either be an input or output pin. The square pins are for providing
 input, the circle pins are for providing outputs. Select these and drop them
 onto the circuit.
 
-![](imgs/logisim/and-circ3.png)
+![and-circ3](imgs/logisim/and-circ3.png)
 
 You'll notice if they are aligned with the wires, they'll display a 0 or 1. If
 you need to reoriented a pin, you can edit in the side pane to face
 east/west/north/south.
 
 Now, to see the AND gate in action, select the finger value
-![](imgs/logisim/finger.png). This allows you to interact with the
+![finger](imgs/logisim/finger.png). This allows you to interact with the
 circuit. Click on the two input pins, and you'll see that when both are set to
 1, the output pin also displays 1.
 
 
-![](imgs/logisim/and-circ4.png)
+![and-circ4](imgs/logisim/and-circ4.png)
 
-![](imgs/logisim/and-circ5.png)
+![and-circ5](imgs/logisim/and-circ5.png)
 
 
 This is great, but we really need to comment our circuit, like we do our
-code. Use the ![](imgs/logisim/A.png) button now to add text to our circuit. 
+code. Use the ![A](imgs/logisim/A.png) button now to add text to our circuit. 
 
 
-![](imgs/logisim/and-circ6.png)
+![and-circ6](imgs/logisim/and-circ6.png)
 
 Once you finish. Save your circuit as `part0.circ`, and the select to print the
 circuit or export as an image.
