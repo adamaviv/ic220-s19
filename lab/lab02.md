@@ -9,10 +9,13 @@ There are 4 parts to this lab:
 
 
 All parts have a digital and hard copy submission requirement. Use the [lab
-coversheet](/rsc/lab_coversheet.pdf) for your hard copy submission.
+coversheet](/rsc/lab_coversheet.pdf) for your hard copy submission. Digital
+submission via the submit server.
 
+1. Pre-Lab due on 22 Feb 2019
+2. Lab due on 27 Feb 2019
 
-## Part 0: Pre-lab -- due at the star of class Feb 22
+## Part 0: Pre-lab : basic AND circuit
 
 1. Install [logisim](http://www.cburch.com/logisim/index.html) on your machine, either your Windows or Linux VM.  
 2. Read the entirety of this lab carefully!
