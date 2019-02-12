@@ -10,7 +10,7 @@
 
 ## Sequential Logic 
 
-So far, we've only consider logic circuits that are *combinational* as they only
+So far, we've only considered logic circuits that are *combinational* as they only
 compute based on the current input. However, you can imagine computation that is
 *sequential*, where the logic takes into account current inputs and previous
 inputs. 
@@ -40,13 +40,14 @@ is to maintain the signal, either asserted (1) or de-asserted (0), which can be
 set by toggling the asserting the S or R input, respectively. 
 
 We can describe these cases using a *next state* table, which considers the
-prior state of the circuit when consider the current state of the circuit. For
+prior state of the circuit when considering the current state of the circuit. For
 example, the S-R latch has three valid inputs for (S,R): (0,0), (1,0),
 and (0,1) and two states of output (1,0) or (0,1). Since the two output states
-or inversions, we can just focus on `Q` either having state 1 or 0. The circuit
+are inversions, we can just focus on `Q` either having state 1 or 0. The circuit
 is undefined at (1,1), leading to a race condition. 
 
-Consider the valid input states and possible output states, we can view this a
+Consider the valid input states and possible output states, we can view this as
+a
 state machine. Given an input state, what is the output state. 
 
 * On input (S,R) = (1,0): the circuit's state Q is set to asserted, 1
