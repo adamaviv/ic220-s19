@@ -41,7 +41,7 @@ set by toggling the asserting the S or R input, respectively.
 
 We can describe these cases using a *next state* table, which considers the
 prior state of the circuit when consider the current state of the circuit. For
-example, the S-R latch has three valid states of input for (S,R): (0,0), (1,0),
+example, the S-R latch has three valid inputs for (S,R): (0,0), (1,0),
 and (0,1) and two states of output (1,0) or (0,1). Since the two output states
 or inversions, we can just focus on `Q` either having state 1 or 0. The circuit
 is undefined at (1,1), leading to a race condition. 
@@ -49,9 +49,9 @@ is undefined at (1,1), leading to a race condition.
 Consider the valid input states and possible output states, we can view this a
 state machine. Given an input state, what is the output state. 
 
-* In state (1,0): the circuit's output is set to asserted, 1
-* In state (0,1): the circuit's output is set to de-asserted, 0
-* In state (0,0): the circuit maintains its prior state, either asserted (1) or
+* On input (S,R) = (1,0): the circuit's state Q is set to asserted, 1
+* On input (S,R) = (0,1): the circuit's state Q is set to de-asserted, 0
+* On input (S,R) = (0,0): the circuit maintains its prior state, either asserted (1) or
   de-asserted (0)
 
 You can see this behavior in the gif. You may notice, that once the `S` input is
@@ -80,7 +80,7 @@ or falling edge. Below, we will look at a bit of both.
 
 The first state element is a *D Latch*, which has many of the same properties of
 a S-R Latch (in fact its built out of an S-R latch!), except that its output
-transition is based on the edges of the clock. 
+transition is based on the level of the clock (i.e, either it is 0 or 1). 
 
 Like before, we can consider the states of input and output of the
 D-latch. There exist two wires for input, `C` for the clock and `D` for the
@@ -93,9 +93,9 @@ the latch is **open** and thus the output `Q` takes on the state of the input `D
 Thus, we can describe the states of the D-Latch in much the same way as the S-R
 latch, except the clock plays the role of opening the output. 
 
-* In state (1,1) : `Q` is set to 1
-* In state (0,1) : `Q` is set to 0
-* In state (X,0) : `Q` keeps the prior state, where X can be either 0 or 1 for `D`.
+* On input (D,C) = (1,1) : `Q` is set to 1
+* On input (D,C) = (0,1) : `Q` is set to 0
+* On input (D,C) = (X,0) : `Q` keeps the prior state, where X can be either 0 or 1 for `D`.
 
 You should also notice the importance of the S-R-Latch in the D-Latch. The two
 leading AND gates use the input states to switch between a Set and Reset in the
@@ -124,11 +124,11 @@ in turn are composed of S-R-Latches.
 To understand the behavior, like before, if we consider the states (`D`,`C`), we
 can describe the operations of the D-Flip-Flop like:
 
-* In state (1,1->0): set output `Q` to 1
-* In state (0,1->0): set output `Q` to 0
-* In state (X,0->1): hold output `Q` to whatever was its prior state
-* In state (X,0): hold output `Q` to whatever was its prior state 
-* In state (X,1): hold output `Q` to whatever was its prior state 
+* (1,1->0): set output `Q` to 1
+* (0,1->0): set output `Q` to 0
+* (X,0->1): hold output `Q` to whatever was its prior state
+* (X,0): hold output `Q` to whatever was its prior state 
+* (X,1): hold output `Q` to whatever was its prior state 
 
 Looking at the animation. The output `Q` is unaffected as `D` changes from 0
 to 1. It is only when a falling edge occurs, C goes 1->0, does the output `Q`
