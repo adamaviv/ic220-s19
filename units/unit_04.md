@@ -1,4 +1,4 @@
-2 33 * (X,0->1): hold output `Q` to whatev# Sequential Logic
+# Sequential Logic
 
     Readings: Chapter  B.7-B.10, B.12
 
