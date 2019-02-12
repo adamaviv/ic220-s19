@@ -166,7 +166,7 @@ output state, and the label on an edge an input state transition to a new
 To see an example, consider the sequential counting D-flip-flops from above. We
 can draw a state diagram for that like so. 
 
-![sff-state-diagram](/imgs/sff-state-diagram.png)
+![sff-state-diagram](/imgs/seq-logic/sff-state-diagram.png)
 
 Note that each transition is a clock tick, either rising or falling edge. The
 state in the node is the state of the D-Flip-Flops. The "Data Input", not
