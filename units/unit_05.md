@@ -1,6 +1,6 @@
 # Arithmetic Logic and Data Representation
 
-    Readings: Chapter  2.4, 3.1-3.3, (skim 3.5), pgs. 259-262
+    Readings: Chapter  2.4, 3.1-3.4, (skim 3.5), pgs. 259-262
 
 > These unit notes are **not** designed to replace readings from the book! They
 > are to provide structure to material covered in class and provide you an
