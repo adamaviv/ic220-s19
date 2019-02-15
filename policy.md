@@ -58,7 +58,7 @@ pipelining.
 
 * (Outcome 2) Implementation. An ability to design, implement, and evaluate a
   computer-based solution to meet a given set of computing requirements in the
-  context of the discipline
+  context of the discipline.
   
 * (Outcome 3) An ability to communicate effectively with a range of audiences about technical
 information.
@@ -77,7 +77,7 @@ Edition*, David Patterson & John Hennessy (**required**)
 
 * We are open to arranging EI via phone/IM/skype etc., but these need to scheduled a priori. 
 
-* You should always feel free to email your questions to your instructor, who should respond in a timely manner
+* You should always feel free to email your questions to your instructor, who should respond in a timely manner.
 
 ## Collaboration
 
@@ -97,7 +97,7 @@ other students, provided that:
 All collaboration and outside sources should always be cited. The same rules
 apply for giving and receiving assistance. If you are unsure whether a certain
 kind of assistance or collaboration is permitted, you should assume it is not,
-work individually, and seek clarification from your instructor
+work individually, and seek clarification from your instructor.
 
 ## Classroom Conduct
 
@@ -167,7 +167,7 @@ system, and you should provide about 5 key points from the assigned readings.
 ### Exams
 
 All exams are effectively cumulative, though the 12-week exam emphasizes
-material covered since the previous exam. The final exam will be cumulative
+material covered since the previous exam. The final exam will be cumulative.
 
 
 ### Bonus
