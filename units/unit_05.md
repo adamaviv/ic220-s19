@@ -30,15 +30,15 @@ But, we can also interpret this is an array of chars. Look at the ascii-table
 
 We find that this series of bits is "Navy."
 
-Data is the bits, but it's how we interpret it and the encodings that
-matters. In this unit, we will explore different arithmetic encodings of data,
-how to manipulate (e.g., add/sub/mul) those encodings using boolean logic, and
+Data is the bits, but it's how we interpret it and the encoding that
+matters. In this unit, we will explore different arithmetic encoding of data,
+how to manipulate (e.g., add/sub/mul) those encoding using Boolean logic, and
 how this is accomplished as part of the CPU. 
 
 ## Integer Numeric Representations
 
 As shown, bits by themselves have no inherit meaning. It's up to us to interpret
-them based on an agreed upon convention. We shoudld already have a pretty good
+them based on an agreed upon convention. We should already have a pretty good
 sense of how to represent positive numbers in binary, or better, how to
 interpret binary as positive numbers.
 
@@ -57,8 +57,8 @@ binary  decimal    binary    decimal
 0111     7          1111      15
 ```
 
-This make sense. With 4-bits, we can represent 16 values, couting from
-0-to-15. We described this as our **unisigned** interpretation. But, what if we
+This make sense. With 4-bits, we can represent 16 values, counting from
+0-to-15. We described this as our **unsigned** interpretation. But, what if we
 wanted to have a negative representation?
 
 ### Sign and Magnitude
@@ -184,8 +184,8 @@ these cases, but it would be greater if there was another representation that
 ### Two's Complement
 
 At first, this encoding seems odd, but it has a lot of advantages. The idea is
-to do the one's complement inversion, and then add 1 to that to get the negative
-value.
+to do the **one's complement inversion and then add 1 to that** to get the
+negation.
 
 So for example, -2 is
 
@@ -195,7 +195,16 @@ So for example, -2 is
  -( 0010 ) = 1101 + 1 = 1110 
 ```
 
-Or, in the table, we shift the interpretation more negative by one. 
+This even works in reverse
+
+```
+ -(-2)
+ -(1110) = 0001 + 1 = 00010
+```
+
+
+And, in the table, we could also see this as shifting the interpretation more
+negative by one.
 
 ```
 binary  decimal    binary    decimal   
@@ -267,14 +276,14 @@ So, if we were to define the number -2 using 4-bit, two's complement, we would h
 ```
 
 The reason in the above formula we can treat 16 as 0, is that we cannot
-represent 16 in 4-bits, so we would loose the most signficant bit, becoming 0000
+represent 16 in 4-bits, so we would loose the most significant bit, becoming 0000
 or 0.
 
 ## Overflow
 
 Even with two's complement representation of negative numbers, we still have
 some issues due to overflow. Overflow occurs when we add numbers together that
-affect the parity bit, the leading bit taht dictates if a binary number is
+affect the parity bit, the leading bit that dictates if a binary number is
 positive or negative.
 
 For example, consider adding the following positive 4-bit numbers together under
@@ -287,7 +296,7 @@ two's complement:
  -------  
     1001 (-7)
     ^
-    '--- overflow! 
+    '--- overflow causes it to go negative! 
 ```
 
 In this case, since 5+4 = 9 (unsigned), but 9 (unsigned) in two's complement is
@@ -299,9 +308,122 @@ of mischievous and security vulnerabilities, and in a lot of architectures,
 rather than allowing overflow, this causes an exception and an error. So
 detecting overflow is important.
 
-Let's consider then the situations in which overflow can occur... it's only when
-ever we add two positive numebrs together.
+Overflow can occur both in a positive and negative direction. For example,
+consider the following addition:
 
+
+
+```
+      1<-- cary
+    1001 (-7)
+ +  1101 (-3)
+ -----------
+  1(0110) (6)
+```
+
+How can we detect overflow? Consider the different cases for positive and negative addition:
+
+1. positive + positive = positive
+2. positive + negative = positive or negative
+3. negative + negative = negative
+
+In case (1) and (3) we can have overflow. When adding two positive numbers, if
+something becomes too positive causing the parity bit to flip from 0-to-1,
+that's an overflow. Similar, adding two negative numbers, can become too
+negative, causing the parity bit to flip form 1-to-0. Case (2) can never cause
+overflow because for all additions of positive numbers and negative numbers, it
+will always stay in the range.
+
+These cases give us a mechanisms for detection just based on the parity bit, the
+leading bit that determines the sign.
+
+1. if 0 and 0, then after add it should still be 0
+2. if 1 and 1, then after add it should still be 1
+3. if 0 and 1 (or 1 and 0), then after add it could be either -- no overflow
+   possible.
+   
+
+## Subtraction with Two's Complement
+
+Now that we have a good sense of addition, let's turn our attention to
+subtraction. Fortunately, this is EASY! That's because subtraction is the same
+as addition where the second term is negated. And, we know how to do negation
+under two's complement.
+
+For example, consider
+
+```
+                   1
+    0101 (5)       0101 (5)
+ -  0100 (4)  =  + 1100 (-4)
+ -----------     -----------
+                 1(0001) (1)
+```
+
+But, in the same way we can have overflow with addition, we can also overflow
+with subtraction once we do the inversion and convert the subtraction into
+addition.
+
+## Sign Extension 
+
+The prior examples were in 4 bits, but what if we want to take a two's
+complement 4-bit number and store it in 8-bits? That is, we want to preserve
+it's meaning when we extend the number of bits.
+
+If we had a positive number, this is relatively straight forward.
+
+```
+0101 (5) -> 0000 0101 (5)
+```
+
+But if we do this for a negative number, it doesn't quite work
+
+```
+1011 (-5) -> 0000 1011 (11) !?!?
+```
+
+That's because the parity bit, the leading bit, needs to also translate to the
+larger bit space. However, we can't just naively flip it. For example,
+
+
+```
+1011 (-5) -> 1000 1011 =
+           -(0111 0100 + 1) = -(01110101) = -117 
+```
+
+Consider that in two's complement, when a value is negative, leading bits are 1
+for larger negative values (values closer to 0). So for the example above, -5 is 
+
+```
+-5 = -(0000 0101) = 1111 1010 + 1 = 1111 1011
+```
+
+Since 5 is small, it has a lot of leading 0's. When inverted, those leading 0's
+become 1's. Thus to do **sign extension** where if the value is negative, we add 1's to the front for each extension, instead of 0's. 
+
+```
+1011 (-5) -> 1111 10111
+```
+
+Taking this further, since MIPS uses 32-bit values, if you have a smaller 8-bit
+negative value (a `char`), this can get cast to 32-bit negative value via a sign
+extension.
+
+In MIPS there are some operations that will do the sign extension and some that
+are unisgned. We've been using the signed version, but if we want to **not** sign extend, there are *unsigned* version of most arithmetic operations:
+
+* `add` vs. `addu`
+* `addi` vs. `addiu`
+* `slt` vs. `sltu`
+
+and etc. When you are programming or thinking about data representation, you
+have to be aware of the sign and how that affects operations. You may get a
+result that is totally unexpected if you don't.
+
+
+## Adding as Digital Logic
+
+//WORK IN PROGRESS//
 
 
 
