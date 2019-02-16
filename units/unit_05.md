@@ -691,7 +691,7 @@ can see that the multipier's bits shows up in the final summation.
 Thinking this through, we can follow multiplication as an algorithm (or state
 machine) that builds on an ALU.
 
-![mult-flow-chart](imgs/arithmetic/mult-flow-chart.png "Copyright © 2014 Elsevier Inc. All rights reserved.")
+![mult-flow-chart](/imgs/arithmetic/mult-flow-chart.png "Copyright © 2014 Elsevier Inc. All rights reserved.")
 
 
 
