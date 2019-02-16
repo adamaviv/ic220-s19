@@ -571,3 +571,14 @@ the two-bit output, with the carry. This gives us the following circuit.
 
 ![twor-bit-adder](/imgs/arithmetic/two-bit-adder.png)
 
+With this circuit in mind, we can just simplify it to an "adder" circuit. For
+example, this circuit is built into LogiSim. 
+
+![twor-bit-adder-built-in](/imgs/arithmetic/two-bit-adder-built-in.png)
+
+And we can also imagine expanding it to arbitrary bit-widths, just by adding in
+more smaller adder circuits.
+
+
+
+
