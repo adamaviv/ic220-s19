@@ -686,12 +686,38 @@ multiplier-'     0010*1 << 0 =  0010110 <- product (z)
 
 The `<<` operator is left-shift's the left input by the number of the right
 input by the number. So `11 << 1` is `110`. Looking down the operators input, we
-can see that the multipier's bits shows up in the final summation. 
+can see that the multiplier's bits shows up in the final summation. 
 
 Thinking this through, we can follow multiplication as an algorithm (or state
 machine) that builds on an ALU.
 
 ![mult-flow-chart](/imgs/arithmetic/mult-flow-chart.png "Copyright © 2014 Elsevier Inc. All rights reserved.")
+
+
+There's a couple of things you should take away from this process.
+
+1. Multiplication is a less efficient routine than adding because requires at
+   least `n` adds and shifts, where `n` is the bit width
+
+2. The output will be `2n` bits in size because we do a shift of `n` bits on a
+   `n` bit number.
+
+Both of these points are useful when considering when to use certain
+instructions; for example, shifting is cheap, so doing multiplication by 2
+should be reserved for the shifting circuit rather than the multiplication
+unit. Additionally, we have to consider that the output of a multiplication will
+be bigger than the inputs. That last point affects how we program multiplication
+in assembly.
+
+## Multiplication in MIPS
+
+
+## Floating Points
+
+
+## Floating Points in MIPS
+
+
 
 
 
