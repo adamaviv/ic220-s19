@@ -569,5 +569,5 @@ can add two bits together
 The operation is simply applying our three-wide, one-bit adder, to each bit in
 the two-bit output, with the carry. This gives us the following circuit. 
 
-![four-bit-adder](/imgs/arithemetic/two-bit-adder.png)
+![twor-bit-adder](/imgs/arithmetic/two-bit-adder.png)
 
