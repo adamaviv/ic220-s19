@@ -579,6 +579,122 @@ example, this circuit is built into LogiSim.
 And we can also imagine expanding it to arbitrary bit-widths, just by adding in
 more smaller adder circuits.
 
+## Arithmetic Logic Unit
+
+With an understanding of the addition circuit, we can now imagine and build
+different circuits for the basic arithmetic circuits. In the CPU, these are
+combined into a single logic circuit described at the ALU or **Arithmetic Logic
+Unit**. 
+
+An ALU, typically drawn as concave trapezoids, with the following inputs and outputs (please excuse my bad ascii art)
+
+```
+       ALU Operation
+       |
+       v
+      .--.
+  a-> |   \
+      |    \ 
+      '     \
+       \     |-> overflow
+       /     |-> result
+      '     /
+      |    /
+  b-> |   / 
+      '../
+        |
+        v
+        carry out
+      
+```
+
+
+The ALU operations are 4-bit values:
+
+* 0000: AND
+* 0001: OR
+* 0010: ADD
+* 0110: Subtract
+* 0111: Set Less Than
+* 1100: NOR
+
+And the ALU can come in 32-bit and 64-bit varieties. So given a 32-bit (or
+64-bit) `a` and `b`, it will compute the 32-bit (or 64-bit) `result` based on
+the 4-bit `operation` input, indicate if `overflow` occurred and if there is a
+`carry out`.
+
+This handy bit of circuitry forms the bases for other kinds of operators, like
+multiplication and division.
+
+## Multiplication 
+
+Multiplication is addition, but repeated. For example, recall that 4*6 means we
+add 4 6-times. We can use that logical understanding to build up a
+multiplication circuit using ALUs.
+
+Consider long, multiplication ... in decimal. You may have been taught the
+following method to solve this by hand
+
+
+```
+               2          1
+     214      214        214
+  x   36  = x   6   +  x  30
+  ------    -----       ----
+    1294     1294       6420 
+  + 6420
+  ------
+    7714
+```
+
+That is, we can break up multiplication based on the digit placement, producing
+a sum of two multiplications.
+
+```
+214*36 = 214*(30+6) = 214*30 + 214*6
+  
+```
+
+Let's take the same idea to binary. Consider multiplying the two, unsigned numbers
+
+```
+      0010  = 2
+   x  1011  = 11
+   -------  
+      0010  (   1 * 0010)  = 2
+     00100  (  10 * 0010)  = 4
+    000000  ( 000 * 0010)  = 0
++  0010000  (1000 * 0010)  = 16
+ ---------
+  00010110   = 22
+```
+
+The second operand `1011` dictates how many times to add the first operand and
+to shift. For example, consider rewriting this multiplication using
+shifting. 
+
+```
+ multiplcand (x)
+   |
+   v
+  0010 * 1011 =  0010*1 << 3 +
+           ^     0010*0 << 2 +
+           |     0010*1 << 1 +
+multiplier-'     0010*1 << 0 =  0010110 <- product (z)
+(y)
+```
+
+The `<<` operator is left-shift's the left input by the number of the right
+input by the number. So `11 << 1` is `110`. Looking down the operators input, we
+can see that the multipier's bits shows up in the final summation. 
+
+Thinking this through, we can follow multiplication as an algorithm (or state
+machine) that builds on an ALU.
+
+![mult-flow-chart](images/arithmetic/mult-flow-chart.png "Copyright © 2014 Elsevier Inc. All rights reserved.")
+
+
+
 
 
 
