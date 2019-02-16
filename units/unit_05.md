@@ -399,7 +399,8 @@ for larger negative values (values closer to 0). So for the example above, -5 is
 ```
 
 Since 5 is small, it has a lot of leading 0's. When inverted, those leading 0's
-become 1's. Thus to do **sign extension** where if the value is negative, we add 1's to the front for each extension, instead of 0's. 
+become 1's. Thus to do **sign extension** where if the value is negative, we add
+1's to the front for each extension, instead of 0's.
 
 ```
 1011 (-5) -> 1111 10111
@@ -410,7 +411,8 @@ negative value (a `char`), this can get cast to 32-bit negative value via a sign
 extension.
 
 In MIPS there are some operations that will do the sign extension and some that
-are unisgned. We've been using the signed version, but if we want to **not** sign extend, there are *unsigned* version of most arithmetic operations:
+are unisgned. We've been using the signed version, but if we want to **not**
+sign extend, there are *unsigned* version of most arithmetic operations:
 
 * `add` vs. `addu`
 * `addi` vs. `addiu`
@@ -423,10 +425,127 @@ result that is totally unexpected if you don't.
 
 ## Adding as Digital Logic
 
-//WORK IN PROGRESS//
+### Adding two, one-bits together w/carry
+
+With a better sense of data representation, let's turn our attention to how we
+perform addition (and subtraction) in digital logic. To begin, let's consider
+adding two, one-bit numbers.
+
+```
+A + B = x
+```
+
+where A and B are one bis, leads to the following truth table
+
+| A | B | x |
+|---|---|---|
+| 0 | 0 | 0 |
+| 0 | 1 | 1 |
+| 1 | 0 | 1 |
+| 1 | 1 | 0 |
 
 
+All these cases should be clear, 0+0=0, 0+1=1, 1+0=1, but 1+1=0! That's because
+of **carry** 1+1=10 (2), but we are doing 1-bit addition, so the carry bit is
+lost. This means 1+1=0, but we also want to keep track of the carry bit and know
+when it occurs.
+
+Solving for this truth table, it becomes clear that this is the formula for
+
+![AxorB](https://latex.codecogs.com/gif.latex?%5Coverline%7BA%7DB%20&plus;%20A%5Coverline%7BB%7D%20%3D%20A%20%5Coplus%20B)
+
+That is, addition is the XOR operator. And, we can also find the operator for
+the carry bit: that occurs when over both A **and** B are 1. The circuit for
+addition, in one-bit, is simply:
+
+![one-bit-adder](/imgs/arithmetic/one-bit-adder.png)
 
 
+### Adding three, one-bits together w/carry
+
+Taking this forward, let's consider adding *three* one-bit values. In this truth
+table, `x0` is the 0-bit of the result, and `x1` is the 1-bit (higher order bit of
+the result).
+
+
+| `A` | `B` | `C` | `x1` | `x0` |
+|-----|-----|-----|------|------|
+| 0   | 0   | 0   | 0    | 0    |
+| 0   | 0   | 1   | 0    | 1    |
+| 0   | 1   | 0   | 0    | 1    |
+| 0   | 1   | 1   | 1    | 0    |
+| 1   | 0   | 0   | 0    | 1    |
+| 1   | 0   | 1   | 1    | 0    |
+| 1   | 1   | 0   | 1    | 0    |
+| 1   | 1   | 1   | 1    | 1    |
+
+
+With three bits of input, our output can be the two bits (`x1`,`x0`) of 00, 01, 10,
+and 11. Since we are doing one-bit math, the x1 bit becomes our carry bit. 
+
+Can we write a formula for three bit add, with a carry? Treating this like our
+state-machine, we can build two k-maps for this calculation.
+
+Consider that `x0` is one whenever the sum is 11 or 01. That occurs whenever one
+of OR all of `A`, `B` or `C` is true/1.
+
+```
+x0 = ABC + !A!BC + !AB!C + A!B!C
+```
+
+But we can use the properties of XOR to make this a bit simpler. 
+
+```
+x0 = (A (+) B (+) C)
+```
+
+We can see the equivalency via a truth table
+
+
+| `A` | `B` | `C` | `y=A (+) B` | `x0=y (+) C` | `x0` |
+|-----|-----|-----|-------------|--------------|------|
+| 0   | 0   | 0   | 0           | 0            | 0    |
+| 0   | 0   | 1   | 0           | 1            | 1    |
+| 0   | 1   | 0   | 1           | 1            | 1    |
+| 0   | 1   | 1   | 1           | 0            | 0    |
+| 1   | 0   | 0   | 1           | 1            | 1    |
+| 1   | 0   | 1   | 1           | 0            | 0    |
+| 1   | 1   | 0   | 0           | 0            | 0    |
+| 1   | 1   | 1   | 0           | 1            | 1    |
+
+
+To determine `x1`, the carry bit of our adder, we have the following truth table
+to solve:
+
+
+| `A` | `B` | `C` | `x1`  |
+|-----|-----|-----|-------|
+| 0   | 0   | 0   | 0     |
+| 0   | 0   | 1   | 0     |
+| 0   | 1   | 0   | 0     |
+| 0   | 1   | 1   | 1     |
+| 1   | 0   | 0   | 0     |
+| 1   | 0   | 1   | 1     |
+| 1   | 1   | 0   | 1     |
+| 1   | 1   | 1   | 1     |
+
+
+Converting this to a K-map we find
+
+|      | `!B!C` | `!BC` | `BC` | `B!C` |
+|------|--------|-------|------|-------|
+| `!A` | 0      | 0     | 1    | 0     |
+| `A`  | 0      | 1     | 1    | 1     |
+
+From this we can reduce to:
+
+```
+   x1 = BC + AC + AB 
+```
+
+Using these two formulae we can produce the following, three-way, one-bit adder
+with a carry.
+
+![three-bit-adder](/imgs/arithmetic/one-bit-three-way-adder.png)
 
 
