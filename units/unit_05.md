@@ -714,16 +714,343 @@ subtractions instead of additions.)
 
 ## Multiplication in MIPS
 
+In the SPIM simulator for MIPS, there's an additional pseudo-instruction,
+R-type, for generic multiplication:
+
+```
+mul $rd, $rs, $rt	    # Multiply (without overflow)
+mulo $rd, $rs, $rt	    # Multiply (with overflow)
+mulou $rd, $rs, $rt    # Mutliply unisgned (with overflow)
+```
+
+And you can happily use these as you would expect, but these are
+pseudo-instructions because of the observation (2) above, that the due to the
+nature of multiplication, the result is `2n`. MIPS uses 32-bit registers, so how
+does these seemingly R-Type registers function?
+
+The real instruction for multiplication in MIPS is `mult` (notice the 't' at the
+end.) It takes two registers:
+
+```
+mult  $rs, $rt  # mutiply $rs and $rt and put result in {hi,lo}
+multu $rs, $rt  # mutiply (unsigned) $rs and $rt and put result in {hi,lo}
+```
+
+Note that there is no destination register (`$rd`), that's because there is no
+64-bit registers. Instead, MIPS has a special two 32 bit registers, a `hi`
+(high) and `lo` (low) register, that you can't access directly, but get set on
+`mult` (and other large operators). 
+
+The `hi` and `lo` register can be retrieved and moved into user variables using
+two other instructions
+
+```
+mfhi $rd    # move hi into $rd
+mflo $rd    # move lo into $rd
+```
 
 ## Floating Points
 
+We now have a handle on integer values and the operations over them, but we need
+to consider floating point values. These are crucial arithmetic units used in
+graphics and other operators, but we have to develop a better sense of what
+kinds of numbers are represented by "floats"
+
+* Fractions: 3.1416 
+* Small numbers: 0.000000001 (or as 1e-10)
+* Large numbers: 3.1416e23 (note the 'e` means do the following 3.1417x10^23 )
+* Negatives: -1.2 
+
+A 32-bit float is described a single-precision, and a 64-bit float is a double
+precision under the IEEE-754 standard, which describes the encoding of floating
+points. Of course, with more bits, we can have higher precision, more
+significant bits shown.
+
+
+The IEEE-754  32-bit encoding is as follows
+
+```
+   .- sign (1 bit)                     .- fraction (23 bits)
+   v                                   v 
+  .---------------------------------------------------------------------.
+b | 0 | 0 1 1 1 1 1 1 0 | 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 |
+  '---------------------------------------------------------------------'
+   31  30             23 22                                           0  <-bit numbers, b[i]
+           ^                                                               where i between [0..31]
+           '- exponent (8-bit) (sometimes refered to as simply e
+```
+
+The value of this floating point number is:
+
+```
+sign--.                             .-- base 2, but on other side of decimal point
+       v                             v
+  (-1)^b[31] *  2^( e - 01111111) * 1.b[22]b[21]...[b0]
+                           ^
+                           '-- 127 in base 2
+```
+
+Converting the number above, we have 0 in the sign bit so, `-1^b[31]` is 1 (x^0
+is defined as 1). 
+
+The exponent (e) is 01111110 in binary, or 126. When we subtract 127 (or
+01111111 in binary) gives us, -00000001, or simply -1.
+
+The fraction part, to the right of the decimal point, we need to consider how
+positional numbers work to the left. In base 10, the number
+
+```
+  342 = 3 * 10^2 + 4*10^1 + 2*10^0
+```
+
+If we add in a decimal, we get
+
+```
+  3.42 = 3*10^0 + 4*10^-1 + 2*10^-2
+```
+
+So moving to the right of the decimal point moves the exponent in the base
+conversion negative. So the number from above, in binary
+
+```
+ f = 1.10000000000000000000000
+   = 1+2^-1 + 0*2^-2 + 0*2^-3 ...
+   = 1+1/2
+   = 1.5 (base 10)
+```
+
+Putting it all together, we have
+
+
+```
+   = 1 * 2^-1 * (1+2^-1)
+   = 2^-1 * 2^-2
+   = 1/2 * 1/4
+   = .5 * .25
+   = .75
+```
+
+### Conversion Examples
+
+Let's try and go the other direction. Suppose we wish to describe the number
+2.25 in floating point, what would it's encoding be? To start, consider that we
+can encode the left and right side of the decimal in binary
+
+```
+ 2.25 = 2 + .25
+      = 2 + (2^-2)
+      = 10.01
+      = 2^1 * 1.001 (shift the decimal!)
+``` 
+
+We need the exponent to be 128so that e=128-127=-1, and we have the remaining
+bits, leading to the following layout.
+
+```
+  .---------------------------------------------------------------------.
+b | 0 | 1 0 0 0 0 0 0 0 | 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 |
+  '---------------------------------------------------------------------'
+```
+  
+Here's another example, this time with 14.5, but using a slight different
+technique. Instead, we consider how many times we need to dived by 2 to get a
+format with leading 1 in the decimal.
+
+```
+14.5 = 2 * 7.25
+      = 2 * 2 * 3.625
+      = 2 * 2 * 1.8125
+      = 2^2  * (1 + .8125)
+```
+
+Now we need to find a binary fraction that matches 0.8125. To do that let's look
+at the negative values of base 2.
+
+```
+2^-1 = .5
+2^-2 = .25
+2^-3 = .125
+2^-4 = .0625
+...
+```
+
+If we add up 2^-1 and 2^-2 we get `.75` and if we add `2^3` we get `.875` which
+is higher than `.775`. But, if we add in 2^4 (`.8125`). So the encoding of 14.5
+is:
+
+```
+  2^2 * (1.1101)
+  
+  .---------------------------------------------------------------------.
+b | 0 | 1 0 0 0 0 0 0 1 | 1 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 |
+  '---------------------------------------------------------------------'
+         ^
+         '-- 129 (-127 = 2)
+```
+
+And finally, here's yet another example, this time with a negative number, but
+using the first technique. 
+
+```
+  9.75 =   -1 * (   9    +    .75  )
+       =   -1 * (   9    +   .5 + .25)
+       =   -1 * (  1001  +   0.11)
+       =  -1001.11 (binary)
+```
+
+Let's rearrange this so there is a leading 1 on the left of the decimal point
+
+``` 
+      =  -1001.11
+      =  -100.111 * 2^1
+      =  -10.0111 * 2^2
+      =  -1.00111 * 2^3
+```
+
+Now we have all the parts to do our encoding. We need e=130 so that 130-127=3,
+and we know the placement of the remaining bits.
+
+
+```
+   -1 * 2^23 * (1.00111)
+  
+  .---------------------------------------------------------------------.
+b | 1 | 1 0 0 0 0 0 1 0 | 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 |
+  '---------------------------------------------------------------------'
+         ^
+         '-- 130 (-127 = 3)
+```
+
+### Floating Points and Accuracy
+
+Floating points can be quite complex for processors. For example, operators will
+be quite a bit more complex (see below), but also we have issues of
+precision. There are some decimal numbers that are not well represented by
+fractions of powers of 2, so we have to do some rounding. There are also some
+really large numbers (and small ones), so we can have notions of "inf" --- bot
+not really infinity. In general, this is tricky, but incredibly useful. 
 
 ## Floating Points in MIPS
 
+MIPS implements double-precision floating points. There are 32 floating point
+registers, $f0...$f31, and to get double-precision, they are used in pairs,
+($f0,$f1), ($f2,$f3), ... ($f30,$f31). We typically use the even register value
+for the name. (Note that $f0 is not always zero!)
+
+For function passing, we use $f12,$f14, etc. to pass floating point values, and
+$f0 to return a floating point value. We still use $a0..$a3 for passing
+non-floating point values, such as addresses of arrays and numbers.
+
+For loading and storing, we have both single and double precision version. Below
+are the single precision loads and stores.
+
+```
+lwc1  $f2, 4($sp)  # load from stack, offset 4, into $f2 (single precision)
+swc1  $f4, 0($t0)  # store to addess in $t0, offset 0, $f4 (single precision)
+
+ldc1  $f2, 4($sp)  # load from stack, offset 4, into $f2,$f3 (double precision)
+sdc1  $f4, 0($t0)  # store to addess in $t0, offset 0, $f4,$f5 (double precision)
+
+```
+
+For arithmetic operations, we also have single and double precision, 
+
+```
+add.s $f1, $f2, $f4   #single precision
+mul.s $f2, $f0, $f6
+div.s $f4, $f8, $f2 
+
+add.d $f1, $f2, $f4   #double precision
+mul.d $f2, $f0, $f6
+div.d $f4, $f8, $f2 
+```
+
+We also have similar notation for comparisons (change s to d for double precision)
+
+```
+c.lt.s $f2, $f4  # set less than (single precsion)
+c.gt.s $f2, $f4  # set greater than (single precsion)
+c.ge.s $f2, $f4  # set greater than or equal (single precsion)
+c.le.s $f2, $f4  # set less than or equal (single precsion)
+```
+
+You may notice that there is no label, instead, a flag is set that you can test
+directly with the following instructions:
+
+```
+bc1t label   #branch if previous comparison true
+bc1f label   #branch if previous comparison false
+```
+
+Dealing with floating constants in MIPS can be a bit cumbersom, so in the SPIM
+simulator, we can use the following psuedo-instructoins
+
+```
+li.s $f0, <const>  #load immediate single-precion float
+li.d $f2, <const>  #load immediate double-precsion float
+```
+
+And, we can also do some conversion between floats and integers to get
+constants. For example, to produce a zero float, we can do the following
+
+```
+li      $t0, 32     #load 32 into #t0
+mtc1    $t0, $f0    #move the 32 in $f0 (but is not technically floating point yet)
+cvt.w.s $f2, $f0    #covert $f0 into floating point, store in f2 
+```
+
+### Programming Examples 
+
+Let's do a few example, we can assume single precision. Convert the following C-style code into MIPS
+
+```
+// set the array to the new value, returning the old
+float setArray(float F[], int index, float val){
+   float old = F[index];
+   F[index] = val;
+   return old;
+}
+
+```
+
+First, the non-float arguments are passed using `$a0` (F) and `$a1` (index) ,
+and the float arguments are passed using `$f12`.
+
+```
+setArray:
+    sll $t0,$a1,4      # calculate offset in bytes
+    add $t0,$a1,$t0    # add it to the base (F+4*i)
+    lwc1 $f0, 0($t0)   # old =  F[i]
+    swc1 $f12, 0($t0)  # F[i] = val
+    jr $ra             # return
+
+```
 
 
+Here's one more example
 
+```
+float max(float A, Float B){
+   if (A >= B) return A;
+   else return B;
+}
+```
 
+This time the single-precision floating arguments are passed in using `$f12` and
+`$f14` per convention.
+
+```
+max:
+   li.s $f0,0.0         # initialize to zer0
+   c.ge.s $f12,$f14     # A>=B
+   bc1f else            # jump to else if false
+   add.s $f0, $f0, $f12 # move $f12 into $f0
+   j exit
+else:
+   add.s $f0, $f0, $f14 # set $f13 into $f0
+exit:
+   jr $ra
+```
 
 
 
