@@ -546,6 +546,28 @@ From this we can reduce to:
 Using these two formulae we can produce the following, three-way, one-bit adder
 with a carry.
 
-![three-bit-adder](/imgs/arithmetic/one-bit-three-way-adder.png)
+![one-bit-three-way-adder](/imgs/arithmetic/one-bit-three-way-adder.png)
 
+### Four-Bit Addition
+
+With our three-way, one-bit adder, we can do arbitrary bit addition by
+duplicating the circuit and tracking caries. Let's look at the some different ways we
+can add two bits together
+
+```
+
+          1      1   11  <-- one-bit carries
+  00  01  01  10  10  11
++ 00  00  01  01  10  11 
+-----------------------------
+  00  01  10  11 100 110
+                 ^   ^
+                 |   |
+                 '---'--- two-bit carries
+```
+
+The operation is simply applying our three-wide, one-bit adder, to each bit in
+the two-bit output, with the carry. This gives us the following circuit. 
+
+![four-bit-adder](/imgs/arithemetic/two-bit-adder.png)
 
