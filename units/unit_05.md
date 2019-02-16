@@ -709,6 +709,9 @@ unit. Additionally, we have to consider that the output of a multiplication will
 be bigger than the inputs. That last point affects how we program multiplication
 in assembly.
 
+(And if you're wondering, division using a similar logic, but with a series of
+subtractions instead of additions.)
+
 ## Multiplication in MIPS
 
 
