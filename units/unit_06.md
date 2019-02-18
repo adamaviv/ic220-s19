@@ -78,7 +78,7 @@ own clock which ticks at a given rate. The *clock rate* is expressed in Hertz,
 or number of ticks per second. So a 400 MHz CPU performs 400 Million clock ticks
 per second. 
 
-This allows us to re-write seconds in terms seconds per cycle, leading to the
+This allows us to re-write seconds in terms seconds per cycle, leading to 
 the following formula:
 
 ```

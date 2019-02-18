@@ -133,8 +133,8 @@ binary  decimal    binary    decimal
 
 
 
-This may seem bizzare at first, but it actually has a few advantages. For one,
-inverting bits is cheap and fast on computers. Also, when you add a postive to a
+This may seem bizarre at first, but it actually has a few advantages. For one,
+inverting bits is cheap and fast on computers. Also, when you add a positive to a
 negative number, and the result is negative, things work out pretty well.
 
 
@@ -165,7 +165,7 @@ But there are some additions where this fails:
  -3  +  -1   =  -1
  1100 + 1110  = 1110
    
-    1 <-- cary
+    1 <-- carry
     1100
  +  1110
  -------
@@ -256,7 +256,7 @@ start adding values together. For example,
 
 The two's compliment has the nice property that if there is a n-bit
 representation, then a number `x` and its negation `~x` is defined by the
-formula below. (This is also where ther name "two's complement" comes from.)
+formula below. (This is also where the name "two's complement" comes from.)
 
 ```
 2^n - x = ~x
@@ -267,7 +267,7 @@ x + ~x = 2^n
 So, if we were to define the number -2 using 4-bit, two's complement, we would have
 
 ```
- 16   -  2   =  14 (unisgned)
+ 16   -  2   =  14 (unsigned)
  
 10000 - 0010 = 1110 (binary)
 
@@ -411,7 +411,7 @@ negative value (a `char`), this can get cast to 32-bit negative value via a sign
 extension.
 
 In MIPS there are some operations that will do the sign extension and some that
-are unisgned. We've been using the signed version, but if we want to **not**
+are unsigned. We've been using the signed version, but if we want to **not**
 sign extend, there are *unsigned* version of most arithmetic operations:
 
 * `add` vs. `addu`
@@ -777,7 +777,7 @@ b | 0 | 0 1 1 1 1 1 1 0 | 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 |
   '---------------------------------------------------------------------'
    31  30             23 22                                           0  <-bit numbers, b[i]
            ^                                                               where i between [0..31]
-           '- exponent (8-bit) (sometimes refered to as simply e
+           '- exponent (8-bit) (sometimes referred to as simply e
 ```
 
 The value of this floating point number is:
@@ -946,10 +946,10 @@ are the single precision loads and stores.
 
 ```
 lwc1  $f2, 4($sp)  # load from stack, offset 4, into $f2 (single precision)
-swc1  $f4, 0($t0)  # store to addess in $t0, offset 0, $f4 (single precision)
+swc1  $f4, 0($t0)  # store to address in $t0, offset 0, $f4 (single precision)
 
 ldc1  $f2, 4($sp)  # load from stack, offset 4, into $f2,$f3 (double precision)
-sdc1  $f4, 0($t0)  # store to addess in $t0, offset 0, $f4,$f5 (double precision)
+sdc1  $f4, 0($t0)  # store to address in $t0, offset 0, $f4,$f5 (double precision)
 
 ```
 
@@ -968,10 +968,10 @@ div.d $f4, $f8, $f2
 We also have similar notation for comparisons (change s to d for double precision)
 
 ```
-c.lt.s $f2, $f4  # set less than (single precsion)
-c.gt.s $f2, $f4  # set greater than (single precsion)
-c.ge.s $f2, $f4  # set greater than or equal (single precsion)
-c.le.s $f2, $f4  # set less than or equal (single precsion)
+c.lt.s $f2, $f4  # set less than (single precision)
+c.gt.s $f2, $f4  # set greater than (single precision)
+c.ge.s $f2, $f4  # set greater than or equal (single precision)
+c.le.s $f2, $f4  # set less than or equal (single precision)
 ```
 
 You may notice that there is no label, instead, a flag is set that you can test
@@ -982,8 +982,8 @@ bc1t label   #branch if previous comparison true
 bc1f label   #branch if previous comparison false
 ```
 
-Dealing with floating constants in MIPS can be a bit cumbersom, so in the SPIM
-simulator, we can use the following psuedo-instructoins
+Dealing with floating constants in MIPS can be a bit cumbersome, so in the SPIM
+simulator, we can use the following pseudo-instructions
 
 ```
 li.s $f0, <const>  #load immediate single-precion float
