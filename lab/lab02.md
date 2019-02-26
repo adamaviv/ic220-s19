@@ -57,7 +57,7 @@ You'll notice that the side pane has also changed to highlight options for this
 and gate. By default, an AND gate in LogiSim can accept 5 inputs, let's change
 it to 2 inputs for the purposes of this circuit.
 
-![and-options](/imgs/logisim/and-options.pn)
+![and-options](/imgs/logisim/and-options.png)
 
 Now we can draw the input and output wires by selecting the "pointer" symbol
 ![](/imgs/logisim/pointer.png) in the top bar. Then drag the wires.
@@ -156,7 +156,7 @@ In this part of the lab you will implement a 2-bit comparison operator for the
 
 1. Digitally: Submit `part2.circ` on the submission server
 
-2. Hard copy: Your truth table, k-map and minmization work. A printout of the circuit. 
+2. Hard copy: Your truth table, k-map and minimization work. A printout of the circuit. 
 
 
 ## Part 3: Two bit reverse counter
