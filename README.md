@@ -21,9 +21,10 @@
 
 * [Policy](policy.md)
 * [Calendar](calendar.md)
-* [Units](units/README.md)
-* [HW](hw/README.md)
-* [Labs](labs/README.md)
+* [Units](units/)
+* [HW](hw/)
+* [Labs](lab/)
+* [Projects](/proj/)
 * [Resources](resources.md)
     
     
