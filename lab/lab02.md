@@ -181,8 +181,7 @@ We can form a truth table to describe the counting
 
 1. Find two formulas, one for `X'1` and one for `X'0`, based on current state `X0` and `X1`
 
-2. Implement the logic circuit in logisim such that given the input state `X`
-   the right output state `X1`
+2. Implement the logic circuit in logisim that given the input state `X` computes the output `X'`
 
 3. Use two D-Flip-Flops to save your current state and a pin input for the clock, such that you can
    cycle clock and see your counter count in reverse.
