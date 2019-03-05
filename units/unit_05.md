@@ -783,7 +783,7 @@ b | 0 | 0 1 1 1 1 1 1 0 | 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 |
 The value of this floating point number is:
 
 ```
-sign--.                             .-- base 2, but on other side of decimal point
+ sign--.                             .-- base 2, but on other side of decimal point
        v                             v
   (-1)^b[31] *  2^( e - 01111111) * 1.b[22]b[21]...[b0]
                            ^
@@ -813,21 +813,22 @@ So moving to the right of the decimal point moves the exponent in the base
 conversion negative. So the number from above, in binary
 
 ```
- f = 1.10000000000000000000000
-   = 1+2^-1 + 0*2^-2 + 0*2^-3 ...
-   = 1+1/2
-   = 1.5 (base 10)
+ f = 1.0100000000000000000000
+   = 1 + 0*2^-1 + 1*2^-2 + 0*2^-3 ...
+   = 1 + 2^-2 = 1+1/4
+   = 1.25 (base 10)
 ```
 
 Putting it all together, we have
 
 
 ```
-   = 1 * 2^-1 * (1+2^-1)
-   = 2^-1 * 2^-2
-   = 1/2 * 1/4
-   = .5 * .25
-   = .75
+   = 1 * 2^-1 * (1+2^-2)
+   = 2^-1 * (1+2^-2)
+   = 2^-1 + 2^-1 * 2^-2
+   = 2^-1 + 2^-3
+   = .5 + .125
+   = .625
 ```
 
 ### Conversion Examples
@@ -843,7 +844,7 @@ can encode the left and right side of the decimal in binary
       = 2^1 * 1.001 (shift the decimal!)
 ``` 
 
-We need the exponent to be 128so that e=128-127=-1, and we have the remaining
+We need the exponent to be 128 so that e=128-127=1, and we have the remaining
 bits, leading to the following layout.
 
 ```
@@ -859,8 +860,8 @@ format with leading 1 in the decimal.
 ```
 14.5 = 2 * 7.25
       = 2 * 2 * 3.625
-      = 2 * 2 * 1.8125
-      = 2^2  * (1 + .8125)
+      = 2 * 2 * 2 * 1.8125
+      = 2^3  * (1 + .8125)
 ```
 
 Now we need to find a binary fraction that matches 0.8125. To do that let's look
@@ -879,13 +880,13 @@ is higher than `.775`. But, if we add in 2^4 (`.8125`). So the encoding of 14.5
 is:
 
 ```
-  2^2 * (1.1101)
+  2^3 * (1.1101)
   
   .---------------------------------------------------------------------.
-b | 0 | 1 0 0 0 0 0 0 1 | 1 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 |
+b | 0 | 1 0 0 0 0 0 1 0 | 1 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 |
   '---------------------------------------------------------------------'
          ^
-         '-- 129 (-127 = 2)
+         '-- 130 (-127 = 3)
 ```
 
 And finally, here's yet another example, this time with a negative number, but
