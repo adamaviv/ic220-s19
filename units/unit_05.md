@@ -893,7 +893,7 @@ And finally, here's yet another example, this time with a negative number, but
 using the first technique. 
 
 ```
-  9.75 =   -1 * (   9    +    .75  )
+ -9.75 =   -1 * (   9    +    .75  )
        =   -1 * (   9    +   .5 + .25)
        =   -1 * (  1001  +   0.11)
        =  -1001.11 (binary)
