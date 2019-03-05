@@ -39,11 +39,15 @@ Symposium on Microarchitecture, November 1999.
 1. Paper description: Submit your description to your instructor (see calendar for deadline) via plain text e-mail (do NOT send a Microsoft Word document etc.). Include the following:
    * A topic. See topic suggestions below. You may also propose your own. One
      restriction: you may not use the Pentium division bug as a topic! (later
-     you will get a sample paper with this topic).
+     you will get a sample paper).
    * A summary. In a few sentences, describe the issue, your sources, and, if
      applicable, the particular solution(s) that you will consider for this
      problem.
-   
+   * **The subject of your email should be formatted like below**, where `<name>` is replace with your first and last name, and `<topic>` is replaced with your topic name. You should NOT include the `<` and `>` in your subject like (that is, the entirity of `<name>` and `<topic>` should be replaced!).
+```   
+   IC220 - Project 3 Topic -- <name> -- <topic>
+```
+    
 2. TWO copies of Paper v1.0. See calendar for due date. You will submit a
    complete, well-written draft of your paper (see calendar for deadline). Very
    soon thereafter, we will devote one day of class to peer review: everyone
