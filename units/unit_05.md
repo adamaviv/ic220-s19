@@ -922,14 +922,53 @@ b | 1 | 1 0 0 0 0 0 1 0 | 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 |
          '-- 130 (-127 = 3)
 ```
 
+### Special Cases
+
+There are few special cases of floating point representations. First consider
+representing 0. This cannot be done directly because the formula for floating
+points is: `-1^s 2^(e-127) * (1.f)` where `s` is the sign-bit, `e` is the
+exponent, and `f` is the fraction. There is no direct way for us to get a 0 in
+that formula because the exponentiation cannot produce a 0 and the fraction
+always has a leading 1. This is the normalized form of single-precision floating
+point.
+
+To accommodate some special cases. The IEEE 754 standard allows for a
+*denormalized* form where the exponent bits are all 0. This special cases alters
+the equation to:
+
+```
+ -1^s * 2^-126 0.f
+```
+
+Note that there is no longer a leading. This allows for the precision to reach
+even smaller fractional numbers. 
+
+Now, to represent 0, we have a special case of the denormalized form where all
+the fractional bits are also 0. Essentially, all 0's are 0. Weirdly, in floating
+point, we can also have a -0 if the sign bit is 1. These are typically
+determined to represent the same thing and should be evaluated to false and
+equal each other.
+
+Floating point can also represent +inf and -inf, although this is not true
+infinity, of course. These are used to represent values that go outside of the
+range of precision. Infinity occurs when all the exponents bits are 1 and all
+the fraction bits are 0. The sign of the infinity is determined by the fraction bit. 
+
+Finally, floating points have a Not-a-Number (NaN) representation, which can
+occur when math occurs that doesn't represent a real number. NaNs are symbolized
+by all the exponents bits set to 1 and at  non zero fraction. 
+ 
+
+
 ### Floating Points and Accuracy
 
 Floating points can be quite complex for processors. For example, operators will
-be quite a bit more complex (see below), but also we have issues of
+be quite a bit more complicated (see below), but also we have issues of
 precision. There are some decimal numbers that are not well represented by
 fractions of powers of 2, so we have to do some rounding. There are also some
-really large numbers (and small ones), so we can have notions of "inf" --- bot
-not really infinity. In general, this is tricky, but incredibly useful. 
+really large numbers (and small ones), so we can have notions of "inf" (see
+above) --- but not really infinity. In general, this is tricky, but incredibly
+useful.
 
 ## Floating Points in MIPS
 
