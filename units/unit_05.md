@@ -972,6 +972,11 @@ useful.
 
 ## Floating Points in MIPS
 
+*Note that these notes below assume instructions in the SPIM simulator that may
+not be available strictly in MIPS as described in the book. You should use these
+version, which are more expressive, than the strict MIPS version found in the
+book*
+
 MIPS implements double-precision floating points. There are 32 floating point
 registers, $f0...$f31, and to get double-precision, they are used in pairs,
 ($f0,$f1), ($f2,$f3), ... ($f30,$f31). We typically use the even register value
@@ -1008,6 +1013,7 @@ div.d $f4, $f8, $f2
 We also have similar notation for comparisons (change s to d for double precision)
 
 ```
+c.eq.s $f2, $f4  # set on equality (single precision)
 c.lt.s $f2, $f4  # set less than (single precision)
 c.gt.s $f2, $f4  # set greater than (single precision)
 c.ge.s $f2, $f4  # set greater than or equal (single precision)
@@ -1037,6 +1043,13 @@ constants. For example, to produce a zero float, we can do the following
 li      $t0, 32     #load 32 into #t0
 mtc1    $t0, $f0    #move the 32 in $f0 (but is not technically floating point yet)
 cvt.w.s $f2, $f0    #covert $f0 into floating point, store in f2 
+```
+
+Finally, we have the ability to move between registers
+
+```
+mov.s $f0, $f2   #load $f0 with the value from $f2 (single)
+mov.d $f0, $f2   #load $f0 with the value from $f2 (double)
 ```
 
 ### Programming Examples 
