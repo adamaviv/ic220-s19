@@ -146,8 +146,35 @@ can calculate the next PC in cases of a jump.
 
 ### R-Type Instructions
 
+As part of the **Register** portion of the diagram, let's consider if the
+incoming *instruction* is an R-Type instruction. Recall that R-Type instructions
+have the following format
+
+```
+ins $rd, $rs, $rt
+```
+
+That is, an R-Type instruction `ins` has three parameters: destination register
+`$rd`, source registers `$rs`, and second source registers `$rt`. In the diagram
+below, we see these get mapped into *read register 1* (`$rs`), *read register 2*
+(`$rt`), and *write register* (`$rd`).
 
 ![r-type](/imgs/cpu/r-type.png "Copyright © 2014 Elsevier Inc. All rights reserved.")
+
+
+Coming out of the component, we have two primary outputs. The two read registers
+map to an ALU unit, where the control bits of the instruction, e.g., is an add,
+or, and, sub, etc., dictate the operation. The output of ALU is fed back into
+the **Register** unit as part of *write data*, so that the destination register
+can be updated with the result.
+
+In this diagram, we also see for the first time control flow. The black lines
+represent data flow, but the orange lines represent control flow. The control
+flow dictates the kinds of operations that should occur. The first one *ALU
+Operation* is a 3-bit value describing the operation for the ALU, which we
+already discussed. The second control flow is the *RegWrite* which is a 1 bit
+value dictate if the *write register* should actually be written. Note that not
+all R-Type instructions write the destination register.
 
 
 ### Load and Store
