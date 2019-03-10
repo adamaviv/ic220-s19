@@ -226,4 +226,50 @@ and *MemRead*. These are set differently depending on the instruction.
   
 ### Branching 
 
+In our simplified instruction set, we have a single branch instruction, `beq`.
+
+```
+beq $rs, $rt, label
+```
+
+Recall that `beq` is an I-Type instruction, so we get the two register read into
+`read register 1` and `read register 2` are the values being compared. The
+immediate value is the `label`, and is again, a 16-bit value, word-length offset
+from the current instruction (+4). This gives us the following diagram.
+
 ![branching](/imgs/cpu/branching.png "Copyright © 2014 Elsevier Inc. All rights reserved.")
+
+Following the data flow, we can see again the sign-extension on the `label` to
+32-bits because the label offset can be both positive (branch forwards) or
+negative (branch backwards). Additionally, labels are offset in word-length, and
+a word is 4-byes wide. This makes sense because all instructions are 4-bytes
+aligned, so there we can more compactly store offsets in word-length. But, to
+calculate the *branch target* we must first multiply by 4 (or shift left by 2)
+to calculate the true offset. This is all fed into the top ALU unit performing
+an add.
+
+Interestingly, in MIPS we calculate the offset from the next instruction
+following the branch, which is 4 more than the PC of the `beq` instruction. This
+is also represented in the diagram, but this fact has another effect which we
+will discuss in more detail in multi-cycle, pipeline design. That being, the
+next instruction that executes, regardless of the branch comparison is the
+instruction where the comparison fails, that is, you don't branch.
+
+This is because *branches are delayed* in MIPS. There is a performance gain from
+doing this because if the branch is false, then execution occurs like
+normal. But only when the branch is true, will we take the hit. So, weirdly, it
+takes two full instruction cycles for a true branch to execute. The reasoning
+and impact of this design decision will become more apparent when discussing
+pipelines.
+
+
+Returning to the diagram, lets now consider how we determine if a the branch is
+true or false. Given the two *read data* outputs, we can check equality by
+subtracting the two values and checking the *zero* output of the ALU. That 1-bit
+zero output would then lead to some control output would be used to determine
+which next, next instruction would execute. For the other control lines,
+*RegWrite* would be 0 since we are not writing any registers, and the *ALU
+operation* is subtraction, as discussed before.
+
+
+
