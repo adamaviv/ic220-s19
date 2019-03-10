@@ -179,10 +179,51 @@ all R-Type instructions write the destination register.
 
 ### Load and Store
 
+Now, let's consider an extension of the **Register** portion of the diagram for
+I-type instructions load and store. Recall that these have the following format.
+
+```
+ lw $rt, i($rs)
+ sw $rt, i($rs)
+```
+
+There are two registers and also an immediate value, which is an offset from
+`$rt` for where to store `$rs`. The immediate value `i` is 16 bits.  Mapping
+this to our diagram, we get the following.
+
 
 ![load-store](/imgs/cpu/load-store.png "Copyright © 2014 Elsevier Inc. All rights reserved.")
 
+Lets first focus on the black, data-flow lines. As before, the *read register 1*
+and *read register 2* receive the 5-bit (0-31 number) for the two source
+registers, but this time, the *write register* receives a 16-bit number for the
+immediate value. This does not refer to a valid register, so instead, the
+immediate value is passed around the **Register** unit, sign extended from
+16-bits to 32-bits, and directed toward the ALU unit.
 
+To understand this *pass around* consider that the immediate value is an offset
+from an address stored in `$rs`. The immediate value can either be positive or
+negative, and as the register value is 32-bits, we need to sign-extend the
+immediate value from 16-bits to 32-bits before processing in the ALU, where we
+add the sign-extend immediate to the register value. The result is the *address*
+in the **Data Memory** unit.
+
+The second input to the **Data Memory** unit is the *write data*, this is passed
+through directly from the **Register** unit's *read data 2* (`$rt`). This unit
+actually does the reading and writing to main memory.
+
+Consider now the control flow of this diagram. As before, we have the 3-bit ALU
+Operation, which is clearly an `add`, but we also have *RegWrite*, *MemWrite*,
+and *MemRead*. These are set differently depending on the instruction. 
+
+* `lw`: `RegWrite` is 1, *MemWrite* is 0, and *MemRead* is 1. That's because we
+  write to register `$rt` and perform a memory read, but do not write to memory.
+  
+* `sw`: `RegWrite` is 0, *MemWrite* is 1, and *MemRead* is 0. That's because we
+  read from register `$rt` to learn what to write to memory, but do not write to
+  a register nor read from memory.
+  
+  
 ### Branching 
 
 ![branching](/imgs/cpu/branching.png "Copyright © 2014 Elsevier Inc. All rights reserved.")
