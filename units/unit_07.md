@@ -272,4 +272,66 @@ which next, next instruction would execute. For the other control lines,
 operation* is subtraction, as discussed before.
 
 
+## Unified Data Path
 
+With each of the components individually understood, we can turn our attention
+to how to merge them into a single, unified data path for the single-cycle
+CPU. The glue points are where decisions points occur based on either computer
+results (e.g., from a branch) or from control flow from the instruction bits. In
+both cases, we need multiplexers, or MUX'es to bind the circuits.
+
+![unified-datapath](/imgs/cpu/unified-datapath.png "Copyright © 2014 Elsevier Inc. All rights reserved.")
+
+In this diagram, we have the complete data path, in black, and the various
+control path, in light-blue. Three MUX'es have been placed as our glue, as well
+as three additional control bits to switch the MUX'es.
+
+* *ALUsrc* MUX: This MUX switches the input to the ALU following the
+  **Registers* state and can be thought of as multiplexing between R-Type and
+  I-Type instructions. Recall, that in R-Type instructions, the it's the value
+  of the *read data 2* that provides the second input to the ALU to complete an
+  `add`, `and`, etc. operation. However, with an I-type instruction, it may
+  instead be the immediate value, passed around from the *write register*
+  through the sign extension, say for a *lw* or *sw* instruction. 
+  
+  
+* *MemtoReg* MUX: This MUX switches on the **data memory* output, which connects
+  back to the *write data* input of the **registers** unit. The two choices
+  being multiplexed is either the output of the ALU operation or the output of
+  the *read data* operation of the **data memory**. Again, the signal for this
+  MUX will be determined by the instruction type. For any R-Type instructing, we
+  have a destination register that needs to be updated, so we choose the output
+  of the ALU operation to pass back to the *write data* input of
+  **registers*. In the case of `lw` instruction, we want the *read data* output
+  to connect back to the *write data*. In the case of a `sw` instruction, it
+  could be either choice because there is no write register, so control bit
+  *RegWrite* would be 0.
+  
+
+* *PCSrc* MUX: This MUX switches based on the branch or jump instruction. In the
+  case where the branch is true or the instruction is a jump, the new PC should
+  be selected from the ALU output, otherwise, it's simply PC+4. The selector
+  control signal, *PCSrc* is 1 when the branch is true or a jump
+  instruction. Setting this to true for the jump instructing is based on the
+  data encoded within the instruction, but setting for a true branch is more
+  complicated because it will be related to the ALU output that follows
+  **registers**. There will need to be a crossover between the data flow and the
+  control flow in this case, and we will discuss this later when discussing the
+  control flow more generally.
+  
+Also pictured in this diagram is other control paths discussed
+previously. This includes:
+
+* *RegWrite*: determining if the *write data* is written back to the *write register*
+
+* *ALU operation*: determining the operation of the ALU based on the
+  *registers* state.
+  
+* *MemWrite* : determining if **data memory** performs a write using *write data*
+
+* *MemRead* : determining if **data memory** performs a read outputting to *read data*
+
+## Determining Control Path from Instructions
+
+
+![control-path](/imgs/cpu/control-path.png "Copyright © 2014 Elsevier Inc. All rights reserved.")
