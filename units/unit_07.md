@@ -519,6 +519,8 @@ and how they related to the instruction input:
   **data memory**. Following the data path, this connects back to *write data*
   in **registers**, completing the full operation.
 
+On your own, in class and in the HW, you should be able to identify the control
+signals for other instructions in our toy example.
 
 
 ## Modifications to Control and Data Path
