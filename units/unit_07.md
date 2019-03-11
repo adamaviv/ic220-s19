@@ -280,7 +280,7 @@ CPU. The glue points are where decisions points occur based on either computer
 results (e.g., from a branch) or from control flow from the instruction bits. In
 both cases, we need multiplexers, or MUX'es to bind the circuits.
 
-![unified-datapath](/imgs/cpu/unified-datapath.png "Copyright © 2014 Elsevier Inc. All rights reserved.")
+![unified-data-path](/imgs/cpu/unified-data-path.png "Copyright © 2014 Elsevier Inc. All rights reserved.")
 
 In this diagram, we have the complete data path, in black, and the various
 control path, in light-blue. Three MUX'es have been placed as our glue, as well
@@ -333,5 +333,131 @@ previously. This includes:
 
 ## Determining Control Path from Instructions
 
+With all the control signals identified, we now turn our attention to the
+digital logic of the control. How are all these signals set? It's dependent on
+the type of the instructions, and later on the bits of the instruction. 
+
+Recall that instructions in our toy example are:
+
+* lw, sw (I-type)
+* add, subtract, AND, OR, slt (R-Type)
+* beq (I-type)
+
+
+Let's also recall the binary layout of an instruction we are working with
+
+```
+
+R-Type: add,sub,or,and,slt
+   .--------------------------------------------------.
+   |  0    |   rs   |   rt  |   rd   | shamt  |  func |
+   '--------------------------------------------------'
+     31:26   25:21    20:16    15:11    10:6    5:0     (bit positions)
+
+
+
+I-Type: lw (35) or sw (43)
+   .--------------------------------------------------.
+   |35 or 43|   rs   |   rt  |        address         |
+   '--------------------------------------------------'
+     31:26   25:21    20:16              15:0            (bit positions)
+
+
+
+I-Type: beq
+   .--------------------------------------------------.
+   |   4    |   rs   |   rt  |        address         |
+   '--------------------------------------------------'
+     31:26   25:21    20:16              15:0            (bit positions)
+
+```
+
+
+For R-type instructions, the `func` or function-field is going to dictate the
+operation as the op-code is 0. The function field for the R-type instructions is:
+
+* add: 1000 00
+* sub: 1000 10
+* AND: 1001 00
+* OR:  1001 01
+* slt: 1010 10
+
+Note that for I-type instructions, the function field is not set, and we will
+treat these as XXXXXXX (don't cares). Later we will use the op-code for these
+functions to help set the control signals.
+
+In general, there are two primary control logic centers. First is the ALU
+control logic which sets the ALU Op signals, and the second is the main control,
+which sets the signal wires for the remainder of the MUXes. 
+
+### ALU Control 
+
+For the first step in determining control logic, let's consider the *ALU
+Operation* control signal which signals the ALU that immediate follows the
+**registers** state logic. 
+
+Recall that the operations of an ALU are as follows, and the their control
+lines.
+
+| **ALU control lines** | **Function** |
+|-----------------------|--------------|
+| 0000                  | AND          |
+| 0001                  | OR           |
+| 0010                  | add          |
+| 0110                  | subtract     |
+| 0111                  | slt          |
+| 1100                  | NOR          |
+|-----------------------|--------------|
+
+Now, let's consider which of our instructions require using this ALU? 
+
+* lw,sw: requires the ALU to computer offsets (ADD)
+* beq: requires the ALU to test equality via subtraction (subtract)
+* add,sub,AND.or,slt: requires the ALU to perform the operation directly
+
+We can form this into a truth table, where we consider having two bits of ALU
+operation control, *ALUop*. 
+
+| inst | ALUop | funct   | ALU Control | ALU action |
+|------|-------|---------|-------------|------------|
+| lw   | 00    | xxxx xx | 0010        | add        |
+| sw   | 00    | xxxx xx | 0010        | add        |
+| beq  | 01    | xxxx xx | 0110        | sub        |
+| add  | 10    | 1000 00 | 0010        | add        |
+| sub  | 10    | 1000 10 | 0110        | sub        |
+| and  | 10    | 1001 00 | 0000        | and        |
+| or   | 10    | 1001 01 | 0001        | or         |
+| slt  | 10    | 1010 10 | 0111        | slt           |
+
+The use of multi-level control is common in design so we that the main control
+unit, which we are building towards, only produces two control bits rather than
+the whol 4-bits of ALU control. Instead we can use the function bits to
+determine the ALU control signal when combine with the *ALUop* bits in a
+seperate circuit. You may also notice that the *ALUop* bits map to the type of
+the instruction, 00 for lw/sw, 01 for branching, and 10 for r-types.
+
+Now, we can form a truth table. 
+
+| ALUOp1 | ALUOp2 | F5 | F4 | F3 | F2 | F1 | F0 | ALU Control |
+|--------|--------|----|----|----|----|----|----|-------------|
+| 0      | 0      | x  | x  | x  | x  | x  | x  | 0010        |
+| x      | 1      | x  | x  | x  | x  | x  | x  | 0110        |
+| 1      | x      | x  | x  | 0  | 0  | 0  | 0  | 0010        |
+| 1      | x      | x  | x  | 0  | 0  | 1  | 0  | 0110        |
+| 1      | x      | x  | x  | 0  | 1  | 0  | 0  | 0000        |
+| 1      | x      | x  | x  | 0  | 1  | 0  | 1  | 0001        |
+| 1      | x      | x  | x  | 1  | 0  | 1  | 0  | 0111        |
+
+
+This truth table is already simplified where X's are don't cares, but we can
+understand how we produce the correct ALU operations based on the instructions
+available to the main control, which we explore more next 
+
+### Main Control Unit
+
+The main control unit is where the rest of the control signals are going to be
+set based on logic coming from the instructions.
+
 
 ![control-path](/imgs/cpu/control-path.png "Copyright © 2014 Elsevier Inc. All rights reserved.")
+
