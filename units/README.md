@@ -12,3 +12,5 @@
     * Chapter  2.4, 3.1-3.4, (skim 3.5), pgs. 259-262
 * [Performance](/units/unit_06.md)
     * Chapter 1.6, 1.9-1.11
+* [Process Design)(/units/unit_07.md)
+    * Chapters 4.1-4.4
