@@ -500,7 +500,7 @@ and how they related to the instruction input:
   15:10, which would be an address or immediate value. This is an R-Type
   instruction, so we choose the data out of *read data 2*.
 
-* *ALUCOp*=10: This signal, as discussed above, provides input to the ALU
+* *ALUOp*=10: This signal, as discussed above, provides input to the ALU
   control unit to determine which ALU operation to perform. The 10 signal
   indicates an R-Type instruction, and then combined with the bits 5:0 (`func`),
   the ALU control produces the output 0110 for an add operation.
