@@ -534,6 +534,48 @@ consistency.
 
 ## Performance
 
+The last piece of the puzzle is to understand how well our single-cycle CPU
+performs. We calculate this based on the length of the longest path in the
+diagram, but also, not all operations cost the same number of cycles. Typically,
+memory reads and writes takes the longest while register reads/writes are very
+fast.
+
+As a comparison, let's consider
+
+* Memory Operations take 200 ps (peta-seconds)
+* ALU Operations take 100 ps
+* Reigster read/write take 50 ps
+
+If we look at our `add` instruction from before, and all R-types generally, we
+have that following sequence of steps:
+
+* Fetch instruction from memory (200 ps)
+* Read registers (50 ps) -- this happens in parallel
+* ALU operation (100 ps)
+* Write registers (50 ps)
+
+That complete path took 400 ps. That's very fast, but let's also consider a
+`beq` instruction.
+
+* Fetch instruction from memory (200 ps)
+* Read registers (50ps)
+* ALU operation (100ps) -- actually two of these happen in parallel!
+
+That's it, so we have 350ps. Now consider a load instruction. 
+
+* Fetch instruction from memory (200ps)
+* Read registers (50 ps)
+* ALU operation (100 ps)
+* Memory read (200 ps)
+* Reg Write (50 ps)
+
+This requires 600 ps. This is our longest path and what we consider our
+performance.
+
+So overall, with a single-cycle CPU we have the benefit that the design is
+simple and easy to understand, but the performance is not great. In the next
+units we will both work to understand performance constraints, notably around
+memory, and also ways to improve performance through pipelining.
 
 
 
