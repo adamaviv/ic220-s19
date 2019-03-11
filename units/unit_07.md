@@ -407,7 +407,7 @@ lines.
 | 0110                  | subtract     |
 | 0111                  | slt          |
 | 1100                  | NOR          |
-|-----------------------|--------------|
+
 
 Now, let's consider which of our instructions require using this ALU? 
 
