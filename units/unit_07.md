@@ -461,3 +461,77 @@ set based on logic coming from the instructions.
 
 ![control-path](/imgs/cpu/control-path.png "Copyright © 2014 Elsevier Inc. All rights reserved.")
 
+
+Essentially, in this image, you can see the various bits of the instruction fed
+into both the data path and the control path to the main control unit, which
+sets all the MUX'es and the ALU control appropriately. To see how this works,
+let's consider the control and data path of the instruction
+
+```
+add $t0, $t1, $t2
+```
+
+The bit layout of this instruction, if you recall is,
+
+```
+     op        $rs       $rt      $rd      shamt    func
+   .--------------------------------------------------------.
+   | 000000 | 01001  |  01010  | 01000   | 00000  | 100000  |
+   '--------------------------------------------------------'
+     31:26    25:21    20:16    15:11      10:6    5:0     (bit positions)
+```
+
+Moving from left to write in the figure, let's tackle all the control signals
+and how they related to the instruction input:
+
+
+* *RegDst*=1: This signal controls the MUX before **registers**. As this MUX
+  chooses between bits 20:16 (`$rt`) and bits 15:11 (`$rd`). As this is an
+  R-type register, and we want to choose `$rd` for the write register, thus
+  *RegDst* is 1.
+  
+* *RegWrite*=1: This signal controls if we use the *write data* to write back to
+  the *write register*. As this is the case for an R-type, this would be set to
+  1.
+
+* *ALUSrc*=0: This signal controls the second MUX after **registers**. Here we
+  are choosing between using the *read data 2* output, which will be the value
+  of the register refered by bits 20:16 (`$rt`), and the sign extended bits
+  15:10, which would be an address or immediate value. This is an R-Type
+  instruction, so we choose the data out of *read data 2*.
+
+* *ALUCOp*=10: This signal, as discussed above, provides input to the ALU
+  control unit to determine which ALU operation to perform. The 10 signal
+  indicates an R-Type instruction, and then combined with the bits 5:0 (`func`),
+  the ALU control produces the output 0110 for an add operation.
+  
+* *Branch*=0 : As this is not a branch operation, this signal is 0, which closes
+  the AND gate leading to the top-most MUX. 
+  
+* *MemWrite*=0 : This is 0 because we are not performing any writes to main
+  memory as this is not a store operation.
+  
+* *MemRead*=0 : This is 0 because wer not performing any reads from main memory
+  as this is not a load operation.
+  
+* *MemToReg*=0 : As an R-type, this should select the passed-around data path
+  that is the direct result of the ALU operation, rather than the output of the
+  **data memory**. Following the data path, this connects back to *write data*
+  in **registers**, completing the full operation.
+
+
+
+## Modifications to Control and Data Path
+
+In class and in the homework you will need to perform modifications to both the
+control and data path to implement additional instructions such as jump. When
+you do this, keep in mind that when you modify the data path, all other
+instructions should still work as before, which means that you may need to add
+control path elements, like MUXes and more main control signals, to assure
+consistency.
+
+## Performance
+
+
+
+
