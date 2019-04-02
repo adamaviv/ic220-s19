@@ -131,19 +131,339 @@ The final arrangement of a cache is
 ## Direct Mapping Cache
 
 A direct mapping cache maps each data being cached to a single line of
-cache. This is the simplest setup.
+cache. This is the simplest setup. To see how it works, let's assume we have
+8-bit addresses and 8 lines of cache. 
+
+
+The layout looks something like this intimately:
+
+
+```
+ index   valid   tag        data 
+         .---.-------.---------------------.
+0  (000) | 0 |       |                     |
+1  (001) | 0 |       |                     |
+2  (010) | 0 |       |                     |
+3  (011) | 0 |       |                     |
+4  (100) | 0 |       |                     |
+5  (101) | 0 |       |                     |
+6  (110) | 0 |       |                     |
+7  (111) | 0 |       |                     |
+         '---'-------'---------------------'
+```
+
+Note that initially all valid bits are 0, since we are just starting up. Let's
+say we complete the following operations. For now, let's assume all the
+operations are reads, so we will ignore the data, and instead use that to note
+the full address (in base 10)
+
+1. 247 `11110111` 
+2. 52  `00110100` 
+3. 55  `00110111` 
+4. 55  `00110111` 
+5. 52  `00110100`
+6. 247 `11110111`
+7. 29  `00011101`
+8. 52  `00110100`
+9. 63  `00111111
+10. 55  `00110111` 
 
 
 
+At the first two insertions, we have the follow table. 
+
+
+```
+ index   valid   tag        data 
+         .---.-------.---------------------.
+0  (000) | 0 |       |                     |
+1  (001) | 0 |       |                     |
+2  (010) | 0 |       |                     |
+3  (011) | 0 |       |                     |
+4  (100) | 0 |00110  | 52                  |
+5  (101) | 0 |       |                     |
+6  (110) | 0 |       |                     |
+7  (111) | 0 |11110  | 247                 |
+         '---'-------'---------------------'
+         
+Misses: 2         
+```
+
+These operations are misses because of the current data there is invalid.  The
+next read, 55, has an index of `111`. When we look at that line of cache, we see
+that the tag doesn't match, and thus it is also a miss. When we load the new
+data, we replace that line of cache 247, with 55.
+
+
+```
+ index   valid   tag        data 
+         .---.-------.---------------------.
+0  (000) | 0 |       |                     |
+1  (001) | 0 |       |                     |
+2  (010) | 0 |       |                     |
+3  (011) | 0 |       |                     |
+4  (100) | 1 |00110  | 52                  |
+5  (101) | 0 |       |                     |
+6  (110) | 0 |       |                     |
+7  (111) | 1 |00110  | 55                  |
+         '---'-------'---------------------'
+         
+Misses: 3 
+```
+
+After a second read to 55, we have our first hit. This takes advantage of the
+temporal locality. Same is true for reading 52. But when we read 247 again, we
+collide again at index 7, causing a miss and eviction.
+
+
+
+```
+ index   valid   tag        data 
+         .---.-------.---------------------.
+0  (000) | 0 |       |                     |
+1  (001) | 0 |       |                     |
+2  (010) | 0 |       |                     |
+3  (011) | 0 |       |                     |
+4  (100) | 1 |00110  | 52                  |
+5  (101) | 0 |       |                     |
+6  (110) | 0 |       |                     |
+7  (111) | 1 |11110  | 247                 |
+         '---'-------'---------------------'
+         
+Misses: 4
+Hits: 2
+```
+
+The next operation 29 is also a miss, but the following 52 is another hit.
+
+```
+ index   valid   tag        data 
+         .---.-------.---------------------.
+0  (000) | 0 |       |                     |
+1  (001) | 1 |00011  | 29                  |
+2  (010) | 0 |       |                     |
+3  (011) | 0 |       |                     |
+4  (100) | 1 |00110  | 52                  |
+5  (101) | 0 |       |                     |
+6  (110) | 0 |       |                     |
+7  (111) | 1 |11110  | 247                 |
+         '---'-------'---------------------'
+         
+Misses: 5
+Hits: 3
+```
+63 is another miss and ejection. 
+
+
+```
+ index   valid   tag        data 
+         .---.-------.---------------------.
+0  (000) | 0 |       |                     |
+1  (001) | 1 |00011  | 29                  |
+2  (010) | 0 |       |                     |
+3  (011) | 0 |       |                     |
+4  (100) | 1 |00110  | 52                  |
+5  (101) | 0 |       |                     |
+6  (110) | 0 |       |                     |
+7  (111) | 1 |00111  | 63                  |
+         '---'-------'---------------------'
+         
+Misses: 6
+Hits: 3
+```
+
+
+
+Then 247 misses and ejects 63. Leaving us with the following table.
+
+
+
+```
+ index   valid   tag        data 
+         .---.-------.---------------------.
+0  (000) | 0 |       |                     |
+1  (001) | 1 |00011  | 29                  |
+2  (010) | 0 |       |                     |
+3  (011) | 0 |       |                     |
+4  (100) | 1 |00110  | 52                  |
+5  (101) | 0 |       |                     |
+6  (110) | 0 |       |                     |
+7  (111) | 1 |11110  | 247                 |
+         '---'-------'---------------------'
+         
+Misses: 7
+Hits: 3
+```
+
+
+In total, we had 7 misses, which is tough, but also 3 hits. Those 3 hits saved a
+lot of time on performance. But we can do better.
 
 ### Associative Caches
 
-Fully associative vs. set associative 
+Thinking of the misses from the sequence above, how can we improve it? What if
+instead of one tag per line, what if we had one index per two tags. This is
+called an *associative cache* because cache lines can occur in multiple
+indexes. There is an increased cost to this design because multiple lines must
+be searched, but the extra cost is small relative to going to memory.
 
-LRU: least recently used 
-* one bit counter, two-associative
+You may ask then, why not just make the cache fully associative where every
+cache line can occur at any index? That would mean for every read operation the
+entire cache must be search. That is quite expensive, and so to reduce that
+load, we only associate related indexes.
 
-### Multi-Level Caches
+How would we organize the cache? We could do the following by doubling the size
+of the cache, where each index just references two lines.
+
+
+```
+ index   valid   tag        data 
+         .---.-------.---------------------.
+0  (000) | 0 |       |                     |
+0  (000) | 0 |       |                     |
+1  (001) | 0 |       |                     |
+1  (001) | 0 |       |                     |
+2  (010) | 0 |       |                     |
+2  (010) | 0 |       |                     |
+3  (011) | 0 |       |                     |
+3  (011) | 0 |       |                     |
+4  (100) | 0 |       |                     |
+4  (100) | 0 |       |                     |
+5  (101) | 0 |       |                     |
+5  (101) | 0 |       |                     |
+6  (110) | 0 |       |                     |
+6  (110) | 0 |       |                     |
+7  (111) | 0 |       |                     |
+7  (111) | 0 |       |                     |
+         '---'-------'---------------------'
+```
+
+But, what if we have a fixed size cache? Instead, we can reduce the index values
+(the modulo) to produce the following association.
+
+
+```
+index   valid   tag        data 
+        .---.-------.---------------------.
+0  (00) | 0 |       |                     |
+        | 0 |       |                     |
+        |---|-------|---------------------|
+1  (01) | 0 |       |                     |
+        | 0 |       |                     |
+        |---|-------|---------------------|
+2  (10) | 0 |       |                     |
+        | 0 |       |                     |
+        |---|-------|---------------------|
+3  (11) | 0 |       |                     |
+        | 0 |       |                     |
+        '---'-------'---------------------'
+```
+
+This requires increasing the tag size by 1 bit, but that is less than doubling
+the number of lines of cache.
+
+Let's again work through the example from before performing reads on the
+following items.
+
+1. 247 `11110111` 
+2. 52  `00110100` 
+3. 55  `00110111` 
+4. 55  `00110111` 
+5. 52  `00110100`
+6. 247 `11110111`
+7. 29  `00011101`
+8. 52  `00110100`
+9. 63  `00111111`
+10. 247 `11110111`
+
+
+
+
+This time we start off the same way, but when we get to reading 55 (line 3)
+
+```
+index   valid   tag        data 
+        .---.-------.---------------------.
+0  (00) | 1 |001101 |52                   |
+        | 0 |       |                     |
+        |---|-------|---------------------|
+1  (01) | 0 |       |                     |
+        | 0 |       |                     |
+        |---|-------|---------------------|
+2  (10) | 0 |       |                     |
+        | 0 |       |                     |
+        |---|-------|---------------------|
+3  (11) | 1 |111101 | 247                 |
+        | 1 |001101 | 55                  |
+        '---'-------'---------------------'
+        
+Misses: 3
+Hits: 3
+```
+
+The cache looks different. We keep 247 in the cache AND 247 because the index
+can handle two slots. This means the next 55, 52, and 247 all hit! Following, 29
+misses, but 52 hits. 
+
+
+```
+index   valid   tag        data 
+        .---.-------.---------------------.
+0  (00) | 1 |001101 | 52                  |
+        | 0 |       |                     |
+        |---|-------|---------------------|
+1  (01) | 0 |0001110| 29                  |
+        | 0 |       |                     |
+        |---|-------|---------------------|
+2  (10) | 0 |       |                     |
+        | 0 |       |                     |
+        |---|-------|---------------------|
+3  (11) | 1 |111101 | 247                 |
+        | 1 |001101 | 55                  |
+        '---'-------'---------------------'
+        
+Misses: 4
+Hits: 6
+```
+
+
+
+But 63 misses and collides with index 3. There are already two values in that
+slot. Which do we eject? The common choice is to eject the *least recently
+used*. Which in this case is 55. Leaving the following table.
+
+
+```
+index   valid   tag        data 
+        .---.-------.---------------------.
+0  (00) | 1 |001101 |52                   |
+        | 0 |       |                     |
+        |---|-------|---------------------|
+1  (01) | 0 |       |                     |
+        | 0 |       |                     |
+        |---|-------|---------------------|
+2  (10) | 0 |       |                     |
+        | 0 |       |                     |
+        |---|-------|---------------------|
+3  (11) | 1 |111101 | 247                 |
+        | 1 |001111 | 63                  |
+        '---'-------'---------------------'
+        
+Misses: 5
+Hits: 6
+```
+
+That was a fortunate choice because the next value we read is 247, which is a
+hit. The final total is 5 misses and 7 hits! 
+
+
+The associativity, while increasing the hit rate, but there is dimension
+returns. Increasing the associativity too far means more scanning, and sometimes
+increased storage costs for tags and other values, such as tracking the
+LRU. Finding a right balance is important.
+
+### Evictions and Multi-Level Caches
+
 
 L1, L2, etc. 
 
