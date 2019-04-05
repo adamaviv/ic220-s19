@@ -314,7 +314,7 @@ consider the following addition:
 
 
 ```
-      1<-- cary
+      1<-- carry
     1001 (-7)
  +  1101 (-3)
  -----------
