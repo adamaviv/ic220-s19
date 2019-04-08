@@ -439,7 +439,7 @@ index   valid   tag        data
 0  (00) | 1 |001101 |52                   |
         | 0 |       |                     |
         |---|-------|---------------------|
-1  (01) | 0 |       |                     |
+1  (01) | 0 |0001110| 29                  |
         | 0 |       |                     |
         |---|-------|---------------------|
 2  (10) | 0 |       |                     |
@@ -450,24 +450,116 @@ index   valid   tag        data
         '---'-------'---------------------'
         
 Misses: 5
-Hits: 6
+Hits: 5
 ```
 
 That was a fortunate choice because the next value we read is 247, which is a
-hit. The final total is 5 misses and 7 hits! 
+hit. The final total is 5 misses and 5 hits! 
 
 
-The associativity, while increasing the hit rate, but there is dimension
+The associativity, while increasing the hit rate, but there is diminishing
 returns. Increasing the associativity too far means more scanning, and sometimes
 increased storage costs for tags and other values, such as tracking the
 LRU. Finding a right balance is important.
 
-### Evictions and Multi-Level Caches
+### Increasing the block size
+
+So far we've been leveraging temporal locality, but let's also consider taking
+advantage of spatial locality. This means increasing the *block size*. So far,
+we've had a block size of 1. That means for every access, we load a single block
+if there is a miss. What if we increased the block size to 2. That means for
+every miss, we not only load just that block, but also its adjacent block. 
+
+For this, let's consider a block size of 4. So for example, if we do an access
+of memory at `x`, we load memory at `x,x+1,x+2,x+3`.  This also means we don't
+need to increase the tag size, instead we search for `x,x-1,x-2,x-3` since all
+those addresses can associate with the address in question. 
+
+Again, let's consider the following sequence of accesses.
+
+1. 247 `11110111` 
+2. 52  `00110100` 
+3. 55  `00110111` 
+4. 55  `00110111` 
+5. 52  `00110100`
+6. 247 `11110111`
+7. 29  `00011101`
+8. 52  `00110100`
+9. 63  `00111111`
+10. 247 `11110111`
 
 
-L1, L2, etc. 
+With a associativity of 2, and a block size of 4, we can model these accesses in
+the following diagrams. After the first two access we have the following
 
-## Misses 
+```
+index   valid   tag        data 
+        .---.-------.---------------------.
+0  (00) | 1 |001101 |52,53,54,55          |
+        | 0 |       |                     |
+        |---|-------|---------------------|
+1  (01) | 0 |       |                     |
+        | 0 |       |                     |
+        |---|-------|---------------------|
+2  (10) | 0 |       |                     |
+        | 0 |       |                     |
+        |---|-------|---------------------|
+3  (11) | 1 |111101 | 247,248,249,250     |
+        | 1 |       |                     |
+        '---'-------'---------------------'
+        
+Misses: 2
+Hits: 0
+```
+
+But, the next two accesses to 55 is a hit because we've loaded it temporally
+when loading 52. The same is true for the remaining accesses until 29, which
+misses, and 63, which misses, but 52 and 247 are still hits. 
+
+
+
+```
+index   valid   tag        data 
+        .---.-------.---------------------.
+0  (00) | 1 |001101 |52,53,54,55          |
+        | 0 |       |                     |
+        |---|-------|---------------------|
+1  (01) | 0 |0001110| 29,30,31,32         |
+        | 0 |       |                     |
+        |---|-------|---------------------|
+2  (10) | 0 |       |                     |
+        | 0 |       |                     |
+        |---|-------|---------------------|
+3  (11) | 1 |111101 | 247,248,249,250     |
+        | 1 |001111 | 63,64,65,66         |
+        '---'-------'---------------------'
+        
+Misses: 4
+Hits: 6
+```
+
+With increasing the block size, we gained one more HIT, and we can continue
+along this path, but at a certain point, just like with associativity,
+increasing the block size because wasteful. We end up loading too much at the
+expense of evicting potentially useful data. We want a bigger block size, for
+sure, but not too big. Typically, these are like 64 bytes to 128 bytes.
+
+
+### Handling Misses
+
+Returning to the performance of our CPU, clearly, a miss in the cache is
+problematic. It takes more cycles to retrieve a block from memory, then from the
+cache. What does a CPU do in those instances? It needs to stall, simply. The
+cost of this miss depends on the particularly CPU. 
+
+Misses also are problemeatic on evictions. If we evict, that data needs to
+potentially be written back to memory. So even on a read miss, there may still
+be a double penalty for writing data back to memory. What about writes though?
+What if we miss on that? Well, we need to potentially both fetch and evict.
+
+
+How to improve upon this, we need to think more deeply on how writes are
+handled.
 
 ## Writes 
 
@@ -475,8 +567,10 @@ Write Through
 
 Write Back (dirty bits!)
 
+### Evictions and Multi-Level Caches
 
-## Performance Evaluation
+
+L1, L2, etc. ## Performance Evaluation
 
 ## Virtual Memory
 
