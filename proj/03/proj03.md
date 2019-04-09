@@ -56,7 +56,7 @@ Symposium on Microarchitecture, November 1999.
    
 3. Final paper submission. See calendar for due date. Be sure that you have
    revised the paper based on the comments you received. Turn in:
-   * [Paper coversheet](/rsc/proj03_coversheet.pdf) (to be provided)
+   * [Paper coversheet](/rsc/proj3_coversheet.pdf) (to be provided)
    * Your final, polished paper. Staple to coversheet but do NOT put your name
      on the paper itself. Be sure to follow the bibliography note above.
    * The two copies of Paper v1.0, with comment sheets. Do not staple these to
