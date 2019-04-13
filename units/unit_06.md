@@ -217,7 +217,7 @@ we make this 5 times faster? That would mean running in 20s
 ```
 20s = 20s + 80s/x
 0 =  80s/x
-x = 80/0 <--- ERRROR
+x = 80/0 <--- ERROR
 ```
 
 We are left with a lower bound on possible improvement because we can't divide

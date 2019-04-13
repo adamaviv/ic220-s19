@@ -39,7 +39,7 @@ Symposium on Microarchitecture, November 1999.
 1. Paper description: Submit your description to your instructor (see calendar for deadline) via plain text e-mail (do NOT send a Microsoft Word document etc.). Include the following:
    * A topic. See topic suggestions below. You may also propose your own. One
      restriction: you may not use the Pentium division bug as a topic! (later
-     you will get a sample paper).
+     you will get a [sample paper](/proj/03/sample.pdf)).
    * A summary. In a few sentences, describe the issue, your sources, and, if
      applicable, the particular solution(s) that you will consider for this
      problem.
@@ -56,7 +56,7 @@ Symposium on Microarchitecture, November 1999.
    
 3. Final paper submission. See calendar for due date. Be sure that you have
    revised the paper based on the comments you received. Turn in:
-   * Paper coversheet (to be provided)
+   * [Paper coversheet](/rsc/proj3_coversheet.pdf) (to be provided)
    * Your final, polished paper. Staple to coversheet but do NOT put your name
      on the paper itself. Be sure to follow the bibliography note above.
    * The two copies of Paper v1.0, with comment sheets. Do not staple these to
