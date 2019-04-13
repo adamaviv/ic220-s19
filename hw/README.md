@@ -10,6 +10,7 @@
 * [HW 6: Due 25 Mar 2019](/hw/hw06.pdf)
 * [HW 7: Due 3 Apr 2019](/hw/hw07.pdf)
 * [HW 8: Due 15 Apr 2019](/hw/hw08.pdf)
+* [HW 9: Due 26 Apr 2019](/hw/hw08.pdf)
 
 ### Resources
 * [HW reading sheet](/rsc/reading_sheet.pdf)
