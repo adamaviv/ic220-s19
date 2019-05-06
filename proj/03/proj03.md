@@ -1,6 +1,6 @@
 # Project 3: Course Paper
 
-Research and write a paper discussing a current computer architectural topic/issue. Specific requirements:
+Research and write a paper discussing a current computer architecture topic/issue. Specific requirements:
 
 1. Originality:This topic and paper must be researched and written this semester for this class(i.e. a paper from a previous class is not allowed to be used).
 2. Sources: You must have at least three sources. Wikipedia may be used, but counts for at most ONE source.
@@ -43,7 +43,7 @@ Symposium on Microarchitecture, November 1999.
    * A summary. In a few sentences, describe the issue, your sources, and, if
      applicable, the particular solution(s) that you will consider for this
      problem.
-   * **The subject of your email should be formatted like below**, where `<name>` is replace with your first and last name, and `<topic>` is replaced with your topic name. You should NOT include the `<` and `>` in your subject like (that is, the entirity of `<name>` and `<topic>` should be replaced!).
+   * **The subject of your email should be formatted like below**, where `<name>` is replace with your first and last name, and `<topic>` is replaced with your topic name. You should NOT include the `<` and `>` in your subject like (that is, the entirety of `<name>` and `<topic>` should be replaced!).
 ```   
    IC220 - Project 3 Topic -- <name> -- <topic>
 ```
