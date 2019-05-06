@@ -22,7 +22,7 @@
   * MI363
   * (number by request)
 
-### Course Descrition
+### Course Description
 
 This course introduces students to performance metrics, instruction set
 architectures, assembly language, logic design, memory hierarchies, and
@@ -32,7 +32,7 @@ pipelining.
 
 3-0-3
 
-## Learning Ojectives
+## Learning Objectives
 
 1. Critically evaluate the performance of computer systems (supports Student Outcome (3))
 
