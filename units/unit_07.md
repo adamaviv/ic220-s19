@@ -61,7 +61,7 @@ access to other data/control components:
 In the single-cycle design, we will use an abstraction to simplify the
 presentation. Each box/rectangle will represent a state element (plus some other
 logic) and transitions between elements will occur at clock edges. One full
-cycle of the clock takes us from one sate element to the next, passing through
+cycle of the clock takes us from one state element to the next, passing through
 some combination logic describing which state element receives the signal from
 the previous element.
 
@@ -263,7 +263,7 @@ and impact of this design decision will become more apparent when discussing
 pipelines.
 
 
-Returning to the diagram, lets now consider how we determine if a the branch is
+Returning to the diagram, let's now consider how we determine if a the branch is
 true or false. Given the two *read data* outputs, we can check equality by
 subtracting the two values and checking the *zero* output of the ALU. That 1-bit
 zero output would then lead to some control output would be used to determine
@@ -393,7 +393,7 @@ which sets the signal wires for the remainder of the MUXes.
 ### ALU Control 
 
 For the first step in determining control logic, let's consider the *ALU
-Operation* control signal which signals the ALU that immediate follows the
+Operation* control signal which signals the ALU that immediately follows the
 **registers** state logic. 
 
 Recall that the operations of an ALU are as follows, and the their control
@@ -431,7 +431,7 @@ operation control, *ALUop*.
 
 The use of multi-level control is common in design so we that the main control
 unit, which we are building towards, only produces two control bits rather than
-the whol 4-bits of ALU control. Instead we can use the function bits to
+the whole 4-bits of ALU control. Instead we can use the function bits to
 determine the ALU control signal when combine with the *ALUop* bits in a
 seperate circuit. You may also notice that the *ALUop* bits map to the type of
 the instruction, 00 for lw/sw, 01 for branching, and 10 for r-types.
@@ -496,7 +496,7 @@ and how they related to the instruction input:
 
 * *ALUSrc*=0: This signal controls the second MUX after **registers**. Here we
   are choosing between using the *read data 2* output, which will be the value
-  of the register refered by bits 20:16 (`$rt`), and the sign extended bits
+  of the register referred by bits 20:16 (`$rt`), and the sign extended bits
   15:10, which would be an address or immediate value. This is an R-Type
   instruction, so we choose the data out of *read data 2*.
 
@@ -511,7 +511,7 @@ and how they related to the instruction input:
 * *MemWrite*=0 : This is 0 because we are not performing any writes to main
   memory as this is not a store operation.
   
-* *MemRead*=0 : This is 0 because wer not performing any reads from main memory
+* *MemRead*=0 : This is 0 because was not performing any reads from main memory
   as this is not a load operation.
   
 * *MemToReg*=0 : As an R-type, this should select the passed-around data path
@@ -544,7 +544,7 @@ As a comparison, let's consider
 
 * Memory Operations take 200 ps (peta-seconds)
 * ALU Operations take 100 ps
-* Reigster read/write take 50 ps
+* Register read/write take 50 ps
 
 If we look at our `add` instruction from before, and all R-types generally, we
 have that following sequence of steps:
