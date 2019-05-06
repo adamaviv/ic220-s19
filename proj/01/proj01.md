@@ -61,7 +61,7 @@ Download [starter-code.asm](/proj/01/starter-code.asm).
             //call-specified-function
             //print password that results
          else
-            //print erorr message ... see your code
+            //print error message ... see your code
        ```
    4. Exit main (syscall #10)
    
@@ -131,7 +131,7 @@ Download [starter-code.asm](/proj/01/starter-code.asm).
   3. Your C++ code generated from http://www.usna.edu/Users/cs/lmcdowel/courses/ic220/spimGen/index.html
   4. Printout (using code-print) of your correct, commented, and recursive assembly code (50 pts)
 
-* *Electronc* via submit.cs.usna.edu
+* *Electronic* via submit.cs.usna.edu
   1. Your `.asm` of your correct, commented, and recursive assembly code (20 pts)
 
 ## Grading Notes
