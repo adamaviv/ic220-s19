@@ -96,7 +96,7 @@ But the same is NOT true if we add to negative numbers together
 1010 + 1001  = 0011
 ```
 
-Why is that? If we line this up using long addition, we see that we loose the
+Why is that? If we line this up using long addition, we see that we lose the
 carry of the last addition.
 
 ```
@@ -112,7 +112,7 @@ Thus the addition of two negative numbers under sign and magnitude do create a
 *more* negative number, as we would hope.
 
 
-### One's Compliment
+### One's Complement
 
 Another representation of negative numbers is to keep the notion of the leading
 bit parity by inverting (flipping 0's to 1's, and vice-versa). Our table would
@@ -175,7 +175,7 @@ But there are some additions where this fails:
 ```
 
 
-Further, 0 is a bit weird. There are two of them! All in all, one's compliment
+Further, 0 is a bit weird. There are two of them! All in all, one's complement
 is getting us closer, and of course we can design our adder units to handle
 these cases, but it would be greater if there was another representation that 
 
@@ -218,7 +218,7 @@ binary  decimal    binary    decimal
 0111     7          1111      -1     
 ```
 
-The advantage of this representation slowly start to be come clear when you
+The advantage of this representation slowly start to become clear when you
 start adding values together. For example, 
 
 ```
@@ -254,7 +254,7 @@ start adding values together. For example,
  
 ```
 
-The two's compliment has the nice property that if there is a n-bit
+The two's complement has the nice property that if there is a n-bit
 representation, then a number `x` and its negation `~x` is defined by the
 formula below. (This is also where the name "two's complement" comes from.)
 
@@ -276,7 +276,7 @@ So, if we were to define the number -2 using 4-bit, two's complement, we would h
 ```
 
 The reason in the above formula we can treat 16 as 0, is that we cannot
-represent 16 in 4-bits, so we would loose the most significant bit, becoming 0000
+represent 16 in 4-bits, so we would lose the most significant bit, becoming 0000
 or 0.
 
 ## Overflow
@@ -330,7 +330,7 @@ How can we detect overflow? Consider the different cases for positive and negati
 In case (1) and (3) we can have overflow. When adding two positive numbers, if
 something becomes too positive causing the parity bit to flip from 0-to-1,
 that's an overflow. Similar, adding two negative numbers, can become too
-negative, causing the parity bit to flip form 1-to-0. Case (2) can never cause
+negative, causing the parity bit to flip from 1-to-0. Case (2) can never cause
 overflow because for all additions of positive numbers and negative numbers, it
 will always stay in the range.
 
@@ -674,7 +674,7 @@ to shift. For example, consider rewriting this multiplication using
 shifting. 
 
 ```
- multiplcand (x)
+ multiplicand (x)
    |
    v
   0010 * 1011 =  0010*1 << 3 +
@@ -720,7 +720,7 @@ R-type, for generic multiplication:
 ```
 mul $rd, $rs, $rt	    # Multiply (without overflow)
 mulo $rd, $rs, $rt	    # Multiply (with overflow)
-mulou $rd, $rs, $rt    # Mutliply unisgned (with overflow)
+mulou $rd, $rs, $rt     # Multiply unsigned (with overflow)
 ```
 
 And you can happily use these as you would expect, but these are
@@ -732,8 +732,8 @@ The real instruction for multiplication in MIPS is `mult` (notice the 't' at the
 end.) It takes two registers:
 
 ```
-mult  $rs, $rt  # mutiply $rs and $rt and put result in {hi,lo}
-multu $rs, $rt  # mutiply (unsigned) $rs and $rt and put result in {hi,lo}
+mult  $rs, $rt  # multiply $rs and $rt and put result in {hi,lo}
+multu $rs, $rt  # multiply (unsigned) $rs and $rt and put result in {hi,lo}
 ```
 
 Note that there is no destination register (`$rd`), that's because there is no
@@ -854,7 +854,7 @@ b | 0 | 1 0 0 0 0 0 0 0 | 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 |
 ```
   
 Here's another example, this time with 14.5, but using a slight different
-technique. Instead, we consider how many times we need to dived by 2 to get a
+technique. Instead, we consider how many times we need to divided by 2 to get a
 format with leading 1 in the decimal.
 
 ```
@@ -1032,8 +1032,8 @@ Dealing with floating constants in MIPS can be a bit cumbersome, so in the SPIM
 simulator, we can use the following pseudo-instructions
 
 ```
-li.s $f0, <const>  #load immediate single-precion float
-li.d $f2, <const>  #load immediate double-precsion float
+li.s $f0, <const>  #load immediate single-precision float
+li.d $f2, <const>  #load immediate double-precision float
 ```
 
 And, we can also do some conversion between floats and integers to get
