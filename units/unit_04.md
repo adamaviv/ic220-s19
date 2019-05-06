@@ -136,7 +136,7 @@ to 1. It is only when a falling edge occurs, C goes 1->0, does the output `Q`
 change state. 
 
 In Logisim, the simulator we will use *rising edge* D-Flip-Flops and mostly
-abstract away the underlying circuitry. However, the basic principal applies,
+abstract away the underlying circuitry. However, the basic principle applies,
 just in this case, the output `Q` only transitions when the clock has a rising
 edge from 0->1.
 
@@ -182,7 +182,7 @@ then translate that into a sequential logic circuit.
 
 Suppose we wanted to write a sequential logic circuit to mimic a candy
 machine. Candy costs 15 cents, and the machine accepts two types of input, a
-nickel or dime. If the total inputted is less then 15 cents, there is no output,
+nickel or dime. If the total inputted is less than 15 cents, there is no output,
 if it is 15 cents, the output is a piece of candy, and if it is 20 cents, then
 the output is candy and 5 cents change. 
 
