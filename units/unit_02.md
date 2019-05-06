@@ -144,7 +144,7 @@ at address `196`, we may line it out in memory like below:
      :    :          :
      |
      v
-    <lower adddresses>
+    <lower addresses>
 
 
 ## Loading and Storing
@@ -435,7 +435,7 @@ We can use a branch instruction to jump backwards in the instructions, forming a
     L1: add $t1, $s3, $s3  # t1 = i+i = 2i
     add $t1, $t1, $t1      # t1 = 2i + 2i = 4i
     add $t1, $t1, $s5      # t1 = &A[i] (& <- address of operator in C/C++)
-    lw $t0, 0($t1)         # t0 = A[i] (dereference pointer of t1 toget the value)
+    lw $t0, 0($t1)         # t0 = A[i] (dereference pointer of t1 to get the value)
     add $s1, $s1, $t0      # g = g + A[i]
     add $s3, $s3, $s4      # i = i + j
     bne $s3, $s2, L1       # go to L1 if i != h (h stored in $s2)
@@ -459,7 +459,7 @@ Can be written like
     bne $t0, $zero, L2
 
 The `slt` instruction sets the register `$t0` to 0 or 1 depending on
-the comarison of `$s1` and `$s2` -- 1 if less than. So we can use the
+the comparison of `$s1` and `$s2` -- 1 if less than. So we can use the
 the `bne` instruction to see if the result is not zero (using the
 special `$zero` register).
 
