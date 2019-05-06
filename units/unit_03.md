@@ -228,7 +228,7 @@ That can be written as the formula
 
 ![not-a-or-not-b](https://latex.codecogs.com/gif.latex?%5Coverline%7BA%7D%20%5Cbullet%20%5Coverline%7BB%7D)
 
-And by, DeMorgan's Law, thats the same as
+And by, DeMorgan's Law, that's the same as
 
 ![not-a-or--b](https://latex.codecogs.com/gif.latex?%5Coverline%7BA%20&plus;%20B%7D)
 
@@ -332,7 +332,7 @@ The final formula is
 ## Karnaugh Maps (K-Maps) 
 
 Minimizing by hand can be cumbersome, but there are more automated ways to do
-this. Karnaugh Maps (K-Maps) are one way to do this. It procedes by building a
+this. Karnaugh Maps (K-Maps) are one way to do this. It proceeds by building a
 truth-table with groupings of variables, which helps to minimize the results
 when forming a sum of products.
 
@@ -418,7 +418,7 @@ We can now "cover" the entire bottom row of this table with ![][A-not-B].
 | ![][A-B]         | 0                | 1            | 1        | 0            |
 | ![][A-not-B]     | (1)              | (1)          | (1)      | (1)          |
 
-Then there is a bock of 4 in the which has ![][A-D] in common
+Then there is a block of 4 which has ![][A-D] in common
 
 |                  | ![][not-C-not-D] | ![][not-C-D] | ![][C-D] | ![][C-not-D] |
 |------------------|------------------|--------------|----------|--------------|
