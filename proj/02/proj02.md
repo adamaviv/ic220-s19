@@ -1,4 +1,4 @@
-# Project 2: Donut Dillema
+# Project 2: Donut Dilemma
 
 (Note: to download .circ files, view them in "raw" format, then save as, and
 remove the .txt extension)
@@ -41,7 +41,7 @@ Consider the Logisim file for a [two-bit donut sequence](/proj/02/ex-two-bit-seq
 ![](/proj/02/ex-two-bit-seq.gif)
 
 This sequence cycles through 0, 2, 1, 3, 0, ... for each cycle of the clock
-button. You can reset the counter back to 0 by hitting the rest button. Note
+button. You can reset the counter back to 0 by hitting the reset button. Note
 that `Q_1` is the higher order bit and `Q_0` is the lower order bit.
 
 
