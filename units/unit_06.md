@@ -45,7 +45,7 @@ faster processor which also means we can process more tasks.
 
 Alternatively, if we were too add a new machine to the lab/cluster what do we
 improve? Just throughput, as we now have yet another machine to handle the
-jobs. It is possible to also improve latency, depending on the setting, but must
+jobs. It is possible to also improve latency, depending on the setting, but most
 likely, just throughput.
 
 ## Execution Time
@@ -73,7 +73,7 @@ than B?  It is not 5 seconds faster, but rather 25/20 = 1.25 faster.
 
 ## Clock Cycles and CPU Time
 
-Clock cycles is another way to report execution time. Every CPU maintains it's
+Clock cycles is another way to report execution time. Every CPU maintains its
 own clock which ticks at a given rate. The *clock rate* is expressed in Hertz,
 or number of ticks per second. So a 400 MHz CPU performs 400 Million clock ticks
 per second. 
