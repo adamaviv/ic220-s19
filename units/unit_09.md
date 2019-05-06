@@ -539,9 +539,47 @@ need 8-bits for index. This leaves us with:
 21-bits of tag | 8-bits of index | 3 bits of offset
 ```
 
+Here are some good formulas to know when working with cache addresses:
+
+```
+# of bytes in a block = 2^(byte offset)
+
+# of blocks = ( 2^(index) ) * (associativity)
+
+total cache size = (block size) * (# of blocks)
+
+(note: log_2 means "log base two")
+
+if direct mapped: index = log_2 (# of blocks)
+
+if associative: index = log_2 ( (# of blocks) / (associativity) )
+
+# of offset bits = log_2 (block size)
+```
+
+Here are some examples using some of the above formulas:
+
+```
+Given: 4-byte blocks.
+Goal: calculate the # of offset bits.
+Work: # of offset bits = log_2 (block size) = log_2 ( 4 ) = 2
+```
+
+```
+Given: 128 blocks, direct mapped cache.
+Goal: calculate the index.
+Work: if direct mapped: index = log_2 (# of blocks) = log_2 ( 128 ) = 7
+```
+
+```
+Given: 128 blocks, 8-way associativity cache.
+Goal: calculate the index.
+Work: if associative: index = log_2 ( (# of blocks) / (associativity) ) = log_2 ( 128 / 8 ) = log_2 ( 16 ) = 4
+```
+
 #### Simulating
 
-Lets now simulate the series of address accesses from before. To simplify, we
+Let's now simulate the series of address accesses from before. To simplify, we
 will use the address instead of the tag to identify a cache line, and also use
 parens to show the individual data bytes being stored.
 
