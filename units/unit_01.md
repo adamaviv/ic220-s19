@@ -55,7 +55,7 @@ C++ code and outputs executable files.
 
 Similarly, a CPU is composed of transistors, circuits, gates, cache, and a whole
 lot of stuff! We will provide some useful abstracts of how these components work
-together to get a larger understanding without loosing ourselves in the details.
+together to get a larger understanding without losing ourselves in the details.
 
 ## What is Computer Architecture?
 
