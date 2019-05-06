@@ -29,7 +29,7 @@ for laundry is:
 
 In our single cycle model, all four stages must be completed before the next
 load of laundry completes. For example, if we look at this as cycle diagram,
-where each action takes 1 cyle of time (maybe an hour?), we would have eh
+where each action takes 1 cycle of time (maybe an hour?), we would have eh
 following diagram for completed four loads of laundry:
 
 
@@ -207,7 +207,7 @@ results in the following pipeline.
 The XXXX's are a stall. These instructions need to way for the memory operation
 to complete so that the result can be *forwarded* to the execute in the later
 instruction. The stall also pushes the `add` to execute its ID stage because
-durring the stall, `sub` is still in ID. That delay enables the write-back in
+during the stall, `sub` is still in ID. That delay enables the write-back in
 cycle 5 to occur so that there is no need for a forward for the `add`.
 
 
@@ -311,7 +311,7 @@ compiler can recognize inefficiencies and remove such dependencies via
 reordering. More often, though, the hardware of the CPU can find such reordering
 and smartly choose the next instruction that can run independently.
 
-Further more, hardware reordering can take other aspects into account. For
+Furthermore, hardware reordering can take other aspects into account. For
 example, it may be aware that there is a looming cache miss on a load, meaning
 that the cycle time required for reading from memory will be a lot
 slower. Additionally, if you arrange loads/stores, there may be address
@@ -326,7 +326,7 @@ fact that at decode stage, all the control signals are set. How then can there
 be different control signals at each stage of the pipeline?
 
 The solution is to also stage the control signals at each part of the
-pipepline. Just like with the data, which is staged and stored in some sort of
+pipeline. Just like with the data, which is staged and stored in some sort of
 state element, the control values must also be passed in the same way. However,
 as data/information flows to the right in the diagram, the control signals are
 used up, until when we reach the WB stage, there should only be one signal left.
